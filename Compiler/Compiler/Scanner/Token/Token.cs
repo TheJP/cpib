@@ -11,7 +11,7 @@ namespace Compiler
     /// </summary>
     public class Token
     {
-        public Terminals Terminal { get; set; }
+        public Terminals Terminal { get; private set; }
         public Token(Terminals terminal)
         {
             this.Terminal = terminal;

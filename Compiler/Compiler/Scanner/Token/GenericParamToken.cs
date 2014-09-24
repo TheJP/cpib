@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Compiler
 {
-    public class GenericParamToken<E> : Token
+    public abstract class GenericParamToken<E> : Token
     {
-        public E Value { get; set; }
+        public E Value { get; private set; }
         protected GenericParamToken(Terminals terminal, E value) : base(terminal)
         {
             this.Value = value;

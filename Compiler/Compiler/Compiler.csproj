@@ -41,16 +41,35 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IntLiteral.cs" />
+    <Compile Include="Scanner\LexicalException.cs" />
+    <Compile Include="Scanner\Scanner.cs" />
+    <Compile Include="Scanner\State\DefaultState.cs" />
+    <Compile Include="Scanner\State\State.cs" />
+    <Compile Include="Scanner\Token\ChangeModeToken.cs" />
+    <Compile Include="Scanner\Token\FlowModeToken.cs" />
+    <Compile Include="Scanner\Token\GenericParamToken.cs" />
+    <Compile Include="Scanner\Token\ChangeMode.cs" />
+    <Compile Include="Scanner\Token\FlowMode.cs" />
+    <Compile Include="Scanner\Token\MechMode.cs" />
+    <Compile Include="Scanner\Token\IdentToken.cs" />
+    <Compile Include="Scanner\Token\MechModeToken.cs" />
+    <Compile Include="Scanner\Token\Operators.cs" />
+    <Compile Include="Scanner\Token\OperatorToken.cs" />
+    <Compile Include="Scanner\Token\BoolLiteralToken.cs" />
+    <Compile Include="Scanner\Token\IntLiteralToken.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Scanner\Terminal.cs" />
-    <Compile Include="Scanner\TokenBase.cs" />
+    <Compile Include="Scanner\Token\Terminals.cs" />
+    <Compile Include="Scanner\Token\Token.cs" />
+    <Compile Include="Scanner\Token\Type.cs" />
+    <Compile Include="Scanner\Token\TypeToken.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="test01.iml" />
+    <None Include="test02.iml" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -10,7 +10,7 @@ namespace Compiler
     {
         public override void Handle(Scanner scanner, char data)
         {
-            if (Char.IsLetter(data) && data < 'z') { } //[a-zA-Z]
+            if (Char.IsLetter(data) && data <= 'z') { scanner.CurrentState = new TextState(data.ToString()); } //[a-zA-Z]
             else if (Char.IsDigit(data)) { } //[0-9]
             else if (!Char.IsWhiteSpace(data))
             {

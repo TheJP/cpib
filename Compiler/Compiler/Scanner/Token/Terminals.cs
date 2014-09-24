@@ -84,5 +84,7 @@ namespace Compiler
         WHILE,
         ///<summary>[a-zA-Z][a-zA-z0-9]*</summary>
         IDENT,
+        ///<summary>EOF</summary>
+        SENTINEL,
     }
 }

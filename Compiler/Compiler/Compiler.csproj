@@ -43,8 +43,15 @@
   <ItemGroup>
     <Compile Include="Scanner\LexicalException.cs" />
     <Compile Include="Scanner\Scanner.cs" />
+    <Compile Include="Scanner\State\AndState.cs" />
+    <Compile Include="Scanner\State\ColonState.cs" />
     <Compile Include="Scanner\State\DefaultState.cs" />
+    <Compile Include="Scanner\State\GTState.cs" />
+    <Compile Include="Scanner\State\LTState.cs" />
+    <Compile Include="Scanner\State\OrState.cs" />
+    <Compile Include="Scanner\State\SlashState.cs" />
     <Compile Include="Scanner\State\State.cs" />
+    <Compile Include="Scanner\State\TextState.cs" />
     <Compile Include="Scanner\Token\ChangeModeToken.cs" />
     <Compile Include="Scanner\Token\FlowModeToken.cs" />
     <Compile Include="Scanner\Token\GenericParamToken.cs" />
@@ -66,8 +73,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="test01.iml" />
-    <None Include="test02.iml" />
+    <None Include="test01.iml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="test02.iml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

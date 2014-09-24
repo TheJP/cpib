@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace Compiler
 {
-    public class BoolLiteralToken : GenericParamToken<bool>
+    public class FlowModeToken : GenericParamToken<FlowMode>
     {
-        public BoolLiteralToken(bool value) : base(Terminals.LITERAL, value) { }
+        public FlowModeToken(FlowMode value) : base(Terminals.FLOWMODE, value) { }
     }
 }

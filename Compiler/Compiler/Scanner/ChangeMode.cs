@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 
 namespace Compiler
 {
-    public class BoolLiteralToken : GenericParamToken<bool>
+    public enum ChangeMode
     {
-        public BoolLiteralToken(bool value) : base(Terminals.LITERAL, value) { }
+        CONST,
+        VAR,
     }
 }

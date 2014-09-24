@@ -6,16 +6,8 @@ using System.Threading.Tasks;
 
 namespace Compiler
 {
-    class IntLiteralToken : Token
+    public class IntLiteralToken : GenericParamToken<int>
     {
-        public int Value { get; set; }
-        public IntLiteralToken(int value) : base(Terminals.LITERAL)
-        {
-            this.Value = value;
-        }
-        public override string ToString()
-        {
-            return String.Format("({0}, {1})", base.ToString(), Value);
-        }
+        public IntLiteralToken(int value) : base(Terminals.LITERAL, value) { }
     }
 }

@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 
 namespace Compiler
 {
-    public class BoolLiteralToken : GenericParamToken<bool>
+    public enum Type
     {
-        public BoolLiteralToken(bool value) : base(Terminals.LITERAL, value) { }
+        Int32,
+        BOOL
     }
 }

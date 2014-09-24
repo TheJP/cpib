@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Compiler
 {
-    public enum Terminal
+    public enum Terminals
     {
         ///<summary>(</summary>
         LPAREN,

@@ -10,9 +10,16 @@ namespace Compiler
     {
         static void Main(string[] args)
         {
-            Scanner scanner = new Scanner();
-            var list = scanner.Scan(new System.IO.StreamReader("test01.iml"));
-            Console.WriteLine(list.ToString());
+            try
+            {
+                Scanner scanner = new Scanner();
+                var list = scanner.Scan(new System.IO.StreamReader("test01.iml"));
+                Console.WriteLine("[" + String.Join(", ", list) + "]");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Failed: " + ex.Message);
+            }
         }
     }
 }

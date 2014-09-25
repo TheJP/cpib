@@ -11,6 +11,14 @@ namespace Compiler
     /// </summary>
     public class Token
     {
+        /// <summary>
+        /// Row the original token was located in
+        /// </summary>
+        public int Row { get; set; }
+        /// <summary>
+        /// Column the original token was located in (Usually the last column of the token)
+        /// </summary>
+        public int Column { get; set; }
         public Terminals Terminal { get; private set; }
         public Token(Terminals terminal)
         {

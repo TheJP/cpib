@@ -11,7 +11,7 @@ namespace Compiler
         public override void Handle(Scanner scanner, char data)
         {
             if (Char.IsLetter(data) && data <= 'z') { scanner.CurrentState = new TextState(data.ToString()); } //[a-zA-Z]
-            else if (Char.IsDigit(data)) { } //[0-9]
+            else if (Char.IsDigit(data)) { scanner.CurrentState = new NumberState(data); } //[0-9]
             else if (!Char.IsWhiteSpace(data))
             {
                 switch (data)
@@ -31,7 +31,7 @@ namespace Compiler
                     case '|': scanner.CurrentState = new OrState(); break;
                     case ':': scanner.CurrentState = new ColonState(); break;
                     default:
-                        throw new LexicalException("Unexpected charachter: " + data);
+                        throw new LexicalException(String.Format("Unexpected charachter: '{0}'", data));
                 }
             }
         }

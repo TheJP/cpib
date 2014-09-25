@@ -8,7 +8,7 @@ namespace Compiler
 {
     public enum Type
     {
-        Int32,
+        INT32,
         BOOL
     }
 }

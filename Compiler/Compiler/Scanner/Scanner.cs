@@ -22,13 +22,21 @@ namespace Compiler
         /// Definition of all keywords and corresponding tokens
         /// </summary>
         public Dictionary<string, Token> Keywords { get; private set; }
+        /// <summary>
+        /// Current row the scanner is in (starting by 1)
+        /// </summary>
+        public int Row { get; private set; }
+        /// <summary>
+        /// Current column the scanner is in (starting by 1)
+        /// </summary>
+        public int Col { get; private set; }
         public Scanner()
         {
             Keywords = new Dictionary<string, Token>();
             Keywords.Add("div", new OperatorToken(Terminals.MULTOPR, Operators.DIV));
             Keywords.Add("mod", new OperatorToken(Terminals.MULTOPR, Operators.MOD));
             Keywords.Add("bool", new TypeToken(Type.BOOL));
-            Keywords.Add("int32", new TypeToken(Type.Int32));
+            Keywords.Add("int32", new TypeToken(Type.INT32));
             Keywords.Add("call", new Token(Terminals.CALL));
             Keywords.Add("const", new ChangeModeToken(ChangeMode.CONST));
             Keywords.Add("var", new ChangeModeToken(ChangeMode.VAR));
@@ -69,19 +77,29 @@ namespace Compiler
             lock (this)
             {
                 TokenList = new List<Token>();
-                CurrentState = new DefaultState();
-                while (!reader.EndOfStream)
+                try
                 {
-                    string line = reader.ReadLine();
-                    foreach (char c in line)
+                    CurrentState = new DefaultState();
+                    Row = 0;
+                    while (!reader.EndOfStream)
                     {
-                        CurrentState.Handle(this, c);
+                        ++Row; Col = 0;
+                        string line = reader.ReadLine();
+                        foreach (char c in line)
+                        {
+                            ++Col;
+                            CurrentState.Handle(this, c);
+                        }
+                        CurrentState.Handle(this, '\n'); //newline char is omitted in the ReadLine method
                     }
-                    CurrentState.Handle(this, '\n'); //newline char is omitted in the ReadLine method
+                    CurrentState.Handle(this, ' '); //More user friendly than to require a new line at the end of the file
+                    if (!(CurrentState is DefaultState)) { throw new LexicalException("Unexpected EOF (end of file)"); }
+                    TokenList.Add(new Token(Terminals.SENTINEL)); //Add SENTINEL Token to the end
                 }
-                CurrentState.Handle(this, ' '); //More user friendly than to require a new line at the end of the file
-                if (!(CurrentState is DefaultState)) { throw new LexicalException("Unexpected EOF (end of file)"); }
-                TokenList.Add(new Token(Terminals.SENTINEL)); //Add SENTINEL Token to the end
+                catch (LexicalException ex)
+                {
+                    throw new LexicalException(String.Format("Row: {0} Col: {1} Msg: {2}", Row, Col, ex.Message));
+                }
                 return TokenList;
             }
         }

@@ -10,11 +10,15 @@ namespace Compiler
     {
         public override void Handle(Scanner scanner, char data)
         {
-            scanner.CurrentState = new DefaultState();
-            scanner.AddToken(data == '=' ?
-                new OperatorToken(Terminals.RELOPR, Operators.NE) : // /=
-                new OperatorToken(Terminals.MULTOPR, Operators.DIV)); // /
-            if (data != '=') { scanner.CurrentState.Handle(scanner, data); }
+            if (data == '/') { scanner.CurrentState = new SkipLineState(); }
+            else
+            {
+                scanner.CurrentState = new DefaultState();
+                scanner.AddToken(data == '=' ?
+                    new OperatorToken(Terminals.RELOPR, Operators.NE) : // /=
+                    new OperatorToken(Terminals.MULTOPR, Operators.DIV)); // /
+                if (data != '=') { scanner.CurrentState.Handle(scanner, data); }
+            }
         }
     }
 }

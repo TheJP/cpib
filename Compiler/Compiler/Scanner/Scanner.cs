@@ -92,7 +92,7 @@ namespace Compiler
                         }
                         CurrentState.Handle(this, '\n'); //newline char is omitted in the ReadLine method
                     }
-                    CurrentState.Handle(this, ' '); //More user friendly than to require a new line at the end of the file
+                    CurrentState.Handle(this, '\n'); //More user friendly than to require a new line at the end of the file
                     if (!(CurrentState is DefaultState)) { throw new LexicalException("Unexpected EOF (end of file)"); }
                     TokenList.Add(new Token(Terminals.SENTINEL)); //Add SENTINEL Token to the end
                 }

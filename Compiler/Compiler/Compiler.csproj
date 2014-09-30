@@ -50,6 +50,7 @@
     <Compile Include="Scanner\State\LTState.cs" />
     <Compile Include="Scanner\State\NumberState.cs" />
     <Compile Include="Scanner\State\OrState.cs" />
+    <Compile Include="Scanner\State\SkipLineState.cs" />
     <Compile Include="Scanner\State\SlashState.cs" />
     <Compile Include="Scanner\State\State.cs" />
     <Compile Include="Scanner\State\TextState.cs" />

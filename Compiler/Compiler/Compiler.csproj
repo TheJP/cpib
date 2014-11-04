@@ -41,37 +41,37 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Scanner\LexicalException.cs" />
-    <Compile Include="Scanner\Scanner.cs" />
-    <Compile Include="Scanner\State\AndState.cs" />
-    <Compile Include="Scanner\State\ColonState.cs" />
-    <Compile Include="Scanner\State\DefaultState.cs" />
-    <Compile Include="Scanner\State\GTState.cs" />
-    <Compile Include="Scanner\State\LTState.cs" />
-    <Compile Include="Scanner\State\NumberState.cs" />
-    <Compile Include="Scanner\State\OrState.cs" />
-    <Compile Include="Scanner\State\SkipLineState.cs" />
-    <Compile Include="Scanner\State\SlashState.cs" />
-    <Compile Include="Scanner\State\State.cs" />
-    <Compile Include="Scanner\State\TextState.cs" />
-    <Compile Include="Scanner\Token\ChangeModeToken.cs" />
-    <Compile Include="Scanner\Token\FlowModeToken.cs" />
-    <Compile Include="Scanner\Token\GenericParamToken.cs" />
-    <Compile Include="Scanner\Token\ChangeMode.cs" />
-    <Compile Include="Scanner\Token\FlowMode.cs" />
-    <Compile Include="Scanner\Token\MechMode.cs" />
-    <Compile Include="Scanner\Token\IdentToken.cs" />
-    <Compile Include="Scanner\Token\MechModeToken.cs" />
-    <Compile Include="Scanner\Token\Operators.cs" />
-    <Compile Include="Scanner\Token\OperatorToken.cs" />
-    <Compile Include="Scanner\Token\BoolLiteralToken.cs" />
-    <Compile Include="Scanner\Token\IntLiteralToken.cs" />
+    <Compile Include="01Scanner\LexicalException.cs" />
+    <Compile Include="01Scanner\Scanner.cs" />
+    <Compile Include="01Scanner\State\AndState.cs" />
+    <Compile Include="01Scanner\State\ColonState.cs" />
+    <Compile Include="01Scanner\State\DefaultState.cs" />
+    <Compile Include="01Scanner\State\GTState.cs" />
+    <Compile Include="01Scanner\State\LTState.cs" />
+    <Compile Include="01Scanner\State\NumberState.cs" />
+    <Compile Include="01Scanner\State\OrState.cs" />
+    <Compile Include="01Scanner\State\SkipLineState.cs" />
+    <Compile Include="01Scanner\State\SlashState.cs" />
+    <Compile Include="01Scanner\State\State.cs" />
+    <Compile Include="01Scanner\State\TextState.cs" />
+    <Compile Include="01Scanner\Token\ChangeModeToken.cs" />
+    <Compile Include="01Scanner\Token\FlowModeToken.cs" />
+    <Compile Include="01Scanner\Token\GenericParamToken.cs" />
+    <Compile Include="01Scanner\Token\ChangeMode.cs" />
+    <Compile Include="01Scanner\Token\FlowMode.cs" />
+    <Compile Include="01Scanner\Token\MechMode.cs" />
+    <Compile Include="01Scanner\Token\IdentToken.cs" />
+    <Compile Include="01Scanner\Token\MechModeToken.cs" />
+    <Compile Include="01Scanner\Token\Operators.cs" />
+    <Compile Include="01Scanner\Token\OperatorToken.cs" />
+    <Compile Include="01Scanner\Token\BoolLiteralToken.cs" />
+    <Compile Include="01Scanner\Token\IntLiteralToken.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Scanner\Token\Terminals.cs" />
-    <Compile Include="Scanner\Token\Token.cs" />
-    <Compile Include="Scanner\Token\Type.cs" />
-    <Compile Include="Scanner\Token\TypeToken.cs" />
+    <Compile Include="01Scanner\Token\Terminals.cs" />
+    <Compile Include="01Scanner\Token\Token.cs" />
+    <Compile Include="01Scanner\Token\Type.cs" />
+    <Compile Include="01Scanner\Token\TypeToken.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -82,7 +82,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="02Parser\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

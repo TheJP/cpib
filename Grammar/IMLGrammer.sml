@@ -34,6 +34,7 @@ datatype term
    | PROGRAM
    | RETURNS
    | SKIP
+   | THEN
    | WHILE
    | IDENT
    | SENTINEL
@@ -74,6 +75,7 @@ val string_of_term =
    | PROGRAM => "PROGRAM"
    | RETURNS => "RETURNS"
    | SKIP => "SKIP"
+   | THEN => "THEN"
    | WHILE => "WHILE"
    | IDENT => "IDENT"
    | SENTINEL => "SENTINEL"
@@ -84,6 +86,8 @@ datatype nonterm
    | optProgParamList
    | repProgParamList
    | cpsCmd
+   | repCpsCmd
+   | cmd
    | cpsDecl
    | optCpsDecl
    | repCpsDecl
@@ -106,6 +110,10 @@ datatype nonterm
    | optMechmode
    | progParam
    | param
+   | expr
+   | exprList
+   | optGlobInits
+   | repIdents
 
 val string_of_nonterm =
   fn program => "program"
@@ -113,6 +121,8 @@ val string_of_nonterm =
    | optProgParamList => "optProgParamList"
    | repProgParamList => "repProgParamList"
    | cpsCmd => "cpsCmd"
+   | repCpsCmd => "repCpsCmd"
+   | cmd => "cmd"
    | cpsDecl => "cpsDecl"
    | optCpsDecl => "optCpsDecl"
    | repCpsDecl => "repCpsDecl"
@@ -135,6 +145,10 @@ val string_of_nonterm =
    | optMechmode => "optMechmode"
    | progParam => "progParam"
    | param => "param"
+   | expr => "expr"
+   | exprList => "exprList"
+   | optGlobInits => "optGlobInits"
+   | repIdents => "repIdents"
 
 val string_of_gramsym = (string_of_term, string_of_nonterm)
 
@@ -264,6 +278,35 @@ val productions =
 
     (typedIdent, [
         [T IDENT, T COLON, T TYPE]
+    ]),
+
+    (cmd, [
+        [T SKIP],
+        [N expr, T BECOMES, N expr],
+        [T IF, N expr, T THEN, N cpsCmd, T ELSE, N cpsCmd, T ENDIF],
+        [T WHILE, N expr, T DO, N cpsCmd, T ENDWHILE],
+        [T CALL, T IDENT, N exprList, N optGlobInits],
+        [T DEBUGIN, N expr],
+        [T DEBUGOUT, N expr]
+    ]),
+
+    (cpsCmd, [
+        [N cmd, N repCpsCmd]
+    ]),
+
+    (repCpsCmd, [
+        [T SEMICOLON, N cmd, N repCpsCmd],
+        []
+    ]),
+
+    (optGlobInits, [
+        [T INIT, T IDENT, N repIdents],
+        []
+    ]),
+
+    (repIdents, [
+        [T COMMA, T IDENT, N repIdents],
+        []
     ])
 ]
 

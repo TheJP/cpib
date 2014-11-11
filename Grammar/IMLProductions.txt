@@ -1,0 +1,128 @@
+<program>
+  PROGRAM IDENT <progParamList> <optCpsDecl> DO <cpsCmd> ENDPROGRAM
+<decl>
+  <stoDecl>
+  <funDecl>
+  <procDecl>
+<stoDecl>
+  <typedIdent>
+  CHANGEMODE <typedIdent>
+<funDecl>
+  FUN IDENT <paramList> RETURNS <stoDecl> <optGlobImps> <optCpsStoDecl> DO <cpsCmd> ENDFUN
+<procDecl>
+  PROC IDENT <paramList> <optGlobImps> <optCpsStoDecl> DO <cpsCmd> ENDPROC
+<optGlobImps>
+  GLOBAL <globImps>
+
+<globImps>
+  <globImp> <repGlobImps>
+<repGlobImps>
+  COMMA <globImp> <repGlobImps>
+
+<optChangemode>
+  CHANGEMODE
+
+<optMechmode>
+  MECHMODE
+
+<globImp>
+  <optChangemode> IDENT
+  FLOWMODE <optChangemode> IDENT
+<optCpsDecl>
+  GLOBAL <cpsDecl>
+
+<cpsDecl>
+  <decl> <repCpsDecl>
+<repCpsDecl>
+  SEMICOLON <decl> <repCpsDecl>
+
+<optCpsStoDecl>
+  LOCAL <cpsStoDecl>
+
+<cpsStoDecl>
+  <stoDecl> <repCpsStoDecl>
+<repCpsStoDecl>
+  SEMICOLON <stoDecl> <repCpsStoDecl>
+
+<progParamList>
+  LPAREN <optProgParamList> RPAREN
+<optProgParamList>
+  <progParam> <repProgParamList>
+
+<repProgParamList>
+  COMMA <progParam> <repProgParamList>
+
+<progParam>
+  <optChangemode> <typedIdent>
+  FLOWMODE <optChangemode> <typedIdent>
+<paramList>
+  LPAREN <optParamList> RPAREN
+<optParamList>
+  <param> <repParamList>
+
+<repParamList>
+  COMMA <param> <repParamList>
+
+<param>
+  <optMechmode> <optChangemode> <typedIdent>
+  FLOWMODE <optMechmode> <optChangemode> <typedIdent>
+<typedIdent>
+  IDENT COLON TYPE
+<cmd>
+  SKIP
+  <expr> BECOMES <expr>
+  IF <expr> THEN <cpsCmd> ELSE <cpsCmd> ENDIF
+  WHILE <expr> DO <cpsCmd> ENDWHILE
+  CALL IDENT <exprList> <optGlobInits>
+  DEBUGIN <expr>
+  DEBUGOUT <expr>
+<cpsCmd>
+  <cmd> <repCpsCmd>
+<repCpsCmd>
+  SEMICOLON <cmd> <repCpsCmd>
+
+<optGlobInits>
+  INIT IDENT <repIdents>
+
+<repIdents>
+  COMMA IDENT <repIdents>
+
+<expr>
+  <term1> <repTerm1>
+<repTerm1>
+  BOOLOPR <term1> <repTerm1>
+
+<term1>
+  <term2> <repTerm2>
+<repTerm2>
+  RELOPR <term2> <repTerm2>
+
+<term2>
+  <term3> <repTerm3>
+<repTerm3>
+  ADDOPR <term3> <repTerm3>
+
+<term3>
+  <factor> <repFactor>
+<repFactor>
+  MULTOPR <factor> <repFactor>
+
+<factor>
+  LITERAL
+  IDENT <optInitOrExprList>
+  <monadicOpr> <factor>
+  LPAREN <expr> RPAREN
+<optInitOrExprList>
+  INIT
+  <exprList>
+
+<monadicOpr>
+  NOT
+  ADDOPR
+<exprList>
+  LPAREN <optExprList> RPAREN
+<optExprList>
+  <expr> <repExprList>
+
+<repExprList>
+  COMMA <expr> <repExprList>

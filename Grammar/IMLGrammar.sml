@@ -114,6 +114,18 @@ datatype nonterm
    | exprList
    | optGlobInits
    | repIdents
+   | term1
+   | term2
+   | term3
+   | repTerm1
+   | repTerm2
+   | repTerm3
+   | factor
+   | repFactor
+   | optInitOrExprList
+   | monadicOpr
+   | optExprList
+   | repExprList
 
 val string_of_nonterm =
   fn program => "program"
@@ -149,6 +161,18 @@ val string_of_nonterm =
    | exprList => "exprList"
    | optGlobInits => "optGlobInits"
    | repIdents => "repIdents"
+   | term1 => "term1"
+   | term2 => "term2"
+   | term3 => "term3"
+   | repTerm1 => "repTerm1"
+   | repTerm2 => "repTerm2"
+   | repTerm3 => "repTerm3"
+   | factor => "factor"
+   | repFactor => "repFactor"
+   | optInitOrExprList => "optInitOrExprList"
+   | monadicOpr => "monadicOpr"
+   | optExprList => "optExprList"
+   | repExprList => "repExprList"
 
 val string_of_gramsym = (string_of_term, string_of_nonterm)
 
@@ -306,6 +330,74 @@ val productions =
 
     (repIdents, [
         [T COMMA, T IDENT, N repIdents],
+        []
+    ]),
+
+    (expr, [
+        [N term1, N repTerm1]
+    ]),
+
+    (repTerm1, [
+        [T BOOLOPR, N term1, N repTerm1],
+        []
+    ]),
+
+    (term1, [
+        [N term2, N repTerm2]
+    ]),
+
+    (repTerm2, [
+        [T RELOPR, N term2, N repTerm2],
+        []
+    ]),
+
+    (term2, [
+        [N term3, N repTerm3]
+    ]),
+
+    (repTerm3, [
+        [T ADDOPR, N term3, N repTerm3],
+        []
+    ]),
+
+    (term3, [
+        [N factor, N repFactor]
+    ]),
+
+    (repFactor, [
+        [T MULTOPR, N factor, N repFactor],
+        []
+    ]),
+
+    (factor, [
+        [T LITERAL],
+        [T IDENT, N optInitOrExprList],
+        [N monadicOpr, N factor],
+        [T LPAREN, N expr, T RPAREN]
+    ]),
+
+    (optInitOrExprList, [
+        [T INIT],
+        [N exprList],
+        []
+    ]),
+
+    (monadicOpr, [
+        [T NOT],
+        [T ADDOPR]
+    ]),
+
+    (exprList, [
+        [T LPAREN, N optExprList, T RPAREN]
+    ]),
+
+    (optExprList, [
+        [N expr, N repExprList],
+        []
+    ]),
+
+    (repExprList, [
+        [T COMMA, N expr, N repExprList],
         []
     ])
 ]

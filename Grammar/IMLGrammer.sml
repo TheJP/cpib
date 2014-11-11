@@ -81,6 +81,8 @@ val string_of_term =
 datatype nonterm
   = program
    | progParamList
+   | optProgParamList
+   | repProgParamList
    | cpsCmd
    | cpsDecl
    | optCpsDecl
@@ -91,6 +93,8 @@ datatype nonterm
    | procDecl
    | typedIdent
    | paramList
+   | optParamList
+   | repParamList
    | globImps
    | optGlobImps
    | globImp
@@ -99,10 +103,15 @@ datatype nonterm
    | optCpsStoDecl
    | repCpsStoDecl
    | optChangemode
+   | optMechmode
+   | progParam
+   | param
 
 val string_of_nonterm =
   fn program => "program"
    | progParamList => "progParamList"
+   | optProgParamList => "optProgParamList"
+   | repProgParamList => "repProgParamList"
    | cpsCmd => "cpsCmd"
    | cpsDecl => "cpsDecl"
    | optCpsDecl => "optCpsDecl"
@@ -113,6 +122,8 @@ val string_of_nonterm =
    | procDecl => "procDecl"
    | typedIdent => "typedIdent"
    | paramList => "paramList"
+   | optParamList => "optParamList"
+   | repParamList => "repParamList"
    | globImps => "globImps"
    | optGlobImps => "optGlobImps"
    | globImp => "globImp"
@@ -121,6 +132,9 @@ val string_of_nonterm =
    | optCpsStoDecl => "optCpsStoDecl"
    | repCpsStoDecl => "repCpsStoDecl"
    | optChangemode => "optChangemode"
+   | optMechmode => "optMechmode"
+   | progParam => "progParam"
+   | param => "param"
 
 val string_of_gramsym = (string_of_term, string_of_nonterm)
 
@@ -172,8 +186,13 @@ val productions =
         []
     ]),
 
+    (optMechmode, [
+        [T MECHMODE],
+        []
+    ]),
+
     (globImp, [
-        [N optChangemode, T IDENT],
+        [            N optChangemode, T IDENT],
         [T FLOWMODE, N optChangemode, T IDENT]
     ]),
 
@@ -205,10 +224,50 @@ val productions =
         []
     ]),
 
-    
+    (progParamList, [
+        [T LPAREN, N optProgParamList, T RPAREN]
+    ]),
+
+    (optProgParamList, [
+        [N progParam, N repProgParamList],
+        []
+    ]),
+
+    (repProgParamList, [
+        [T COMMA, N progParam, N repProgParamList],
+        []
+    ]),
+
+    (progParam, [
+        [            N optChangemode, N typedIdent],
+        [T FLOWMODE, N optChangemode, N typedIdent]
+    ]),
+
+    (paramList, [
+        [T LPAREN, N optParamList, T RPAREN]
+    ]),
+
+    (optParamList, [
+        [N param, N repParamList],
+        []
+    ]),
+
+    (repParamList, [
+        [T COMMA, N param, N repParamList],
+        []
+    ]),
+
+    (param, [
+        [            N optMechmode, N optChangemode, N typedIdent],
+        [T FLOWMODE, N optMechmode, N optChangemode, N typedIdent]
+    ]),
+
+    (typedIdent, [
+        [T IDENT, T COLON, T TYPE]
+    ])
 ]
 
-val S = expr
+val S = program
 
 val result = fix_foxi productions S string_of_gramsym
 

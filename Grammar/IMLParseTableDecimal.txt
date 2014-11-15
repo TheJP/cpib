@@ -1,0 +1,502 @@
+<program>
+  terminal PROGRAM
+    PROGRAM IDENT <progParamList> <optCpsDecl> DO <cpsCmd> ENDPROGRAM
+<decl>
+  terminal CHANGEMODE
+    <stoDecl>
+  terminal IDENT
+    <stoDecl>
+  terminal FUN
+    <funDecl>
+  terminal PROC
+    <procDecl>
+<stoDecl>
+  terminal IDENT
+    <typedIdent>
+  terminal CHANGEMODE
+    CHANGEMODE <typedIdent>
+<funDecl>
+  terminal FUN
+    FUN IDENT <paramList> RETURNS <stoDecl> <optGlobImps> <optCpsStoDecl> DO <cpsCmd> ENDFUN
+<procDecl>
+  terminal PROC
+    PROC IDENT <paramList> <optGlobImps> <optCpsStoDecl> DO <cpsCmd> ENDPROC
+<optGlobImps>
+  terminal GLOBAL
+    GLOBAL <globImps>
+  terminal DO
+
+  terminal LOCAL
+
+<globImps>
+  terminal FLOWMODE
+    <globImp> <repGlobImps>
+  terminal IDENT
+    <globImp> <repGlobImps>
+  terminal CHANGEMODE
+    <globImp> <repGlobImps>
+<repGlobImps>
+  terminal COMMA
+    COMMA <globImp> <repGlobImps>
+  terminal DO
+
+  terminal LOCAL
+
+<optChangemode>
+  terminal CHANGEMODE
+    CHANGEMODE
+  terminal IDENT
+
+<optMechmode>
+  terminal MECHMODE
+    MECHMODE
+  terminal IDENT
+
+  terminal CHANGEMODE
+
+<globImp>
+  terminal IDENT
+    <optChangemode> IDENT
+  terminal CHANGEMODE
+    <optChangemode> IDENT
+  terminal FLOWMODE
+    FLOWMODE <optChangemode> IDENT
+<optCpsDecl>
+  terminal GLOBAL
+    GLOBAL <cpsDecl>
+  terminal DO
+
+<cpsDecl>
+  terminal PROC
+    <decl> <repCpsDecl>
+  terminal FUN
+    <decl> <repCpsDecl>
+  terminal CHANGEMODE
+    <decl> <repCpsDecl>
+  terminal IDENT
+    <decl> <repCpsDecl>
+<repCpsDecl>
+  terminal SEMICOLON
+    SEMICOLON <decl> <repCpsDecl>
+  terminal DO
+
+<optCpsStoDecl>
+  terminal LOCAL
+    LOCAL <cpsStoDecl>
+  terminal DO
+
+<cpsStoDecl>
+  terminal CHANGEMODE
+    <stoDecl> <repCpsStoDecl>
+  terminal IDENT
+    <stoDecl> <repCpsStoDecl>
+<repCpsStoDecl>
+  terminal SEMICOLON
+    SEMICOLON <stoDecl> <repCpsStoDecl>
+  terminal DO
+
+<progParamList>
+  terminal LPAREN
+    LPAREN <optProgParamList> RPAREN
+<optProgParamList>
+  terminal FLOWMODE
+    <progParam> <repProgParamList>
+  terminal IDENT
+    <progParam> <repProgParamList>
+  terminal CHANGEMODE
+    <progParam> <repProgParamList>
+  terminal RPAREN
+
+<repProgParamList>
+  terminal COMMA
+    COMMA <progParam> <repProgParamList>
+  terminal RPAREN
+
+<progParam>
+  terminal IDENT
+    <optChangemode> <typedIdent>
+  terminal CHANGEMODE
+    <optChangemode> <typedIdent>
+  terminal FLOWMODE
+    FLOWMODE <optChangemode> <typedIdent>
+<paramList>
+  terminal LPAREN
+    LPAREN <optParamList> RPAREN
+<optParamList>
+  terminal FLOWMODE
+    <param> <repParamList>
+  terminal IDENT
+    <param> <repParamList>
+  terminal CHANGEMODE
+    <param> <repParamList>
+  terminal MECHMODE
+    <param> <repParamList>
+  terminal RPAREN
+
+<repParamList>
+  terminal COMMA
+    COMMA <param> <repParamList>
+  terminal RPAREN
+
+<param>
+  terminal IDENT
+    <optMechmode> <optChangemode> <typedIdent>
+  terminal CHANGEMODE
+    <optMechmode> <optChangemode> <typedIdent>
+  terminal MECHMODE
+    <optMechmode> <optChangemode> <typedIdent>
+  terminal FLOWMODE
+    FLOWMODE <optMechmode> <optChangemode> <typedIdent>
+<typedIdent>
+  terminal IDENT
+    IDENT COLON TYPE
+<cmd>
+  terminal SKIP
+    SKIP
+  terminal CASTTYPE
+    <expr> BECOMES <expr>
+  terminal LPAREN
+    <expr> BECOMES <expr>
+  terminal ADDOPR
+    <expr> BECOMES <expr>
+  terminal NOT
+    <expr> BECOMES <expr>
+  terminal IDENT
+    <expr> BECOMES <expr>
+  terminal LITERAL
+    <expr> BECOMES <expr>
+  terminal IF
+    IF <expr> THEN <cpsCmd> ELSE <cpsCmd> ENDIF
+  terminal WHILE
+    WHILE <expr> DO <cpsCmd> ENDWHILE
+  terminal CALL
+    CALL IDENT <exprList> <optGlobInits>
+  terminal DEBUGIN
+    DEBUGIN <expr>
+  terminal DEBUGOUT
+    DEBUGOUT <expr>
+<cpsCmd>
+  terminal DEBUGOUT
+    <cmd> <repCpsCmd>
+  terminal DEBUGIN
+    <cmd> <repCpsCmd>
+  terminal CALL
+    <cmd> <repCpsCmd>
+  terminal WHILE
+    <cmd> <repCpsCmd>
+  terminal IF
+    <cmd> <repCpsCmd>
+  terminal CASTTYPE
+    <cmd> <repCpsCmd>
+  terminal LPAREN
+    <cmd> <repCpsCmd>
+  terminal ADDOPR
+    <cmd> <repCpsCmd>
+  terminal NOT
+    <cmd> <repCpsCmd>
+  terminal IDENT
+    <cmd> <repCpsCmd>
+  terminal LITERAL
+    <cmd> <repCpsCmd>
+  terminal SKIP
+    <cmd> <repCpsCmd>
+<repCpsCmd>
+  terminal SEMICOLON
+    SEMICOLON <cmd> <repCpsCmd>
+  terminal ENDWHILE
+
+  terminal ENDIF
+
+  terminal ELSE
+
+  terminal ENDPROC
+
+  terminal ENDFUN
+
+  terminal ENDPROGRAM
+
+<optGlobInits>
+  terminal INIT
+    INIT IDENT <repIdents>
+  terminal ENDWHILE
+
+  terminal ENDIF
+
+  terminal ELSE
+
+  terminal ENDPROC
+
+  terminal ENDFUN
+
+  terminal ENDPROGRAM
+
+  terminal SEMICOLON
+
+<repIdents>
+  terminal COMMA
+    COMMA IDENT <repIdents>
+  terminal ENDWHILE
+
+  terminal ENDIF
+
+  terminal ELSE
+
+  terminal ENDPROC
+
+  terminal ENDFUN
+
+  terminal ENDPROGRAM
+
+  terminal SEMICOLON
+
+<expr>
+  terminal CASTTYPE
+    <term1> <repTerm1>
+  terminal LPAREN
+    <term1> <repTerm1>
+  terminal ADDOPR
+    <term1> <repTerm1>
+  terminal NOT
+    <term1> <repTerm1>
+  terminal IDENT
+    <term1> <repTerm1>
+  terminal LITERAL
+    <term1> <repTerm1>
+<repTerm1>
+  terminal BOOLOPR
+    BOOLOPR <term1> <repTerm1>
+  terminal COMMA
+
+  terminal RPAREN
+
+  terminal DO
+
+  terminal THEN
+
+  terminal ENDWHILE
+
+  terminal ENDIF
+
+  terminal ELSE
+
+  terminal ENDPROC
+
+  terminal ENDFUN
+
+  terminal ENDPROGRAM
+
+  terminal SEMICOLON
+
+  terminal BECOMES
+
+<term1>
+  terminal CASTTYPE
+    <term2> <repTerm2>
+  terminal LPAREN
+    <term2> <repTerm2>
+  terminal ADDOPR
+    <term2> <repTerm2>
+  terminal NOT
+    <term2> <repTerm2>
+  terminal IDENT
+    <term2> <repTerm2>
+  terminal LITERAL
+    <term2> <repTerm2>
+<repTerm2>
+  terminal RELOPR
+    RELOPR <term2> <repTerm2>
+  terminal COMMA
+
+  terminal RPAREN
+
+  terminal DO
+
+  terminal THEN
+
+  terminal ENDWHILE
+
+  terminal ENDIF
+
+  terminal ELSE
+
+  terminal ENDPROC
+
+  terminal ENDFUN
+
+  terminal ENDPROGRAM
+
+  terminal SEMICOLON
+
+  terminal BECOMES
+
+  terminal BOOLOPR
+
+<term2>
+  terminal CASTTYPE
+    <term3> <repTerm3>
+  terminal LPAREN
+    <term3> <repTerm3>
+  terminal ADDOPR
+    <term3> <repTerm3>
+  terminal NOT
+    <term3> <repTerm3>
+  terminal IDENT
+    <term3> <repTerm3>
+  terminal LITERAL
+    <term3> <repTerm3>
+<repTerm3>
+  terminal ADDOPR
+    ADDOPR <term3> <repTerm3>
+  terminal COMMA
+
+  terminal RPAREN
+
+  terminal DO
+
+  terminal THEN
+
+  terminal ENDWHILE
+
+  terminal ENDIF
+
+  terminal ELSE
+
+  terminal ENDPROC
+
+  terminal ENDFUN
+
+  terminal ENDPROGRAM
+
+  terminal SEMICOLON
+
+  terminal BECOMES
+
+  terminal BOOLOPR
+
+  terminal RELOPR
+
+<term3>
+  terminal CASTTYPE
+    <factor> <repFactor>
+  terminal LPAREN
+    <factor> <repFactor>
+  terminal ADDOPR
+    <factor> <repFactor>
+  terminal NOT
+    <factor> <repFactor>
+  terminal IDENT
+    <factor> <repFactor>
+  terminal LITERAL
+    <factor> <repFactor>
+<repFactor>
+  terminal MULTOPR
+    MULTOPR <factor> <repFactor>
+  terminal COMMA
+
+  terminal RPAREN
+
+  terminal DO
+
+  terminal THEN
+
+  terminal ENDWHILE
+
+  terminal ENDIF
+
+  terminal ELSE
+
+  terminal ENDPROC
+
+  terminal ENDFUN
+
+  terminal ENDPROGRAM
+
+  terminal SEMICOLON
+
+  terminal BECOMES
+
+  terminal BOOLOPR
+
+  terminal RELOPR
+
+  terminal ADDOPR
+
+<factor>
+  terminal LITERAL
+    LITERAL
+  terminal IDENT
+    IDENT <optInitOrExprList>
+  terminal ADDOPR
+    <monadicOpr> <factor>
+  terminal NOT
+    <monadicOpr> <factor>
+  terminal LPAREN
+    LPAREN <expr> RPAREN
+  terminal CASTTYPE
+    CASTTYPE LPAREN <expr> RPAREN
+<optInitOrExprList>
+  terminal INIT
+    INIT
+  terminal LPAREN
+    <exprList>
+  terminal COMMA
+
+  terminal RPAREN
+
+  terminal DO
+
+  terminal THEN
+
+  terminal ENDWHILE
+
+  terminal ENDIF
+
+  terminal ELSE
+
+  terminal ENDPROC
+
+  terminal ENDFUN
+
+  terminal ENDPROGRAM
+
+  terminal SEMICOLON
+
+  terminal BECOMES
+
+  terminal BOOLOPR
+
+  terminal RELOPR
+
+  terminal ADDOPR
+
+  terminal MULTOPR
+
+<monadicOpr>
+  terminal NOT
+    NOT
+  terminal ADDOPR
+    ADDOPR
+<exprList>
+  terminal LPAREN
+    LPAREN <optExprList> RPAREN
+<optExprList>
+  terminal CASTTYPE
+    <expr> <repExprList>
+  terminal LPAREN
+    <expr> <repExprList>
+  terminal ADDOPR
+    <expr> <repExprList>
+  terminal NOT
+    <expr> <repExprList>
+  terminal IDENT
+    <expr> <repExprList>
+  terminal LITERAL
+    <expr> <repExprList>
+  terminal RPAREN
+
+<repExprList>
+  terminal COMMA
+    COMMA <expr> <repExprList>
+  terminal RPAREN
+
+val it = () : unit

@@ -108,6 +108,8 @@ namespace Compiler
         /// <param name="token">Token to append to the token list</param>
         public void AddToken(Token token)
         {
+            token.Row = Row;
+            token.Column = Col;
             TokenList.Add(token);
         }
     }

@@ -66,6 +66,7 @@
     <Compile Include="01Scanner\Token\OperatorToken.cs" />
     <Compile Include="01Scanner\Token\BoolLiteralToken.cs" />
     <Compile Include="01Scanner\Token\IntLiteralToken.cs" />
+    <Compile Include="02Parser\GrammarException.cs" />
     <Compile Include="02Parser\NotTerminals.cs" />
     <Compile Include="02Parser\Parser.cs" />
     <Compile Include="02Parser\ParserSymbol.cs" />
@@ -82,6 +83,9 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="test01.iml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="parsertest01.iml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="test02.iml">

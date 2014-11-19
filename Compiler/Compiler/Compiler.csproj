@@ -66,6 +66,12 @@
     <Compile Include="01Scanner\Token\OperatorToken.cs" />
     <Compile Include="01Scanner\Token\BoolLiteralToken.cs" />
     <Compile Include="01Scanner\Token\IntLiteralToken.cs" />
+    <Compile Include="02Parser\NotTerminals.cs" />
+    <Compile Include="02Parser\Parser.cs" />
+    <Compile Include="02Parser\ParserSymbol.cs" />
+    <Compile Include="02Parser\Symbol.cs" />
+    <Compile Include="02Parser\Productions.cs" />
+    <Compile Include="02Parser\Treenode.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="01Scanner\Token\Terminals.cs" />
@@ -82,9 +88,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="02Parser\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

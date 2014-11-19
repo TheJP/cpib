@@ -6,12 +6,8 @@ using System.Threading.Tasks;
 
 namespace Compiler
 {
-    public enum NotTerminals
+    public class GrammarException : Exception
     {
-        program,
-        cmds,
-        repCmd,
-
-        expr
+        public GrammarException(string message) : base(message) { }
     }
 }

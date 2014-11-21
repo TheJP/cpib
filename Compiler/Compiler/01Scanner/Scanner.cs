@@ -99,6 +99,10 @@ namespace Compiler
                 {
                     throw new LexicalException(String.Format("Row: {0} Col: {1} Msg: {2}", Row, Col, ex.Message));
                 }
+                finally
+                {
+                    reader.Close();
+                }
                 return TokenList;
             }
         }

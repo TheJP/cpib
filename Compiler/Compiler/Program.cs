@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,7 +14,7 @@ namespace Compiler
             try
             {
                 Scanner scanner = new Scanner();
-                var list = scanner.Scan(new System.IO.StreamReader("parsertest01.iml"));
+                var list = scanner.Scan(new StreamReader("parsertest01.iml"));
                 Console.WriteLine("[" + String.Join(", ", list) + "]");
                 Parser parser = new Parser();
                 var tree = parser.Parse(list);

@@ -50,7 +50,7 @@ namespace Compiler
                     //Add Token to the tree
                     if (currSymbol.S.Terminal != tokenItr.Current.Terminal)
                     {
-                        //Throw a GrammarException, if the token, which (grammaticaly) has to be the next token, is not the next token
+                        //Throw a GrammarException, if the token, which (grammatically) has to be the next token, is not the next token
                         throw new GrammarException(String.Format("Row: {0} Col: {1} Msg: Unexpected token: {2}", tokenItr.Current.Row, tokenItr.Current.Column, tokenItr.Current));
                     }
                     current = new Tokennode(tokenItr.Current);

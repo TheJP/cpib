@@ -1,0 +1,12 @@
+﻿<program>
+  terminal PROGRAM
+    PROGRAM <cmds> ENDPROGRAM
+<cmds>
+  terminal IDENT
+    IDENT <repCmd>
+<repCmd>
+  terminal SEMICOLON
+    SEMICOLON IDENT <repCmd>
+  terminal ENDPROGRAM
+
+val it = () : unit

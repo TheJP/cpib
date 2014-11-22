@@ -12,6 +12,6 @@ namespace Compiler
         cmds,
         repCmd,
 
-        expr
+        expr,
     }
 }

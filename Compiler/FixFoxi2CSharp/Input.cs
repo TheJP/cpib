@@ -24,23 +24,24 @@ namespace FixFoxi2CSharp
                 {
                     string line = reader.ReadLine();
                     if (reachedEnd && !String.IsNullOrEmpty(line)) { Console.WriteLine("Warning: Found \"val it = () : unit\" not at last line. Please check to see if you created the input file correctly."); }
-                    if (line[0] == '<')
+                    if (line.StartsWith("<"))
                     {
                         //New row of the parsetable
-                        currentNotTerminal = notTerminalRegex.Match(line).Captures[0].Value; //If this throws an exception: The input file is invalid
+                        currentNotTerminal = notTerminalRegex.Match(line).Groups[1].Value; //If this throws an exception: The input file is invalid
                         parseTable.Add(currentNotTerminal, new Dictionary<string, string[]>());
                     }
-                    else if (line.StartsWith("  terminal"))
+                    else if (line.StartsWith("  terminal "))
                     {
                         //New column of the parsetable
                         if (currentNotTerminal == null) { throw new Exception("Invalid ParseTable at " + lineNumber); }
-                        currentTerminal = line.Substring("  terminal".Length);
+                        currentTerminal = line.Substring("  terminal ".Length);
                     }
                     else if (line.StartsWith("    ") || String.IsNullOrEmpty(line))
                     {
                         //Production, to be used with the current cell (row and column)
                         if (currentTerminal == null) { throw new Exception("Invalid ParseTable" + lineNumber); }
-                        parseTable[currentNotTerminal].Add(currentTerminal, line.Trim().Split(' '));
+                        parseTable[currentNotTerminal].Add(currentTerminal,
+                            line.Trim().Split(' ').Where(symbol => !String.IsNullOrWhiteSpace(symbol)).ToArray()); //Remove empty entries
                         currentTerminal = null;
                     }
                     else if (line.Equals("val it = () : unit"))

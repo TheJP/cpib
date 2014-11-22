@@ -5,6 +5,8 @@ VisualStudioVersion = 12.0.30501.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Compiler", "Compiler\Compiler.csproj", "{CDE5D691-0D68-41BA-A78A-8760F9B9667E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FixFoxi2CSharp", "FixFoxi2CSharp\FixFoxi2CSharp.csproj", "{DC8D7FE1-565B-4742-8B3E-EDB6A2DDB4C0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{CDE5D691-0D68-41BA-A78A-8760F9B9667E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CDE5D691-0D68-41BA-A78A-8760F9B9667E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CDE5D691-0D68-41BA-A78A-8760F9B9667E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DC8D7FE1-565B-4742-8B3E-EDB6A2DDB4C0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DC8D7FE1-565B-4742-8B3E-EDB6A2DDB4C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DC8D7FE1-565B-4742-8B3E-EDB6A2DDB4C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DC8D7FE1-565B-4742-8B3E-EDB6A2DDB4C0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

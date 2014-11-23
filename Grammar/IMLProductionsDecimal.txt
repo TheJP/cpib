@@ -1,4 +1,3 @@
-- dispProds result;
 <program>
   PROGRAM IDENT <progParamList> <optCpsDecl> DO <cpsCmd> ENDPROGRAM
 <decl>
@@ -113,7 +112,7 @@
   IDENT <optInitOrExprList>
   <monadicOpr> <factor>
   LPAREN <expr> RPAREN
-  CASTTYPE LPAREN <expr> RPAREN
+  TYPE LPAREN <expr> RPAREN
 <optInitOrExprList>
   INIT
   <exprList>
@@ -128,3 +127,5 @@
 
 <repExprList>
   COMMA <expr> <repExprList>
+
+val it = () : unit

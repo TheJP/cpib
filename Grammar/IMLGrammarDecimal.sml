@@ -10,7 +10,6 @@ datatype term
    | RELOPR
    | BOOLOPR
    | TYPE
-   | CASTTYPE
    | CALL
    | CHANGEMODE
    | MECHMODE
@@ -52,7 +51,6 @@ val string_of_term =
    | RELOPR => "RELOPR"
    | BOOLOPR => "BOOLOPR"
    | TYPE => "TYPE"
-   | CASTTYPE => "CASTTYPE"
    | CALL => "CALL"
    | CHANGEMODE => "CHANGEMODE"
    | MECHMODE => "MECHMODE"
@@ -376,7 +374,7 @@ val productions =
         [T IDENT, N optInitOrExprList],
         [N monadicOpr, N factor],
         [T LPAREN, N expr, T RPAREN],
-        [T CASTTYPE, T LPAREN, N expr, T RPAREN]
+        [T TYPE, T LPAREN, N expr, T RPAREN]
     ]),
 
     (optInitOrExprList, [

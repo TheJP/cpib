@@ -76,11 +76,7 @@ namespace Compiler
             Factories[NotTerminals.repCmd][Terminals.ENDPROGRAM] = () => { return new RepCmdENDPROGRAM(); };
         }
     }
-    public class Tokennode : Treenode
-    {
-        public Token Token { get; private set; }
-        public Tokennode(Token token) { this.Token = token; }
-    }
+    public class Tokennode : Treenode { public Token Token { get; private set; } public Tokennode(Token token) { this.Token = token; } }
     //Example
     public interface Expr : Treenode { } //For each NTS
     public class ExprAddopr : Expr { } //For each Production

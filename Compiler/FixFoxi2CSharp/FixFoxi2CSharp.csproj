@@ -42,6 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Creator.cs" />
+    <Compile Include="CreatorClasses.cs" />
     <Compile Include="CreatorFactories.cs" />
     <Compile Include="CreatorNotTerminalsEnum.cs" />
     <Compile Include="CreatorProductions.cs" />

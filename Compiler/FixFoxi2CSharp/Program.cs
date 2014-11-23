@@ -18,8 +18,18 @@ namespace FixFoxi2CSharp
             }
             using (StreamWriter writer = new StreamWriter("Productions.cs"))
             {
+                writer.WriteLine(@"public class Productions
+{
+    public IDictionary<NotTerminals, IDictionary<Terminals, Symbol[]>> ParseTable { get; private set; }
+    public IDictionary<NotTerminals, IDictionary<Terminals, Func<Treenode>>> Factories { get; private set; }
+    public Productions()
+    {");
                 new CreatorProductions().Create(writer, parseTable);
                 new CreatorFactories().Create(writer, parseTable);
+                writer.WriteLine("}");
+                writer.WriteLine("}");
+                writer.WriteLine();
+                new CreatorClasses().Create(writer, parseTable);
             }
         }
     }

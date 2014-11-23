@@ -11,7 +11,7 @@ namespace FixFoxi2CSharp
     {
         static void Main(string[] args)
         {
-            IDictionary<string, IDictionary<string, string[]>> parseTable = new Input().ReadParseTable("grammar.txt");
+            IDictionary<string, IDictionary<string, string[]>> parseTable = new Input().ReadParseTable("GrammarDecimal.txt");
             using (StreamWriter writer = new StreamWriter("NotTerminals.cs"))
             {
                 new CreatorNotTerminalsEnum().Create(writer, parseTable);

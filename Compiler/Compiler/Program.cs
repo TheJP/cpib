@@ -7,14 +7,14 @@ using System.Threading.Tasks;
 
 namespace Compiler
 {
-    class Program
+    class ProgramMain
     {
         static void Main(string[] args)
         {
             try
             {
                 Scanner scanner = new Scanner();
-                var list = scanner.Scan(new StreamReader("parsertest01.iml"));
+                var list = scanner.Scan(new StreamReader("test01.iml"));
                 Console.WriteLine("[" + String.Join(", ", list) + "]");
                 Parser parser = new Parser();
                 var tree = parser.Parse(list);

@@ -35,7 +35,7 @@ namespace FixFoxi2CSharp
                         else
                         {
                             //TerminalSymbol
-                            writer.WriteLine("new Symbol(Terminals.{0}, (p,s) => {{ (({1}{0})p).{0} = (Tokennode)s; }}),", symbol, entry.Key.FirstUpper());
+                            writer.WriteLine("new Symbol(Terminals.{0}, (p,s) => {{ (({1}{2})p).{0} = (Tokennode)s; }}),", symbol, entry.Key.FirstUpper(), terminal.Key);
                         }
                     }
                     writer.WriteLine("};");

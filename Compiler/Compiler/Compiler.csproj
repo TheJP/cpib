@@ -81,6 +81,9 @@
     <Compile Include="01Scanner\Token\TypeToken.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="test03.iml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="App.config" />
     <None Include="test01.iml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

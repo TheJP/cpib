@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace Compiler
 {
+    /// <summary>
+    /// Generated Code, which is a conversion of the fixfoxi parsetable.
+    /// </summary>
     public class Productions
     {
         public IDictionary<NotTerminals, IDictionary<Terminals, Symbol[]>> ParseTable { get; private set; }
@@ -18,1023 +21,1023 @@ namespace Compiler
 
             ParseTable[NotTerminals.program] = new Dictionary<Terminals, Symbol[]>();
             ParseTable[NotTerminals.program][Terminals.PROGRAM] = new Symbol[]{
-    new Symbol(Terminals.PROGRAM, (p,s) => { ((ProgramPROGRAM)p).PROGRAM = (Tokennode)s; }),
-    new Symbol(Terminals.IDENT, (p,s) => { ((ProgramPROGRAM)p).IDENT = (Tokennode)s; }),
-    new Symbol(NotTerminals.progParamList, (p,s) => { ((ProgramPROGRAM)p).ProgParamList = (ProgParamList)s; }),
-    new Symbol(NotTerminals.optCpsDecl, (p,s) => { ((ProgramPROGRAM)p).OptCpsDecl = (OptCpsDecl)s; }),
-    new Symbol(Terminals.DO, (p,s) => { ((ProgramPROGRAM)p).DO = (Tokennode)s; }),
-    new Symbol(NotTerminals.cpsCmd, (p,s) => { ((ProgramPROGRAM)p).CpsCmd = (CpsCmd)s; }),
-    new Symbol(Terminals.ENDPROGRAM, (p,s) => { ((ProgramPROGRAM)p).ENDPROGRAM = (Tokennode)s; }),
-};
+                new Symbol(Terminals.PROGRAM, (p,s) => { ((ProgramPROGRAM)p).PROGRAM = (Tokennode)s; }),
+                new Symbol(Terminals.IDENT, (p,s) => { ((ProgramPROGRAM)p).IDENT = (Tokennode)s; }),
+                new Symbol(NotTerminals.progParamList, (p,s) => { ((ProgramPROGRAM)p).ProgParamList = (ProgParamList)s; }),
+                new Symbol(NotTerminals.optCpsDecl, (p,s) => { ((ProgramPROGRAM)p).OptCpsDecl = (OptCpsDecl)s; }),
+                new Symbol(Terminals.DO, (p,s) => { ((ProgramPROGRAM)p).DO = (Tokennode)s; }),
+                new Symbol(NotTerminals.cpsCmd, (p,s) => { ((ProgramPROGRAM)p).CpsCmd = (CpsCmd)s; }),
+                new Symbol(Terminals.ENDPROGRAM, (p,s) => { ((ProgramPROGRAM)p).ENDPROGRAM = (Tokennode)s; }),
+            };
 
             ParseTable[NotTerminals.decl] = new Dictionary<Terminals, Symbol[]>();
             ParseTable[NotTerminals.decl][Terminals.CHANGEMODE] = new Symbol[]{
-    new Symbol(NotTerminals.stoDecl, (p,s) => { ((DeclCHANGEMODE)p).StoDecl = (StoDecl)s; }),
-};
+                new Symbol(NotTerminals.stoDecl, (p,s) => { ((DeclCHANGEMODE)p).StoDecl = (StoDecl)s; }),
+            };
 
             ParseTable[NotTerminals.decl][Terminals.IDENT] = new Symbol[]{
-    new Symbol(NotTerminals.stoDecl, (p,s) => { ((DeclIDENT)p).StoDecl = (StoDecl)s; }),
-};
+                new Symbol(NotTerminals.stoDecl, (p,s) => { ((DeclIDENT)p).StoDecl = (StoDecl)s; }),
+            };
 
             ParseTable[NotTerminals.decl][Terminals.FUN] = new Symbol[]{
-    new Symbol(NotTerminals.funDecl, (p,s) => { ((DeclFUN)p).FunDecl = (FunDecl)s; }),
-};
+                new Symbol(NotTerminals.funDecl, (p,s) => { ((DeclFUN)p).FunDecl = (FunDecl)s; }),
+            };
 
             ParseTable[NotTerminals.decl][Terminals.PROC] = new Symbol[]{
-    new Symbol(NotTerminals.procDecl, (p,s) => { ((DeclPROC)p).ProcDecl = (ProcDecl)s; }),
-};
+                new Symbol(NotTerminals.procDecl, (p,s) => { ((DeclPROC)p).ProcDecl = (ProcDecl)s; }),
+            };
 
             ParseTable[NotTerminals.stoDecl] = new Dictionary<Terminals, Symbol[]>();
             ParseTable[NotTerminals.stoDecl][Terminals.IDENT] = new Symbol[]{
-    new Symbol(NotTerminals.typedIdent, (p,s) => { ((StoDeclIDENT)p).TypedIdent = (TypedIdent)s; }),
-};
+                new Symbol(NotTerminals.typedIdent, (p,s) => { ((StoDeclIDENT)p).TypedIdent = (TypedIdent)s; }),
+            };
 
             ParseTable[NotTerminals.stoDecl][Terminals.CHANGEMODE] = new Symbol[]{
-    new Symbol(Terminals.CHANGEMODE, (p,s) => { ((StoDeclCHANGEMODE)p).CHANGEMODE = (Tokennode)s; }),
-    new Symbol(NotTerminals.typedIdent, (p,s) => { ((StoDeclCHANGEMODE)p).TypedIdent = (TypedIdent)s; }),
-};
+                new Symbol(Terminals.CHANGEMODE, (p,s) => { ((StoDeclCHANGEMODE)p).CHANGEMODE = (Tokennode)s; }),
+                new Symbol(NotTerminals.typedIdent, (p,s) => { ((StoDeclCHANGEMODE)p).TypedIdent = (TypedIdent)s; }),
+            };
 
             ParseTable[NotTerminals.funDecl] = new Dictionary<Terminals, Symbol[]>();
             ParseTable[NotTerminals.funDecl][Terminals.FUN] = new Symbol[]{
-    new Symbol(Terminals.FUN, (p,s) => { ((FunDeclFUN)p).FUN = (Tokennode)s; }),
-    new Symbol(Terminals.IDENT, (p,s) => { ((FunDeclFUN)p).IDENT = (Tokennode)s; }),
-    new Symbol(NotTerminals.paramList, (p,s) => { ((FunDeclFUN)p).ParamList = (ParamList)s; }),
-    new Symbol(Terminals.RETURNS, (p,s) => { ((FunDeclFUN)p).RETURNS = (Tokennode)s; }),
-    new Symbol(NotTerminals.stoDecl, (p,s) => { ((FunDeclFUN)p).StoDecl = (StoDecl)s; }),
-    new Symbol(NotTerminals.optGlobImps, (p,s) => { ((FunDeclFUN)p).OptGlobImps = (OptGlobImps)s; }),
-    new Symbol(NotTerminals.optCpsStoDecl, (p,s) => { ((FunDeclFUN)p).OptCpsStoDecl = (OptCpsStoDecl)s; }),
-    new Symbol(Terminals.DO, (p,s) => { ((FunDeclFUN)p).DO = (Tokennode)s; }),
-    new Symbol(NotTerminals.cpsCmd, (p,s) => { ((FunDeclFUN)p).CpsCmd = (CpsCmd)s; }),
-    new Symbol(Terminals.ENDFUN, (p,s) => { ((FunDeclFUN)p).ENDFUN = (Tokennode)s; }),
-};
+                new Symbol(Terminals.FUN, (p,s) => { ((FunDeclFUN)p).FUN = (Tokennode)s; }),
+                new Symbol(Terminals.IDENT, (p,s) => { ((FunDeclFUN)p).IDENT = (Tokennode)s; }),
+                new Symbol(NotTerminals.paramList, (p,s) => { ((FunDeclFUN)p).ParamList = (ParamList)s; }),
+                new Symbol(Terminals.RETURNS, (p,s) => { ((FunDeclFUN)p).RETURNS = (Tokennode)s; }),
+                new Symbol(NotTerminals.stoDecl, (p,s) => { ((FunDeclFUN)p).StoDecl = (StoDecl)s; }),
+                new Symbol(NotTerminals.optGlobImps, (p,s) => { ((FunDeclFUN)p).OptGlobImps = (OptGlobImps)s; }),
+                new Symbol(NotTerminals.optCpsStoDecl, (p,s) => { ((FunDeclFUN)p).OptCpsStoDecl = (OptCpsStoDecl)s; }),
+                new Symbol(Terminals.DO, (p,s) => { ((FunDeclFUN)p).DO = (Tokennode)s; }),
+                new Symbol(NotTerminals.cpsCmd, (p,s) => { ((FunDeclFUN)p).CpsCmd = (CpsCmd)s; }),
+                new Symbol(Terminals.ENDFUN, (p,s) => { ((FunDeclFUN)p).ENDFUN = (Tokennode)s; }),
+            };
 
             ParseTable[NotTerminals.procDecl] = new Dictionary<Terminals, Symbol[]>();
             ParseTable[NotTerminals.procDecl][Terminals.PROC] = new Symbol[]{
-    new Symbol(Terminals.PROC, (p,s) => { ((ProcDeclPROC)p).PROC = (Tokennode)s; }),
-    new Symbol(Terminals.IDENT, (p,s) => { ((ProcDeclPROC)p).IDENT = (Tokennode)s; }),
-    new Symbol(NotTerminals.paramList, (p,s) => { ((ProcDeclPROC)p).ParamList = (ParamList)s; }),
-    new Symbol(NotTerminals.optGlobImps, (p,s) => { ((ProcDeclPROC)p).OptGlobImps = (OptGlobImps)s; }),
-    new Symbol(NotTerminals.optCpsStoDecl, (p,s) => { ((ProcDeclPROC)p).OptCpsStoDecl = (OptCpsStoDecl)s; }),
-    new Symbol(Terminals.DO, (p,s) => { ((ProcDeclPROC)p).DO = (Tokennode)s; }),
-    new Symbol(NotTerminals.cpsCmd, (p,s) => { ((ProcDeclPROC)p).CpsCmd = (CpsCmd)s; }),
-    new Symbol(Terminals.ENDPROC, (p,s) => { ((ProcDeclPROC)p).ENDPROC = (Tokennode)s; }),
-};
+                new Symbol(Terminals.PROC, (p,s) => { ((ProcDeclPROC)p).PROC = (Tokennode)s; }),
+                new Symbol(Terminals.IDENT, (p,s) => { ((ProcDeclPROC)p).IDENT = (Tokennode)s; }),
+                new Symbol(NotTerminals.paramList, (p,s) => { ((ProcDeclPROC)p).ParamList = (ParamList)s; }),
+                new Symbol(NotTerminals.optGlobImps, (p,s) => { ((ProcDeclPROC)p).OptGlobImps = (OptGlobImps)s; }),
+                new Symbol(NotTerminals.optCpsStoDecl, (p,s) => { ((ProcDeclPROC)p).OptCpsStoDecl = (OptCpsStoDecl)s; }),
+                new Symbol(Terminals.DO, (p,s) => { ((ProcDeclPROC)p).DO = (Tokennode)s; }),
+                new Symbol(NotTerminals.cpsCmd, (p,s) => { ((ProcDeclPROC)p).CpsCmd = (CpsCmd)s; }),
+                new Symbol(Terminals.ENDPROC, (p,s) => { ((ProcDeclPROC)p).ENDPROC = (Tokennode)s; }),
+            };
 
             ParseTable[NotTerminals.optGlobImps] = new Dictionary<Terminals, Symbol[]>();
             ParseTable[NotTerminals.optGlobImps][Terminals.GLOBAL] = new Symbol[]{
-    new Symbol(Terminals.GLOBAL, (p,s) => { ((OptGlobImpsGLOBAL)p).GLOBAL = (Tokennode)s; }),
-    new Symbol(NotTerminals.globImps, (p,s) => { ((OptGlobImpsGLOBAL)p).GlobImps = (GlobImps)s; }),
-};
+                new Symbol(Terminals.GLOBAL, (p,s) => { ((OptGlobImpsGLOBAL)p).GLOBAL = (Tokennode)s; }),
+                new Symbol(NotTerminals.globImps, (p,s) => { ((OptGlobImpsGLOBAL)p).GlobImps = (GlobImps)s; }),
+            };
 
             ParseTable[NotTerminals.optGlobImps][Terminals.DO] = new Symbol[]{
-};
+            };
 
             ParseTable[NotTerminals.optGlobImps][Terminals.LOCAL] = new Symbol[]{
-};
+            };
 
             ParseTable[NotTerminals.globImps] = new Dictionary<Terminals, Symbol[]>();
             ParseTable[NotTerminals.globImps][Terminals.FLOWMODE] = new Symbol[]{
-    new Symbol(NotTerminals.globImp, (p,s) => { ((GlobImpsFLOWMODE)p).GlobImp = (GlobImp)s; }),
-    new Symbol(NotTerminals.repGlobImps, (p,s) => { ((GlobImpsFLOWMODE)p).RepGlobImps = (RepGlobImps)s; }),
-};
+                new Symbol(NotTerminals.globImp, (p,s) => { ((GlobImpsFLOWMODE)p).GlobImp = (GlobImp)s; }),
+                new Symbol(NotTerminals.repGlobImps, (p,s) => { ((GlobImpsFLOWMODE)p).RepGlobImps = (RepGlobImps)s; }),
+            };
 
             ParseTable[NotTerminals.globImps][Terminals.IDENT] = new Symbol[]{
-    new Symbol(NotTerminals.globImp, (p,s) => { ((GlobImpsIDENT)p).GlobImp = (GlobImp)s; }),
-    new Symbol(NotTerminals.repGlobImps, (p,s) => { ((GlobImpsIDENT)p).RepGlobImps = (RepGlobImps)s; }),
-};
+                new Symbol(NotTerminals.globImp, (p,s) => { ((GlobImpsIDENT)p).GlobImp = (GlobImp)s; }),
+                new Symbol(NotTerminals.repGlobImps, (p,s) => { ((GlobImpsIDENT)p).RepGlobImps = (RepGlobImps)s; }),
+            };
 
             ParseTable[NotTerminals.globImps][Terminals.CHANGEMODE] = new Symbol[]{
-    new Symbol(NotTerminals.globImp, (p,s) => { ((GlobImpsCHANGEMODE)p).GlobImp = (GlobImp)s; }),
-    new Symbol(NotTerminals.repGlobImps, (p,s) => { ((GlobImpsCHANGEMODE)p).RepGlobImps = (RepGlobImps)s; }),
-};
+                new Symbol(NotTerminals.globImp, (p,s) => { ((GlobImpsCHANGEMODE)p).GlobImp = (GlobImp)s; }),
+                new Symbol(NotTerminals.repGlobImps, (p,s) => { ((GlobImpsCHANGEMODE)p).RepGlobImps = (RepGlobImps)s; }),
+            };
 
             ParseTable[NotTerminals.repGlobImps] = new Dictionary<Terminals, Symbol[]>();
             ParseTable[NotTerminals.repGlobImps][Terminals.COMMA] = new Symbol[]{
-    new Symbol(Terminals.COMMA, (p,s) => { ((RepGlobImpsCOMMA)p).COMMA = (Tokennode)s; }),
-    new Symbol(NotTerminals.globImp, (p,s) => { ((RepGlobImpsCOMMA)p).GlobImp = (GlobImp)s; }),
-    new Symbol(NotTerminals.repGlobImps, (p,s) => { ((RepGlobImpsCOMMA)p).RepGlobImps = (RepGlobImps)s; }),
-};
+                new Symbol(Terminals.COMMA, (p,s) => { ((RepGlobImpsCOMMA)p).COMMA = (Tokennode)s; }),
+                new Symbol(NotTerminals.globImp, (p,s) => { ((RepGlobImpsCOMMA)p).GlobImp = (GlobImp)s; }),
+                new Symbol(NotTerminals.repGlobImps, (p,s) => { ((RepGlobImpsCOMMA)p).RepGlobImps = (RepGlobImps)s; }),
+            };
 
             ParseTable[NotTerminals.repGlobImps][Terminals.DO] = new Symbol[]{
-};
+            };
 
             ParseTable[NotTerminals.repGlobImps][Terminals.LOCAL] = new Symbol[]{
-};
+            };
 
             ParseTable[NotTerminals.optChangemode] = new Dictionary<Terminals, Symbol[]>();
             ParseTable[NotTerminals.optChangemode][Terminals.CHANGEMODE] = new Symbol[]{
-    new Symbol(Terminals.CHANGEMODE, (p,s) => { ((OptChangemodeCHANGEMODE)p).CHANGEMODE = (Tokennode)s; }),
-};
+                new Symbol(Terminals.CHANGEMODE, (p,s) => { ((OptChangemodeCHANGEMODE)p).CHANGEMODE = (Tokennode)s; }),
+            };
 
             ParseTable[NotTerminals.optChangemode][Terminals.IDENT] = new Symbol[]{
-};
+            };
 
             ParseTable[NotTerminals.optMechmode] = new Dictionary<Terminals, Symbol[]>();
             ParseTable[NotTerminals.optMechmode][Terminals.MECHMODE] = new Symbol[]{
-    new Symbol(Terminals.MECHMODE, (p,s) => { ((OptMechmodeMECHMODE)p).MECHMODE = (Tokennode)s; }),
-};
+                new Symbol(Terminals.MECHMODE, (p,s) => { ((OptMechmodeMECHMODE)p).MECHMODE = (Tokennode)s; }),
+            };
 
             ParseTable[NotTerminals.optMechmode][Terminals.IDENT] = new Symbol[]{
-};
+            };
 
             ParseTable[NotTerminals.optMechmode][Terminals.CHANGEMODE] = new Symbol[]{
-};
+            };
 
             ParseTable[NotTerminals.globImp] = new Dictionary<Terminals, Symbol[]>();
             ParseTable[NotTerminals.globImp][Terminals.IDENT] = new Symbol[]{
-    new Symbol(NotTerminals.optChangemode, (p,s) => { ((GlobImpIDENT)p).OptChangemode = (OptChangemode)s; }),
-    new Symbol(Terminals.IDENT, (p,s) => { ((GlobImpIDENT)p).IDENT = (Tokennode)s; }),
-};
+                new Symbol(NotTerminals.optChangemode, (p,s) => { ((GlobImpIDENT)p).OptChangemode = (OptChangemode)s; }),
+                new Symbol(Terminals.IDENT, (p,s) => { ((GlobImpIDENT)p).IDENT = (Tokennode)s; }),
+            };
 
             ParseTable[NotTerminals.globImp][Terminals.CHANGEMODE] = new Symbol[]{
-    new Symbol(NotTerminals.optChangemode, (p,s) => { ((GlobImpCHANGEMODE)p).OptChangemode = (OptChangemode)s; }),
-    new Symbol(Terminals.IDENT, (p,s) => { ((GlobImpCHANGEMODE)p).IDENT = (Tokennode)s; }),
-};
+                new Symbol(NotTerminals.optChangemode, (p,s) => { ((GlobImpCHANGEMODE)p).OptChangemode = (OptChangemode)s; }),
+                new Symbol(Terminals.IDENT, (p,s) => { ((GlobImpCHANGEMODE)p).IDENT = (Tokennode)s; }),
+            };
 
             ParseTable[NotTerminals.globImp][Terminals.FLOWMODE] = new Symbol[]{
-    new Symbol(Terminals.FLOWMODE, (p,s) => { ((GlobImpFLOWMODE)p).FLOWMODE = (Tokennode)s; }),
-    new Symbol(NotTerminals.optChangemode, (p,s) => { ((GlobImpFLOWMODE)p).OptChangemode = (OptChangemode)s; }),
-    new Symbol(Terminals.IDENT, (p,s) => { ((GlobImpFLOWMODE)p).IDENT = (Tokennode)s; }),
-};
+                new Symbol(Terminals.FLOWMODE, (p,s) => { ((GlobImpFLOWMODE)p).FLOWMODE = (Tokennode)s; }),
+                new Symbol(NotTerminals.optChangemode, (p,s) => { ((GlobImpFLOWMODE)p).OptChangemode = (OptChangemode)s; }),
+                new Symbol(Terminals.IDENT, (p,s) => { ((GlobImpFLOWMODE)p).IDENT = (Tokennode)s; }),
+            };
 
             ParseTable[NotTerminals.optCpsDecl] = new Dictionary<Terminals, Symbol[]>();
             ParseTable[NotTerminals.optCpsDecl][Terminals.GLOBAL] = new Symbol[]{
-    new Symbol(Terminals.GLOBAL, (p,s) => { ((OptCpsDeclGLOBAL)p).GLOBAL = (Tokennode)s; }),
-    new Symbol(NotTerminals.cpsDecl, (p,s) => { ((OptCpsDeclGLOBAL)p).CpsDecl = (CpsDecl)s; }),
-};
+                new Symbol(Terminals.GLOBAL, (p,s) => { ((OptCpsDeclGLOBAL)p).GLOBAL = (Tokennode)s; }),
+                new Symbol(NotTerminals.cpsDecl, (p,s) => { ((OptCpsDeclGLOBAL)p).CpsDecl = (CpsDecl)s; }),
+            };
 
             ParseTable[NotTerminals.optCpsDecl][Terminals.DO] = new Symbol[]{
-};
+            };
 
             ParseTable[NotTerminals.cpsDecl] = new Dictionary<Terminals, Symbol[]>();
             ParseTable[NotTerminals.cpsDecl][Terminals.PROC] = new Symbol[]{
-    new Symbol(NotTerminals.decl, (p,s) => { ((CpsDeclPROC)p).Decl = (Decl)s; }),
-    new Symbol(NotTerminals.repCpsDecl, (p,s) => { ((CpsDeclPROC)p).RepCpsDecl = (RepCpsDecl)s; }),
-};
+                new Symbol(NotTerminals.decl, (p,s) => { ((CpsDeclPROC)p).Decl = (Decl)s; }),
+                new Symbol(NotTerminals.repCpsDecl, (p,s) => { ((CpsDeclPROC)p).RepCpsDecl = (RepCpsDecl)s; }),
+            };
 
             ParseTable[NotTerminals.cpsDecl][Terminals.FUN] = new Symbol[]{
-    new Symbol(NotTerminals.decl, (p,s) => { ((CpsDeclFUN)p).Decl = (Decl)s; }),
-    new Symbol(NotTerminals.repCpsDecl, (p,s) => { ((CpsDeclFUN)p).RepCpsDecl = (RepCpsDecl)s; }),
-};
+                new Symbol(NotTerminals.decl, (p,s) => { ((CpsDeclFUN)p).Decl = (Decl)s; }),
+                new Symbol(NotTerminals.repCpsDecl, (p,s) => { ((CpsDeclFUN)p).RepCpsDecl = (RepCpsDecl)s; }),
+            };
 
             ParseTable[NotTerminals.cpsDecl][Terminals.CHANGEMODE] = new Symbol[]{
-    new Symbol(NotTerminals.decl, (p,s) => { ((CpsDeclCHANGEMODE)p).Decl = (Decl)s; }),
-    new Symbol(NotTerminals.repCpsDecl, (p,s) => { ((CpsDeclCHANGEMODE)p).RepCpsDecl = (RepCpsDecl)s; }),
-};
+                new Symbol(NotTerminals.decl, (p,s) => { ((CpsDeclCHANGEMODE)p).Decl = (Decl)s; }),
+                new Symbol(NotTerminals.repCpsDecl, (p,s) => { ((CpsDeclCHANGEMODE)p).RepCpsDecl = (RepCpsDecl)s; }),
+            };
 
             ParseTable[NotTerminals.cpsDecl][Terminals.IDENT] = new Symbol[]{
-    new Symbol(NotTerminals.decl, (p,s) => { ((CpsDeclIDENT)p).Decl = (Decl)s; }),
-    new Symbol(NotTerminals.repCpsDecl, (p,s) => { ((CpsDeclIDENT)p).RepCpsDecl = (RepCpsDecl)s; }),
-};
+                new Symbol(NotTerminals.decl, (p,s) => { ((CpsDeclIDENT)p).Decl = (Decl)s; }),
+                new Symbol(NotTerminals.repCpsDecl, (p,s) => { ((CpsDeclIDENT)p).RepCpsDecl = (RepCpsDecl)s; }),
+            };
 
             ParseTable[NotTerminals.repCpsDecl] = new Dictionary<Terminals, Symbol[]>();
             ParseTable[NotTerminals.repCpsDecl][Terminals.SEMICOLON] = new Symbol[]{
-    new Symbol(Terminals.SEMICOLON, (p,s) => { ((RepCpsDeclSEMICOLON)p).SEMICOLON = (Tokennode)s; }),
-    new Symbol(NotTerminals.decl, (p,s) => { ((RepCpsDeclSEMICOLON)p).Decl = (Decl)s; }),
-    new Symbol(NotTerminals.repCpsDecl, (p,s) => { ((RepCpsDeclSEMICOLON)p).RepCpsDecl = (RepCpsDecl)s; }),
-};
+                new Symbol(Terminals.SEMICOLON, (p,s) => { ((RepCpsDeclSEMICOLON)p).SEMICOLON = (Tokennode)s; }),
+                new Symbol(NotTerminals.decl, (p,s) => { ((RepCpsDeclSEMICOLON)p).Decl = (Decl)s; }),
+                new Symbol(NotTerminals.repCpsDecl, (p,s) => { ((RepCpsDeclSEMICOLON)p).RepCpsDecl = (RepCpsDecl)s; }),
+            };
 
             ParseTable[NotTerminals.repCpsDecl][Terminals.DO] = new Symbol[]{
-};
+            };
 
             ParseTable[NotTerminals.optCpsStoDecl] = new Dictionary<Terminals, Symbol[]>();
             ParseTable[NotTerminals.optCpsStoDecl][Terminals.LOCAL] = new Symbol[]{
-    new Symbol(Terminals.LOCAL, (p,s) => { ((OptCpsStoDeclLOCAL)p).LOCAL = (Tokennode)s; }),
-    new Symbol(NotTerminals.cpsStoDecl, (p,s) => { ((OptCpsStoDeclLOCAL)p).CpsStoDecl = (CpsStoDecl)s; }),
-};
+                new Symbol(Terminals.LOCAL, (p,s) => { ((OptCpsStoDeclLOCAL)p).LOCAL = (Tokennode)s; }),
+                new Symbol(NotTerminals.cpsStoDecl, (p,s) => { ((OptCpsStoDeclLOCAL)p).CpsStoDecl = (CpsStoDecl)s; }),
+            };
 
             ParseTable[NotTerminals.optCpsStoDecl][Terminals.DO] = new Symbol[]{
-};
+            };
 
             ParseTable[NotTerminals.cpsStoDecl] = new Dictionary<Terminals, Symbol[]>();
             ParseTable[NotTerminals.cpsStoDecl][Terminals.CHANGEMODE] = new Symbol[]{
-    new Symbol(NotTerminals.stoDecl, (p,s) => { ((CpsStoDeclCHANGEMODE)p).StoDecl = (StoDecl)s; }),
-    new Symbol(NotTerminals.repCpsStoDecl, (p,s) => { ((CpsStoDeclCHANGEMODE)p).RepCpsStoDecl = (RepCpsStoDecl)s; }),
-};
+                new Symbol(NotTerminals.stoDecl, (p,s) => { ((CpsStoDeclCHANGEMODE)p).StoDecl = (StoDecl)s; }),
+                new Symbol(NotTerminals.repCpsStoDecl, (p,s) => { ((CpsStoDeclCHANGEMODE)p).RepCpsStoDecl = (RepCpsStoDecl)s; }),
+            };
 
             ParseTable[NotTerminals.cpsStoDecl][Terminals.IDENT] = new Symbol[]{
-    new Symbol(NotTerminals.stoDecl, (p,s) => { ((CpsStoDeclIDENT)p).StoDecl = (StoDecl)s; }),
-    new Symbol(NotTerminals.repCpsStoDecl, (p,s) => { ((CpsStoDeclIDENT)p).RepCpsStoDecl = (RepCpsStoDecl)s; }),
-};
+                new Symbol(NotTerminals.stoDecl, (p,s) => { ((CpsStoDeclIDENT)p).StoDecl = (StoDecl)s; }),
+                new Symbol(NotTerminals.repCpsStoDecl, (p,s) => { ((CpsStoDeclIDENT)p).RepCpsStoDecl = (RepCpsStoDecl)s; }),
+            };
 
             ParseTable[NotTerminals.repCpsStoDecl] = new Dictionary<Terminals, Symbol[]>();
             ParseTable[NotTerminals.repCpsStoDecl][Terminals.SEMICOLON] = new Symbol[]{
-    new Symbol(Terminals.SEMICOLON, (p,s) => { ((RepCpsStoDeclSEMICOLON)p).SEMICOLON = (Tokennode)s; }),
-    new Symbol(NotTerminals.stoDecl, (p,s) => { ((RepCpsStoDeclSEMICOLON)p).StoDecl = (StoDecl)s; }),
-    new Symbol(NotTerminals.repCpsStoDecl, (p,s) => { ((RepCpsStoDeclSEMICOLON)p).RepCpsStoDecl = (RepCpsStoDecl)s; }),
-};
+                new Symbol(Terminals.SEMICOLON, (p,s) => { ((RepCpsStoDeclSEMICOLON)p).SEMICOLON = (Tokennode)s; }),
+                new Symbol(NotTerminals.stoDecl, (p,s) => { ((RepCpsStoDeclSEMICOLON)p).StoDecl = (StoDecl)s; }),
+                new Symbol(NotTerminals.repCpsStoDecl, (p,s) => { ((RepCpsStoDeclSEMICOLON)p).RepCpsStoDecl = (RepCpsStoDecl)s; }),
+            };
 
             ParseTable[NotTerminals.repCpsStoDecl][Terminals.DO] = new Symbol[]{
-};
+            };
 
             ParseTable[NotTerminals.progParamList] = new Dictionary<Terminals, Symbol[]>();
             ParseTable[NotTerminals.progParamList][Terminals.LPAREN] = new Symbol[]{
-    new Symbol(Terminals.LPAREN, (p,s) => { ((ProgParamListLPAREN)p).LPAREN = (Tokennode)s; }),
-    new Symbol(NotTerminals.optProgParamList, (p,s) => { ((ProgParamListLPAREN)p).OptProgParamList = (OptProgParamList)s; }),
-    new Symbol(Terminals.RPAREN, (p,s) => { ((ProgParamListLPAREN)p).RPAREN = (Tokennode)s; }),
-};
+                new Symbol(Terminals.LPAREN, (p,s) => { ((ProgParamListLPAREN)p).LPAREN = (Tokennode)s; }),
+                new Symbol(NotTerminals.optProgParamList, (p,s) => { ((ProgParamListLPAREN)p).OptProgParamList = (OptProgParamList)s; }),
+                new Symbol(Terminals.RPAREN, (p,s) => { ((ProgParamListLPAREN)p).RPAREN = (Tokennode)s; }),
+            };
 
             ParseTable[NotTerminals.optProgParamList] = new Dictionary<Terminals, Symbol[]>();
             ParseTable[NotTerminals.optProgParamList][Terminals.FLOWMODE] = new Symbol[]{
-    new Symbol(NotTerminals.progParam, (p,s) => { ((OptProgParamListFLOWMODE)p).ProgParam = (ProgParam)s; }),
-    new Symbol(NotTerminals.repProgParamList, (p,s) => { ((OptProgParamListFLOWMODE)p).RepProgParamList = (RepProgParamList)s; }),
-};
+                new Symbol(NotTerminals.progParam, (p,s) => { ((OptProgParamListFLOWMODE)p).ProgParam = (ProgParam)s; }),
+                new Symbol(NotTerminals.repProgParamList, (p,s) => { ((OptProgParamListFLOWMODE)p).RepProgParamList = (RepProgParamList)s; }),
+            };
 
             ParseTable[NotTerminals.optProgParamList][Terminals.IDENT] = new Symbol[]{
-    new Symbol(NotTerminals.progParam, (p,s) => { ((OptProgParamListIDENT)p).ProgParam = (ProgParam)s; }),
-    new Symbol(NotTerminals.repProgParamList, (p,s) => { ((OptProgParamListIDENT)p).RepProgParamList = (RepProgParamList)s; }),
-};
+                new Symbol(NotTerminals.progParam, (p,s) => { ((OptProgParamListIDENT)p).ProgParam = (ProgParam)s; }),
+                new Symbol(NotTerminals.repProgParamList, (p,s) => { ((OptProgParamListIDENT)p).RepProgParamList = (RepProgParamList)s; }),
+            };
 
             ParseTable[NotTerminals.optProgParamList][Terminals.CHANGEMODE] = new Symbol[]{
-    new Symbol(NotTerminals.progParam, (p,s) => { ((OptProgParamListCHANGEMODE)p).ProgParam = (ProgParam)s; }),
-    new Symbol(NotTerminals.repProgParamList, (p,s) => { ((OptProgParamListCHANGEMODE)p).RepProgParamList = (RepProgParamList)s; }),
-};
+                new Symbol(NotTerminals.progParam, (p,s) => { ((OptProgParamListCHANGEMODE)p).ProgParam = (ProgParam)s; }),
+                new Symbol(NotTerminals.repProgParamList, (p,s) => { ((OptProgParamListCHANGEMODE)p).RepProgParamList = (RepProgParamList)s; }),
+            };
 
             ParseTable[NotTerminals.optProgParamList][Terminals.RPAREN] = new Symbol[]{
-};
+            };
 
             ParseTable[NotTerminals.repProgParamList] = new Dictionary<Terminals, Symbol[]>();
             ParseTable[NotTerminals.repProgParamList][Terminals.COMMA] = new Symbol[]{
-    new Symbol(Terminals.COMMA, (p,s) => { ((RepProgParamListCOMMA)p).COMMA = (Tokennode)s; }),
-    new Symbol(NotTerminals.progParam, (p,s) => { ((RepProgParamListCOMMA)p).ProgParam = (ProgParam)s; }),
-    new Symbol(NotTerminals.repProgParamList, (p,s) => { ((RepProgParamListCOMMA)p).RepProgParamList = (RepProgParamList)s; }),
-};
+                new Symbol(Terminals.COMMA, (p,s) => { ((RepProgParamListCOMMA)p).COMMA = (Tokennode)s; }),
+                new Symbol(NotTerminals.progParam, (p,s) => { ((RepProgParamListCOMMA)p).ProgParam = (ProgParam)s; }),
+                new Symbol(NotTerminals.repProgParamList, (p,s) => { ((RepProgParamListCOMMA)p).RepProgParamList = (RepProgParamList)s; }),
+            };
 
             ParseTable[NotTerminals.repProgParamList][Terminals.RPAREN] = new Symbol[]{
-};
+            };
 
             ParseTable[NotTerminals.progParam] = new Dictionary<Terminals, Symbol[]>();
             ParseTable[NotTerminals.progParam][Terminals.IDENT] = new Symbol[]{
-    new Symbol(NotTerminals.optChangemode, (p,s) => { ((ProgParamIDENT)p).OptChangemode = (OptChangemode)s; }),
-    new Symbol(NotTerminals.typedIdent, (p,s) => { ((ProgParamIDENT)p).TypedIdent = (TypedIdent)s; }),
-};
+                new Symbol(NotTerminals.optChangemode, (p,s) => { ((ProgParamIDENT)p).OptChangemode = (OptChangemode)s; }),
+                new Symbol(NotTerminals.typedIdent, (p,s) => { ((ProgParamIDENT)p).TypedIdent = (TypedIdent)s; }),
+            };
 
             ParseTable[NotTerminals.progParam][Terminals.CHANGEMODE] = new Symbol[]{
-    new Symbol(NotTerminals.optChangemode, (p,s) => { ((ProgParamCHANGEMODE)p).OptChangemode = (OptChangemode)s; }),
-    new Symbol(NotTerminals.typedIdent, (p,s) => { ((ProgParamCHANGEMODE)p).TypedIdent = (TypedIdent)s; }),
-};
+                new Symbol(NotTerminals.optChangemode, (p,s) => { ((ProgParamCHANGEMODE)p).OptChangemode = (OptChangemode)s; }),
+                new Symbol(NotTerminals.typedIdent, (p,s) => { ((ProgParamCHANGEMODE)p).TypedIdent = (TypedIdent)s; }),
+            };
 
             ParseTable[NotTerminals.progParam][Terminals.FLOWMODE] = new Symbol[]{
-    new Symbol(Terminals.FLOWMODE, (p,s) => { ((ProgParamFLOWMODE)p).FLOWMODE = (Tokennode)s; }),
-    new Symbol(NotTerminals.optChangemode, (p,s) => { ((ProgParamFLOWMODE)p).OptChangemode = (OptChangemode)s; }),
-    new Symbol(NotTerminals.typedIdent, (p,s) => { ((ProgParamFLOWMODE)p).TypedIdent = (TypedIdent)s; }),
-};
+                new Symbol(Terminals.FLOWMODE, (p,s) => { ((ProgParamFLOWMODE)p).FLOWMODE = (Tokennode)s; }),
+                new Symbol(NotTerminals.optChangemode, (p,s) => { ((ProgParamFLOWMODE)p).OptChangemode = (OptChangemode)s; }),
+                new Symbol(NotTerminals.typedIdent, (p,s) => { ((ProgParamFLOWMODE)p).TypedIdent = (TypedIdent)s; }),
+            };
 
             ParseTable[NotTerminals.paramList] = new Dictionary<Terminals, Symbol[]>();
             ParseTable[NotTerminals.paramList][Terminals.LPAREN] = new Symbol[]{
-    new Symbol(Terminals.LPAREN, (p,s) => { ((ParamListLPAREN)p).LPAREN = (Tokennode)s; }),
-    new Symbol(NotTerminals.optParamList, (p,s) => { ((ParamListLPAREN)p).OptParamList = (OptParamList)s; }),
-    new Symbol(Terminals.RPAREN, (p,s) => { ((ParamListLPAREN)p).RPAREN = (Tokennode)s; }),
-};
+                new Symbol(Terminals.LPAREN, (p,s) => { ((ParamListLPAREN)p).LPAREN = (Tokennode)s; }),
+                new Symbol(NotTerminals.optParamList, (p,s) => { ((ParamListLPAREN)p).OptParamList = (OptParamList)s; }),
+                new Symbol(Terminals.RPAREN, (p,s) => { ((ParamListLPAREN)p).RPAREN = (Tokennode)s; }),
+            };
 
             ParseTable[NotTerminals.optParamList] = new Dictionary<Terminals, Symbol[]>();
             ParseTable[NotTerminals.optParamList][Terminals.FLOWMODE] = new Symbol[]{
-    new Symbol(NotTerminals.param, (p,s) => { ((OptParamListFLOWMODE)p).Param = (Param)s; }),
-    new Symbol(NotTerminals.repParamList, (p,s) => { ((OptParamListFLOWMODE)p).RepParamList = (RepParamList)s; }),
-};
+                new Symbol(NotTerminals.param, (p,s) => { ((OptParamListFLOWMODE)p).Param = (Param)s; }),
+                new Symbol(NotTerminals.repParamList, (p,s) => { ((OptParamListFLOWMODE)p).RepParamList = (RepParamList)s; }),
+            };
 
             ParseTable[NotTerminals.optParamList][Terminals.IDENT] = new Symbol[]{
-    new Symbol(NotTerminals.param, (p,s) => { ((OptParamListIDENT)p).Param = (Param)s; }),
-    new Symbol(NotTerminals.repParamList, (p,s) => { ((OptParamListIDENT)p).RepParamList = (RepParamList)s; }),
-};
+                new Symbol(NotTerminals.param, (p,s) => { ((OptParamListIDENT)p).Param = (Param)s; }),
+                new Symbol(NotTerminals.repParamList, (p,s) => { ((OptParamListIDENT)p).RepParamList = (RepParamList)s; }),
+            };
 
             ParseTable[NotTerminals.optParamList][Terminals.CHANGEMODE] = new Symbol[]{
-    new Symbol(NotTerminals.param, (p,s) => { ((OptParamListCHANGEMODE)p).Param = (Param)s; }),
-    new Symbol(NotTerminals.repParamList, (p,s) => { ((OptParamListCHANGEMODE)p).RepParamList = (RepParamList)s; }),
-};
+                new Symbol(NotTerminals.param, (p,s) => { ((OptParamListCHANGEMODE)p).Param = (Param)s; }),
+                new Symbol(NotTerminals.repParamList, (p,s) => { ((OptParamListCHANGEMODE)p).RepParamList = (RepParamList)s; }),
+            };
 
             ParseTable[NotTerminals.optParamList][Terminals.MECHMODE] = new Symbol[]{
-    new Symbol(NotTerminals.param, (p,s) => { ((OptParamListMECHMODE)p).Param = (Param)s; }),
-    new Symbol(NotTerminals.repParamList, (p,s) => { ((OptParamListMECHMODE)p).RepParamList = (RepParamList)s; }),
-};
+                new Symbol(NotTerminals.param, (p,s) => { ((OptParamListMECHMODE)p).Param = (Param)s; }),
+                new Symbol(NotTerminals.repParamList, (p,s) => { ((OptParamListMECHMODE)p).RepParamList = (RepParamList)s; }),
+            };
 
             ParseTable[NotTerminals.optParamList][Terminals.RPAREN] = new Symbol[]{
-};
+            };
 
             ParseTable[NotTerminals.repParamList] = new Dictionary<Terminals, Symbol[]>();
             ParseTable[NotTerminals.repParamList][Terminals.COMMA] = new Symbol[]{
-    new Symbol(Terminals.COMMA, (p,s) => { ((RepParamListCOMMA)p).COMMA = (Tokennode)s; }),
-    new Symbol(NotTerminals.param, (p,s) => { ((RepParamListCOMMA)p).Param = (Param)s; }),
-    new Symbol(NotTerminals.repParamList, (p,s) => { ((RepParamListCOMMA)p).RepParamList = (RepParamList)s; }),
-};
+                new Symbol(Terminals.COMMA, (p,s) => { ((RepParamListCOMMA)p).COMMA = (Tokennode)s; }),
+                new Symbol(NotTerminals.param, (p,s) => { ((RepParamListCOMMA)p).Param = (Param)s; }),
+                new Symbol(NotTerminals.repParamList, (p,s) => { ((RepParamListCOMMA)p).RepParamList = (RepParamList)s; }),
+            };
 
             ParseTable[NotTerminals.repParamList][Terminals.RPAREN] = new Symbol[]{
-};
+            };
 
             ParseTable[NotTerminals.param] = new Dictionary<Terminals, Symbol[]>();
             ParseTable[NotTerminals.param][Terminals.IDENT] = new Symbol[]{
-    new Symbol(NotTerminals.optMechmode, (p,s) => { ((ParamIDENT)p).OptMechmode = (OptMechmode)s; }),
-    new Symbol(NotTerminals.optChangemode, (p,s) => { ((ParamIDENT)p).OptChangemode = (OptChangemode)s; }),
-    new Symbol(NotTerminals.typedIdent, (p,s) => { ((ParamIDENT)p).TypedIdent = (TypedIdent)s; }),
-};
+                new Symbol(NotTerminals.optMechmode, (p,s) => { ((ParamIDENT)p).OptMechmode = (OptMechmode)s; }),
+                new Symbol(NotTerminals.optChangemode, (p,s) => { ((ParamIDENT)p).OptChangemode = (OptChangemode)s; }),
+                new Symbol(NotTerminals.typedIdent, (p,s) => { ((ParamIDENT)p).TypedIdent = (TypedIdent)s; }),
+            };
 
             ParseTable[NotTerminals.param][Terminals.CHANGEMODE] = new Symbol[]{
-    new Symbol(NotTerminals.optMechmode, (p,s) => { ((ParamCHANGEMODE)p).OptMechmode = (OptMechmode)s; }),
-    new Symbol(NotTerminals.optChangemode, (p,s) => { ((ParamCHANGEMODE)p).OptChangemode = (OptChangemode)s; }),
-    new Symbol(NotTerminals.typedIdent, (p,s) => { ((ParamCHANGEMODE)p).TypedIdent = (TypedIdent)s; }),
-};
+                new Symbol(NotTerminals.optMechmode, (p,s) => { ((ParamCHANGEMODE)p).OptMechmode = (OptMechmode)s; }),
+                new Symbol(NotTerminals.optChangemode, (p,s) => { ((ParamCHANGEMODE)p).OptChangemode = (OptChangemode)s; }),
+                new Symbol(NotTerminals.typedIdent, (p,s) => { ((ParamCHANGEMODE)p).TypedIdent = (TypedIdent)s; }),
+            };
 
             ParseTable[NotTerminals.param][Terminals.MECHMODE] = new Symbol[]{
-    new Symbol(NotTerminals.optMechmode, (p,s) => { ((ParamMECHMODE)p).OptMechmode = (OptMechmode)s; }),
-    new Symbol(NotTerminals.optChangemode, (p,s) => { ((ParamMECHMODE)p).OptChangemode = (OptChangemode)s; }),
-    new Symbol(NotTerminals.typedIdent, (p,s) => { ((ParamMECHMODE)p).TypedIdent = (TypedIdent)s; }),
-};
+                new Symbol(NotTerminals.optMechmode, (p,s) => { ((ParamMECHMODE)p).OptMechmode = (OptMechmode)s; }),
+                new Symbol(NotTerminals.optChangemode, (p,s) => { ((ParamMECHMODE)p).OptChangemode = (OptChangemode)s; }),
+                new Symbol(NotTerminals.typedIdent, (p,s) => { ((ParamMECHMODE)p).TypedIdent = (TypedIdent)s; }),
+            };
 
             ParseTable[NotTerminals.param][Terminals.FLOWMODE] = new Symbol[]{
-    new Symbol(Terminals.FLOWMODE, (p,s) => { ((ParamFLOWMODE)p).FLOWMODE = (Tokennode)s; }),
-    new Symbol(NotTerminals.optMechmode, (p,s) => { ((ParamFLOWMODE)p).OptMechmode = (OptMechmode)s; }),
-    new Symbol(NotTerminals.optChangemode, (p,s) => { ((ParamFLOWMODE)p).OptChangemode = (OptChangemode)s; }),
-    new Symbol(NotTerminals.typedIdent, (p,s) => { ((ParamFLOWMODE)p).TypedIdent = (TypedIdent)s; }),
-};
+                new Symbol(Terminals.FLOWMODE, (p,s) => { ((ParamFLOWMODE)p).FLOWMODE = (Tokennode)s; }),
+                new Symbol(NotTerminals.optMechmode, (p,s) => { ((ParamFLOWMODE)p).OptMechmode = (OptMechmode)s; }),
+                new Symbol(NotTerminals.optChangemode, (p,s) => { ((ParamFLOWMODE)p).OptChangemode = (OptChangemode)s; }),
+                new Symbol(NotTerminals.typedIdent, (p,s) => { ((ParamFLOWMODE)p).TypedIdent = (TypedIdent)s; }),
+            };
 
             ParseTable[NotTerminals.typedIdent] = new Dictionary<Terminals, Symbol[]>();
             ParseTable[NotTerminals.typedIdent][Terminals.IDENT] = new Symbol[]{
-    new Symbol(Terminals.IDENT, (p,s) => { ((TypedIdentIDENT)p).IDENT = (Tokennode)s; }),
-    new Symbol(Terminals.COLON, (p,s) => { ((TypedIdentIDENT)p).COLON = (Tokennode)s; }),
-    new Symbol(Terminals.TYPE, (p,s) => { ((TypedIdentIDENT)p).TYPE = (Tokennode)s; }),
-};
+                new Symbol(Terminals.IDENT, (p,s) => { ((TypedIdentIDENT)p).IDENT = (Tokennode)s; }),
+                new Symbol(Terminals.COLON, (p,s) => { ((TypedIdentIDENT)p).COLON = (Tokennode)s; }),
+                new Symbol(Terminals.TYPE, (p,s) => { ((TypedIdentIDENT)p).TYPE = (Tokennode)s; }),
+            };
 
             ParseTable[NotTerminals.cmd] = new Dictionary<Terminals, Symbol[]>();
             ParseTable[NotTerminals.cmd][Terminals.SKIP] = new Symbol[]{
-    new Symbol(Terminals.SKIP, (p,s) => { ((CmdSKIP)p).SKIP = (Tokennode)s; }),
-};
+                new Symbol(Terminals.SKIP, (p,s) => { ((CmdSKIP)p).SKIP = (Tokennode)s; }),
+            };
 
             ParseTable[NotTerminals.cmd][Terminals.TYPE] = new Symbol[]{
-    new Symbol(NotTerminals.expr, (p,s) => { ((CmdTYPE)p).Expr = (Expr)s; }),
-    new Symbol(Terminals.BECOMES, (p,s) => { ((CmdTYPE)p).BECOMES = (Tokennode)s; }),
-    new Symbol(NotTerminals.expr, (p,s) => { ((CmdTYPE)p).Expr2 = (Expr)s; }),
-};
+                new Symbol(NotTerminals.expr, (p,s) => { ((CmdTYPE)p).Expr = (Expr)s; }),
+                new Symbol(Terminals.BECOMES, (p,s) => { ((CmdTYPE)p).BECOMES = (Tokennode)s; }),
+                new Symbol(NotTerminals.expr, (p,s) => { ((CmdTYPE)p).Expr2 = (Expr)s; }),
+            };
 
             ParseTable[NotTerminals.cmd][Terminals.LPAREN] = new Symbol[]{
-    new Symbol(NotTerminals.expr, (p,s) => { ((CmdLPAREN)p).Expr = (Expr)s; }),
-    new Symbol(Terminals.BECOMES, (p,s) => { ((CmdLPAREN)p).BECOMES = (Tokennode)s; }),
-    new Symbol(NotTerminals.expr, (p,s) => { ((CmdLPAREN)p).Expr2 = (Expr)s; }),
-};
+                new Symbol(NotTerminals.expr, (p,s) => { ((CmdLPAREN)p).Expr = (Expr)s; }),
+                new Symbol(Terminals.BECOMES, (p,s) => { ((CmdLPAREN)p).BECOMES = (Tokennode)s; }),
+                new Symbol(NotTerminals.expr, (p,s) => { ((CmdLPAREN)p).Expr2 = (Expr)s; }),
+            };
 
             ParseTable[NotTerminals.cmd][Terminals.ADDOPR] = new Symbol[]{
-    new Symbol(NotTerminals.expr, (p,s) => { ((CmdADDOPR)p).Expr = (Expr)s; }),
-    new Symbol(Terminals.BECOMES, (p,s) => { ((CmdADDOPR)p).BECOMES = (Tokennode)s; }),
-    new Symbol(NotTerminals.expr, (p,s) => { ((CmdADDOPR)p).Expr2 = (Expr)s; }),
-};
+                new Symbol(NotTerminals.expr, (p,s) => { ((CmdADDOPR)p).Expr = (Expr)s; }),
+                new Symbol(Terminals.BECOMES, (p,s) => { ((CmdADDOPR)p).BECOMES = (Tokennode)s; }),
+                new Symbol(NotTerminals.expr, (p,s) => { ((CmdADDOPR)p).Expr2 = (Expr)s; }),
+            };
 
             ParseTable[NotTerminals.cmd][Terminals.NOT] = new Symbol[]{
-    new Symbol(NotTerminals.expr, (p,s) => { ((CmdNOT)p).Expr = (Expr)s; }),
-    new Symbol(Terminals.BECOMES, (p,s) => { ((CmdNOT)p).BECOMES = (Tokennode)s; }),
-    new Symbol(NotTerminals.expr, (p,s) => { ((CmdNOT)p).Expr2 = (Expr)s; }),
-};
+                new Symbol(NotTerminals.expr, (p,s) => { ((CmdNOT)p).Expr = (Expr)s; }),
+                new Symbol(Terminals.BECOMES, (p,s) => { ((CmdNOT)p).BECOMES = (Tokennode)s; }),
+                new Symbol(NotTerminals.expr, (p,s) => { ((CmdNOT)p).Expr2 = (Expr)s; }),
+            };
 
             ParseTable[NotTerminals.cmd][Terminals.IDENT] = new Symbol[]{
-    new Symbol(NotTerminals.expr, (p,s) => { ((CmdIDENT)p).Expr = (Expr)s; }),
-    new Symbol(Terminals.BECOMES, (p,s) => { ((CmdIDENT)p).BECOMES = (Tokennode)s; }),
-    new Symbol(NotTerminals.expr, (p,s) => { ((CmdIDENT)p).Expr2 = (Expr)s; }),
-};
+                new Symbol(NotTerminals.expr, (p,s) => { ((CmdIDENT)p).Expr = (Expr)s; }),
+                new Symbol(Terminals.BECOMES, (p,s) => { ((CmdIDENT)p).BECOMES = (Tokennode)s; }),
+                new Symbol(NotTerminals.expr, (p,s) => { ((CmdIDENT)p).Expr2 = (Expr)s; }),
+            };
 
             ParseTable[NotTerminals.cmd][Terminals.LITERAL] = new Symbol[]{
-    new Symbol(NotTerminals.expr, (p,s) => { ((CmdLITERAL)p).Expr = (Expr)s; }),
-    new Symbol(Terminals.BECOMES, (p,s) => { ((CmdLITERAL)p).BECOMES = (Tokennode)s; }),
-    new Symbol(NotTerminals.expr, (p,s) => { ((CmdLITERAL)p).Expr2 = (Expr)s; }),
-};
+                new Symbol(NotTerminals.expr, (p,s) => { ((CmdLITERAL)p).Expr = (Expr)s; }),
+                new Symbol(Terminals.BECOMES, (p,s) => { ((CmdLITERAL)p).BECOMES = (Tokennode)s; }),
+                new Symbol(NotTerminals.expr, (p,s) => { ((CmdLITERAL)p).Expr2 = (Expr)s; }),
+            };
 
             ParseTable[NotTerminals.cmd][Terminals.IF] = new Symbol[]{
-    new Symbol(Terminals.IF, (p,s) => { ((CmdIF)p).IF = (Tokennode)s; }),
-    new Symbol(NotTerminals.expr, (p,s) => { ((CmdIF)p).Expr = (Expr)s; }),
-    new Symbol(Terminals.THEN, (p,s) => { ((CmdIF)p).THEN = (Tokennode)s; }),
-    new Symbol(NotTerminals.cpsCmd, (p,s) => { ((CmdIF)p).CpsCmd = (CpsCmd)s; }),
-    new Symbol(Terminals.ELSE, (p,s) => { ((CmdIF)p).ELSE = (Tokennode)s; }),
-    new Symbol(NotTerminals.cpsCmd, (p,s) => { ((CmdIF)p).CpsCmd2 = (CpsCmd)s; }),
-    new Symbol(Terminals.ENDIF, (p,s) => { ((CmdIF)p).ENDIF = (Tokennode)s; }),
-};
+                new Symbol(Terminals.IF, (p,s) => { ((CmdIF)p).IF = (Tokennode)s; }),
+                new Symbol(NotTerminals.expr, (p,s) => { ((CmdIF)p).Expr = (Expr)s; }),
+                new Symbol(Terminals.THEN, (p,s) => { ((CmdIF)p).THEN = (Tokennode)s; }),
+                new Symbol(NotTerminals.cpsCmd, (p,s) => { ((CmdIF)p).CpsCmd = (CpsCmd)s; }),
+                new Symbol(Terminals.ELSE, (p,s) => { ((CmdIF)p).ELSE = (Tokennode)s; }),
+                new Symbol(NotTerminals.cpsCmd, (p,s) => { ((CmdIF)p).CpsCmd2 = (CpsCmd)s; }),
+                new Symbol(Terminals.ENDIF, (p,s) => { ((CmdIF)p).ENDIF = (Tokennode)s; }),
+            };
 
             ParseTable[NotTerminals.cmd][Terminals.WHILE] = new Symbol[]{
-    new Symbol(Terminals.WHILE, (p,s) => { ((CmdWHILE)p).WHILE = (Tokennode)s; }),
-    new Symbol(NotTerminals.expr, (p,s) => { ((CmdWHILE)p).Expr = (Expr)s; }),
-    new Symbol(Terminals.DO, (p,s) => { ((CmdWHILE)p).DO = (Tokennode)s; }),
-    new Symbol(NotTerminals.cpsCmd, (p,s) => { ((CmdWHILE)p).CpsCmd = (CpsCmd)s; }),
-    new Symbol(Terminals.ENDWHILE, (p,s) => { ((CmdWHILE)p).ENDWHILE = (Tokennode)s; }),
-};
+                new Symbol(Terminals.WHILE, (p,s) => { ((CmdWHILE)p).WHILE = (Tokennode)s; }),
+                new Symbol(NotTerminals.expr, (p,s) => { ((CmdWHILE)p).Expr = (Expr)s; }),
+                new Symbol(Terminals.DO, (p,s) => { ((CmdWHILE)p).DO = (Tokennode)s; }),
+                new Symbol(NotTerminals.cpsCmd, (p,s) => { ((CmdWHILE)p).CpsCmd = (CpsCmd)s; }),
+                new Symbol(Terminals.ENDWHILE, (p,s) => { ((CmdWHILE)p).ENDWHILE = (Tokennode)s; }),
+            };
 
             ParseTable[NotTerminals.cmd][Terminals.CALL] = new Symbol[]{
-    new Symbol(Terminals.CALL, (p,s) => { ((CmdCALL)p).CALL = (Tokennode)s; }),
-    new Symbol(Terminals.IDENT, (p,s) => { ((CmdCALL)p).IDENT = (Tokennode)s; }),
-    new Symbol(NotTerminals.exprList, (p,s) => { ((CmdCALL)p).ExprList = (ExprList)s; }),
-    new Symbol(NotTerminals.optGlobInits, (p,s) => { ((CmdCALL)p).OptGlobInits = (OptGlobInits)s; }),
-};
+                new Symbol(Terminals.CALL, (p,s) => { ((CmdCALL)p).CALL = (Tokennode)s; }),
+                new Symbol(Terminals.IDENT, (p,s) => { ((CmdCALL)p).IDENT = (Tokennode)s; }),
+                new Symbol(NotTerminals.exprList, (p,s) => { ((CmdCALL)p).ExprList = (ExprList)s; }),
+                new Symbol(NotTerminals.optGlobInits, (p,s) => { ((CmdCALL)p).OptGlobInits = (OptGlobInits)s; }),
+            };
 
             ParseTable[NotTerminals.cmd][Terminals.DEBUGIN] = new Symbol[]{
-    new Symbol(Terminals.DEBUGIN, (p,s) => { ((CmdDEBUGIN)p).DEBUGIN = (Tokennode)s; }),
-    new Symbol(NotTerminals.expr, (p,s) => { ((CmdDEBUGIN)p).Expr = (Expr)s; }),
-};
+                new Symbol(Terminals.DEBUGIN, (p,s) => { ((CmdDEBUGIN)p).DEBUGIN = (Tokennode)s; }),
+                new Symbol(NotTerminals.expr, (p,s) => { ((CmdDEBUGIN)p).Expr = (Expr)s; }),
+            };
 
             ParseTable[NotTerminals.cmd][Terminals.DEBUGOUT] = new Symbol[]{
-    new Symbol(Terminals.DEBUGOUT, (p,s) => { ((CmdDEBUGOUT)p).DEBUGOUT = (Tokennode)s; }),
-    new Symbol(NotTerminals.expr, (p,s) => { ((CmdDEBUGOUT)p).Expr = (Expr)s; }),
-};
+                new Symbol(Terminals.DEBUGOUT, (p,s) => { ((CmdDEBUGOUT)p).DEBUGOUT = (Tokennode)s; }),
+                new Symbol(NotTerminals.expr, (p,s) => { ((CmdDEBUGOUT)p).Expr = (Expr)s; }),
+            };
 
             ParseTable[NotTerminals.cpsCmd] = new Dictionary<Terminals, Symbol[]>();
             ParseTable[NotTerminals.cpsCmd][Terminals.DEBUGOUT] = new Symbol[]{
-    new Symbol(NotTerminals.cmd, (p,s) => { ((CpsCmdDEBUGOUT)p).Cmd = (Cmd)s; }),
-    new Symbol(NotTerminals.repCpsCmd, (p,s) => { ((CpsCmdDEBUGOUT)p).RepCpsCmd = (RepCpsCmd)s; }),
-};
+                new Symbol(NotTerminals.cmd, (p,s) => { ((CpsCmdDEBUGOUT)p).Cmd = (Cmd)s; }),
+                new Symbol(NotTerminals.repCpsCmd, (p,s) => { ((CpsCmdDEBUGOUT)p).RepCpsCmd = (RepCpsCmd)s; }),
+            };
 
             ParseTable[NotTerminals.cpsCmd][Terminals.DEBUGIN] = new Symbol[]{
-    new Symbol(NotTerminals.cmd, (p,s) => { ((CpsCmdDEBUGIN)p).Cmd = (Cmd)s; }),
-    new Symbol(NotTerminals.repCpsCmd, (p,s) => { ((CpsCmdDEBUGIN)p).RepCpsCmd = (RepCpsCmd)s; }),
-};
+                new Symbol(NotTerminals.cmd, (p,s) => { ((CpsCmdDEBUGIN)p).Cmd = (Cmd)s; }),
+                new Symbol(NotTerminals.repCpsCmd, (p,s) => { ((CpsCmdDEBUGIN)p).RepCpsCmd = (RepCpsCmd)s; }),
+            };
 
             ParseTable[NotTerminals.cpsCmd][Terminals.CALL] = new Symbol[]{
-    new Symbol(NotTerminals.cmd, (p,s) => { ((CpsCmdCALL)p).Cmd = (Cmd)s; }),
-    new Symbol(NotTerminals.repCpsCmd, (p,s) => { ((CpsCmdCALL)p).RepCpsCmd = (RepCpsCmd)s; }),
-};
+                new Symbol(NotTerminals.cmd, (p,s) => { ((CpsCmdCALL)p).Cmd = (Cmd)s; }),
+                new Symbol(NotTerminals.repCpsCmd, (p,s) => { ((CpsCmdCALL)p).RepCpsCmd = (RepCpsCmd)s; }),
+            };
 
             ParseTable[NotTerminals.cpsCmd][Terminals.WHILE] = new Symbol[]{
-    new Symbol(NotTerminals.cmd, (p,s) => { ((CpsCmdWHILE)p).Cmd = (Cmd)s; }),
-    new Symbol(NotTerminals.repCpsCmd, (p,s) => { ((CpsCmdWHILE)p).RepCpsCmd = (RepCpsCmd)s; }),
-};
+                new Symbol(NotTerminals.cmd, (p,s) => { ((CpsCmdWHILE)p).Cmd = (Cmd)s; }),
+                new Symbol(NotTerminals.repCpsCmd, (p,s) => { ((CpsCmdWHILE)p).RepCpsCmd = (RepCpsCmd)s; }),
+            };
 
             ParseTable[NotTerminals.cpsCmd][Terminals.IF] = new Symbol[]{
-    new Symbol(NotTerminals.cmd, (p,s) => { ((CpsCmdIF)p).Cmd = (Cmd)s; }),
-    new Symbol(NotTerminals.repCpsCmd, (p,s) => { ((CpsCmdIF)p).RepCpsCmd = (RepCpsCmd)s; }),
-};
+                new Symbol(NotTerminals.cmd, (p,s) => { ((CpsCmdIF)p).Cmd = (Cmd)s; }),
+                new Symbol(NotTerminals.repCpsCmd, (p,s) => { ((CpsCmdIF)p).RepCpsCmd = (RepCpsCmd)s; }),
+            };
 
             ParseTable[NotTerminals.cpsCmd][Terminals.TYPE] = new Symbol[]{
-    new Symbol(NotTerminals.cmd, (p,s) => { ((CpsCmdTYPE)p).Cmd = (Cmd)s; }),
-    new Symbol(NotTerminals.repCpsCmd, (p,s) => { ((CpsCmdTYPE)p).RepCpsCmd = (RepCpsCmd)s; }),
-};
+                new Symbol(NotTerminals.cmd, (p,s) => { ((CpsCmdTYPE)p).Cmd = (Cmd)s; }),
+                new Symbol(NotTerminals.repCpsCmd, (p,s) => { ((CpsCmdTYPE)p).RepCpsCmd = (RepCpsCmd)s; }),
+            };
 
             ParseTable[NotTerminals.cpsCmd][Terminals.LPAREN] = new Symbol[]{
-    new Symbol(NotTerminals.cmd, (p,s) => { ((CpsCmdLPAREN)p).Cmd = (Cmd)s; }),
-    new Symbol(NotTerminals.repCpsCmd, (p,s) => { ((CpsCmdLPAREN)p).RepCpsCmd = (RepCpsCmd)s; }),
-};
+                new Symbol(NotTerminals.cmd, (p,s) => { ((CpsCmdLPAREN)p).Cmd = (Cmd)s; }),
+                new Symbol(NotTerminals.repCpsCmd, (p,s) => { ((CpsCmdLPAREN)p).RepCpsCmd = (RepCpsCmd)s; }),
+            };
 
             ParseTable[NotTerminals.cpsCmd][Terminals.ADDOPR] = new Symbol[]{
-    new Symbol(NotTerminals.cmd, (p,s) => { ((CpsCmdADDOPR)p).Cmd = (Cmd)s; }),
-    new Symbol(NotTerminals.repCpsCmd, (p,s) => { ((CpsCmdADDOPR)p).RepCpsCmd = (RepCpsCmd)s; }),
-};
+                new Symbol(NotTerminals.cmd, (p,s) => { ((CpsCmdADDOPR)p).Cmd = (Cmd)s; }),
+                new Symbol(NotTerminals.repCpsCmd, (p,s) => { ((CpsCmdADDOPR)p).RepCpsCmd = (RepCpsCmd)s; }),
+            };
 
             ParseTable[NotTerminals.cpsCmd][Terminals.NOT] = new Symbol[]{
-    new Symbol(NotTerminals.cmd, (p,s) => { ((CpsCmdNOT)p).Cmd = (Cmd)s; }),
-    new Symbol(NotTerminals.repCpsCmd, (p,s) => { ((CpsCmdNOT)p).RepCpsCmd = (RepCpsCmd)s; }),
-};
+                new Symbol(NotTerminals.cmd, (p,s) => { ((CpsCmdNOT)p).Cmd = (Cmd)s; }),
+                new Symbol(NotTerminals.repCpsCmd, (p,s) => { ((CpsCmdNOT)p).RepCpsCmd = (RepCpsCmd)s; }),
+            };
 
             ParseTable[NotTerminals.cpsCmd][Terminals.IDENT] = new Symbol[]{
-    new Symbol(NotTerminals.cmd, (p,s) => { ((CpsCmdIDENT)p).Cmd = (Cmd)s; }),
-    new Symbol(NotTerminals.repCpsCmd, (p,s) => { ((CpsCmdIDENT)p).RepCpsCmd = (RepCpsCmd)s; }),
-};
+                new Symbol(NotTerminals.cmd, (p,s) => { ((CpsCmdIDENT)p).Cmd = (Cmd)s; }),
+                new Symbol(NotTerminals.repCpsCmd, (p,s) => { ((CpsCmdIDENT)p).RepCpsCmd = (RepCpsCmd)s; }),
+            };
 
             ParseTable[NotTerminals.cpsCmd][Terminals.LITERAL] = new Symbol[]{
-    new Symbol(NotTerminals.cmd, (p,s) => { ((CpsCmdLITERAL)p).Cmd = (Cmd)s; }),
-    new Symbol(NotTerminals.repCpsCmd, (p,s) => { ((CpsCmdLITERAL)p).RepCpsCmd = (RepCpsCmd)s; }),
-};
+                new Symbol(NotTerminals.cmd, (p,s) => { ((CpsCmdLITERAL)p).Cmd = (Cmd)s; }),
+                new Symbol(NotTerminals.repCpsCmd, (p,s) => { ((CpsCmdLITERAL)p).RepCpsCmd = (RepCpsCmd)s; }),
+            };
 
             ParseTable[NotTerminals.cpsCmd][Terminals.SKIP] = new Symbol[]{
-    new Symbol(NotTerminals.cmd, (p,s) => { ((CpsCmdSKIP)p).Cmd = (Cmd)s; }),
-    new Symbol(NotTerminals.repCpsCmd, (p,s) => { ((CpsCmdSKIP)p).RepCpsCmd = (RepCpsCmd)s; }),
-};
+                new Symbol(NotTerminals.cmd, (p,s) => { ((CpsCmdSKIP)p).Cmd = (Cmd)s; }),
+                new Symbol(NotTerminals.repCpsCmd, (p,s) => { ((CpsCmdSKIP)p).RepCpsCmd = (RepCpsCmd)s; }),
+            };
 
             ParseTable[NotTerminals.repCpsCmd] = new Dictionary<Terminals, Symbol[]>();
             ParseTable[NotTerminals.repCpsCmd][Terminals.SEMICOLON] = new Symbol[]{
-    new Symbol(Terminals.SEMICOLON, (p,s) => { ((RepCpsCmdSEMICOLON)p).SEMICOLON = (Tokennode)s; }),
-    new Symbol(NotTerminals.cmd, (p,s) => { ((RepCpsCmdSEMICOLON)p).Cmd = (Cmd)s; }),
-    new Symbol(NotTerminals.repCpsCmd, (p,s) => { ((RepCpsCmdSEMICOLON)p).RepCpsCmd = (RepCpsCmd)s; }),
-};
+                new Symbol(Terminals.SEMICOLON, (p,s) => { ((RepCpsCmdSEMICOLON)p).SEMICOLON = (Tokennode)s; }),
+                new Symbol(NotTerminals.cmd, (p,s) => { ((RepCpsCmdSEMICOLON)p).Cmd = (Cmd)s; }),
+                new Symbol(NotTerminals.repCpsCmd, (p,s) => { ((RepCpsCmdSEMICOLON)p).RepCpsCmd = (RepCpsCmd)s; }),
+            };
 
             ParseTable[NotTerminals.repCpsCmd][Terminals.ENDWHILE] = new Symbol[]{
-};
+            };
 
             ParseTable[NotTerminals.repCpsCmd][Terminals.ENDIF] = new Symbol[]{
-};
+            };
 
             ParseTable[NotTerminals.repCpsCmd][Terminals.ELSE] = new Symbol[]{
-};
+            };
 
             ParseTable[NotTerminals.repCpsCmd][Terminals.ENDPROC] = new Symbol[]{
-};
+            };
 
             ParseTable[NotTerminals.repCpsCmd][Terminals.ENDFUN] = new Symbol[]{
-};
+            };
 
             ParseTable[NotTerminals.repCpsCmd][Terminals.ENDPROGRAM] = new Symbol[]{
-};
+            };
 
             ParseTable[NotTerminals.optGlobInits] = new Dictionary<Terminals, Symbol[]>();
             ParseTable[NotTerminals.optGlobInits][Terminals.INIT] = new Symbol[]{
-    new Symbol(Terminals.INIT, (p,s) => { ((OptGlobInitsINIT)p).INIT = (Tokennode)s; }),
-    new Symbol(Terminals.IDENT, (p,s) => { ((OptGlobInitsINIT)p).IDENT = (Tokennode)s; }),
-    new Symbol(NotTerminals.repIdents, (p,s) => { ((OptGlobInitsINIT)p).RepIdents = (RepIdents)s; }),
-};
+                new Symbol(Terminals.INIT, (p,s) => { ((OptGlobInitsINIT)p).INIT = (Tokennode)s; }),
+                new Symbol(Terminals.IDENT, (p,s) => { ((OptGlobInitsINIT)p).IDENT = (Tokennode)s; }),
+                new Symbol(NotTerminals.repIdents, (p,s) => { ((OptGlobInitsINIT)p).RepIdents = (RepIdents)s; }),
+            };
 
             ParseTable[NotTerminals.optGlobInits][Terminals.ENDWHILE] = new Symbol[]{
-};
+            };
 
             ParseTable[NotTerminals.optGlobInits][Terminals.ENDIF] = new Symbol[]{
-};
+            };
 
             ParseTable[NotTerminals.optGlobInits][Terminals.ELSE] = new Symbol[]{
-};
+            };
 
             ParseTable[NotTerminals.optGlobInits][Terminals.ENDPROC] = new Symbol[]{
-};
+            };
 
             ParseTable[NotTerminals.optGlobInits][Terminals.ENDFUN] = new Symbol[]{
-};
+            };
 
             ParseTable[NotTerminals.optGlobInits][Terminals.ENDPROGRAM] = new Symbol[]{
-};
+            };
 
             ParseTable[NotTerminals.optGlobInits][Terminals.SEMICOLON] = new Symbol[]{
-};
+            };
 
             ParseTable[NotTerminals.repIdents] = new Dictionary<Terminals, Symbol[]>();
             ParseTable[NotTerminals.repIdents][Terminals.COMMA] = new Symbol[]{
-    new Symbol(Terminals.COMMA, (p,s) => { ((RepIdentsCOMMA)p).COMMA = (Tokennode)s; }),
-    new Symbol(Terminals.IDENT, (p,s) => { ((RepIdentsCOMMA)p).IDENT = (Tokennode)s; }),
-    new Symbol(NotTerminals.repIdents, (p,s) => { ((RepIdentsCOMMA)p).RepIdents = (RepIdents)s; }),
-};
+                new Symbol(Terminals.COMMA, (p,s) => { ((RepIdentsCOMMA)p).COMMA = (Tokennode)s; }),
+                new Symbol(Terminals.IDENT, (p,s) => { ((RepIdentsCOMMA)p).IDENT = (Tokennode)s; }),
+                new Symbol(NotTerminals.repIdents, (p,s) => { ((RepIdentsCOMMA)p).RepIdents = (RepIdents)s; }),
+            };
 
             ParseTable[NotTerminals.repIdents][Terminals.ENDWHILE] = new Symbol[]{
-};
+            };
 
             ParseTable[NotTerminals.repIdents][Terminals.ENDIF] = new Symbol[]{
-};
+            };
 
             ParseTable[NotTerminals.repIdents][Terminals.ELSE] = new Symbol[]{
-};
+            };
 
             ParseTable[NotTerminals.repIdents][Terminals.ENDPROC] = new Symbol[]{
-};
+            };
 
             ParseTable[NotTerminals.repIdents][Terminals.ENDFUN] = new Symbol[]{
-};
+            };
 
             ParseTable[NotTerminals.repIdents][Terminals.ENDPROGRAM] = new Symbol[]{
-};
+            };
 
             ParseTable[NotTerminals.repIdents][Terminals.SEMICOLON] = new Symbol[]{
-};
+            };
 
             ParseTable[NotTerminals.expr] = new Dictionary<Terminals, Symbol[]>();
             ParseTable[NotTerminals.expr][Terminals.TYPE] = new Symbol[]{
-    new Symbol(NotTerminals.term1, (p,s) => { ((ExprTYPE)p).Term1 = (Term1)s; }),
-    new Symbol(NotTerminals.repTerm1, (p,s) => { ((ExprTYPE)p).RepTerm1 = (RepTerm1)s; }),
-};
+                new Symbol(NotTerminals.term1, (p,s) => { ((ExprTYPE)p).Term1 = (Term1)s; }),
+                new Symbol(NotTerminals.repTerm1, (p,s) => { ((ExprTYPE)p).RepTerm1 = (RepTerm1)s; }),
+            };
 
             ParseTable[NotTerminals.expr][Terminals.LPAREN] = new Symbol[]{
-    new Symbol(NotTerminals.term1, (p,s) => { ((ExprLPAREN)p).Term1 = (Term1)s; }),
-    new Symbol(NotTerminals.repTerm1, (p,s) => { ((ExprLPAREN)p).RepTerm1 = (RepTerm1)s; }),
-};
+                new Symbol(NotTerminals.term1, (p,s) => { ((ExprLPAREN)p).Term1 = (Term1)s; }),
+                new Symbol(NotTerminals.repTerm1, (p,s) => { ((ExprLPAREN)p).RepTerm1 = (RepTerm1)s; }),
+            };
 
             ParseTable[NotTerminals.expr][Terminals.ADDOPR] = new Symbol[]{
-    new Symbol(NotTerminals.term1, (p,s) => { ((ExprADDOPR)p).Term1 = (Term1)s; }),
-    new Symbol(NotTerminals.repTerm1, (p,s) => { ((ExprADDOPR)p).RepTerm1 = (RepTerm1)s; }),
-};
+                new Symbol(NotTerminals.term1, (p,s) => { ((ExprADDOPR)p).Term1 = (Term1)s; }),
+                new Symbol(NotTerminals.repTerm1, (p,s) => { ((ExprADDOPR)p).RepTerm1 = (RepTerm1)s; }),
+            };
 
             ParseTable[NotTerminals.expr][Terminals.NOT] = new Symbol[]{
-    new Symbol(NotTerminals.term1, (p,s) => { ((ExprNOT)p).Term1 = (Term1)s; }),
-    new Symbol(NotTerminals.repTerm1, (p,s) => { ((ExprNOT)p).RepTerm1 = (RepTerm1)s; }),
-};
+                new Symbol(NotTerminals.term1, (p,s) => { ((ExprNOT)p).Term1 = (Term1)s; }),
+                new Symbol(NotTerminals.repTerm1, (p,s) => { ((ExprNOT)p).RepTerm1 = (RepTerm1)s; }),
+            };
 
             ParseTable[NotTerminals.expr][Terminals.IDENT] = new Symbol[]{
-    new Symbol(NotTerminals.term1, (p,s) => { ((ExprIDENT)p).Term1 = (Term1)s; }),
-    new Symbol(NotTerminals.repTerm1, (p,s) => { ((ExprIDENT)p).RepTerm1 = (RepTerm1)s; }),
-};
+                new Symbol(NotTerminals.term1, (p,s) => { ((ExprIDENT)p).Term1 = (Term1)s; }),
+                new Symbol(NotTerminals.repTerm1, (p,s) => { ((ExprIDENT)p).RepTerm1 = (RepTerm1)s; }),
+            };
 
             ParseTable[NotTerminals.expr][Terminals.LITERAL] = new Symbol[]{
-    new Symbol(NotTerminals.term1, (p,s) => { ((ExprLITERAL)p).Term1 = (Term1)s; }),
-    new Symbol(NotTerminals.repTerm1, (p,s) => { ((ExprLITERAL)p).RepTerm1 = (RepTerm1)s; }),
-};
+                new Symbol(NotTerminals.term1, (p,s) => { ((ExprLITERAL)p).Term1 = (Term1)s; }),
+                new Symbol(NotTerminals.repTerm1, (p,s) => { ((ExprLITERAL)p).RepTerm1 = (RepTerm1)s; }),
+            };
 
             ParseTable[NotTerminals.repTerm1] = new Dictionary<Terminals, Symbol[]>();
             ParseTable[NotTerminals.repTerm1][Terminals.BOOLOPR] = new Symbol[]{
-    new Symbol(Terminals.BOOLOPR, (p,s) => { ((RepTerm1BOOLOPR)p).BOOLOPR = (Tokennode)s; }),
-    new Symbol(NotTerminals.term1, (p,s) => { ((RepTerm1BOOLOPR)p).Term1 = (Term1)s; }),
-    new Symbol(NotTerminals.repTerm1, (p,s) => { ((RepTerm1BOOLOPR)p).RepTerm1 = (RepTerm1)s; }),
-};
+                new Symbol(Terminals.BOOLOPR, (p,s) => { ((RepTerm1BOOLOPR)p).BOOLOPR = (Tokennode)s; }),
+                new Symbol(NotTerminals.term1, (p,s) => { ((RepTerm1BOOLOPR)p).Term1 = (Term1)s; }),
+                new Symbol(NotTerminals.repTerm1, (p,s) => { ((RepTerm1BOOLOPR)p).RepTerm1 = (RepTerm1)s; }),
+            };
 
             ParseTable[NotTerminals.repTerm1][Terminals.COMMA] = new Symbol[]{
-};
+            };
 
             ParseTable[NotTerminals.repTerm1][Terminals.RPAREN] = new Symbol[]{
-};
+            };
 
             ParseTable[NotTerminals.repTerm1][Terminals.DO] = new Symbol[]{
-};
+            };
 
             ParseTable[NotTerminals.repTerm1][Terminals.THEN] = new Symbol[]{
-};
+            };
 
             ParseTable[NotTerminals.repTerm1][Terminals.ENDWHILE] = new Symbol[]{
-};
+            };
 
             ParseTable[NotTerminals.repTerm1][Terminals.ENDIF] = new Symbol[]{
-};
+            };
 
             ParseTable[NotTerminals.repTerm1][Terminals.ELSE] = new Symbol[]{
-};
+            };
 
             ParseTable[NotTerminals.repTerm1][Terminals.ENDPROC] = new Symbol[]{
-};
+            };
 
             ParseTable[NotTerminals.repTerm1][Terminals.ENDFUN] = new Symbol[]{
-};
+            };
 
             ParseTable[NotTerminals.repTerm1][Terminals.ENDPROGRAM] = new Symbol[]{
-};
+            };
 
             ParseTable[NotTerminals.repTerm1][Terminals.SEMICOLON] = new Symbol[]{
-};
+            };
 
             ParseTable[NotTerminals.repTerm1][Terminals.BECOMES] = new Symbol[]{
-};
+            };
 
             ParseTable[NotTerminals.term1] = new Dictionary<Terminals, Symbol[]>();
             ParseTable[NotTerminals.term1][Terminals.TYPE] = new Symbol[]{
-    new Symbol(NotTerminals.term2, (p,s) => { ((Term1TYPE)p).Term2 = (Term2)s; }),
-    new Symbol(NotTerminals.repTerm2, (p,s) => { ((Term1TYPE)p).RepTerm2 = (RepTerm2)s; }),
-};
+                new Symbol(NotTerminals.term2, (p,s) => { ((Term1TYPE)p).Term2 = (Term2)s; }),
+                new Symbol(NotTerminals.repTerm2, (p,s) => { ((Term1TYPE)p).RepTerm2 = (RepTerm2)s; }),
+            };
 
             ParseTable[NotTerminals.term1][Terminals.LPAREN] = new Symbol[]{
-    new Symbol(NotTerminals.term2, (p,s) => { ((Term1LPAREN)p).Term2 = (Term2)s; }),
-    new Symbol(NotTerminals.repTerm2, (p,s) => { ((Term1LPAREN)p).RepTerm2 = (RepTerm2)s; }),
-};
+                new Symbol(NotTerminals.term2, (p,s) => { ((Term1LPAREN)p).Term2 = (Term2)s; }),
+                new Symbol(NotTerminals.repTerm2, (p,s) => { ((Term1LPAREN)p).RepTerm2 = (RepTerm2)s; }),
+            };
 
             ParseTable[NotTerminals.term1][Terminals.ADDOPR] = new Symbol[]{
-    new Symbol(NotTerminals.term2, (p,s) => { ((Term1ADDOPR)p).Term2 = (Term2)s; }),
-    new Symbol(NotTerminals.repTerm2, (p,s) => { ((Term1ADDOPR)p).RepTerm2 = (RepTerm2)s; }),
-};
+                new Symbol(NotTerminals.term2, (p,s) => { ((Term1ADDOPR)p).Term2 = (Term2)s; }),
+                new Symbol(NotTerminals.repTerm2, (p,s) => { ((Term1ADDOPR)p).RepTerm2 = (RepTerm2)s; }),
+            };
 
             ParseTable[NotTerminals.term1][Terminals.NOT] = new Symbol[]{
-    new Symbol(NotTerminals.term2, (p,s) => { ((Term1NOT)p).Term2 = (Term2)s; }),
-    new Symbol(NotTerminals.repTerm2, (p,s) => { ((Term1NOT)p).RepTerm2 = (RepTerm2)s; }),
-};
+                new Symbol(NotTerminals.term2, (p,s) => { ((Term1NOT)p).Term2 = (Term2)s; }),
+                new Symbol(NotTerminals.repTerm2, (p,s) => { ((Term1NOT)p).RepTerm2 = (RepTerm2)s; }),
+            };
 
             ParseTable[NotTerminals.term1][Terminals.IDENT] = new Symbol[]{
-    new Symbol(NotTerminals.term2, (p,s) => { ((Term1IDENT)p).Term2 = (Term2)s; }),
-    new Symbol(NotTerminals.repTerm2, (p,s) => { ((Term1IDENT)p).RepTerm2 = (RepTerm2)s; }),
-};
+                new Symbol(NotTerminals.term2, (p,s) => { ((Term1IDENT)p).Term2 = (Term2)s; }),
+                new Symbol(NotTerminals.repTerm2, (p,s) => { ((Term1IDENT)p).RepTerm2 = (RepTerm2)s; }),
+            };
 
             ParseTable[NotTerminals.term1][Terminals.LITERAL] = new Symbol[]{
-    new Symbol(NotTerminals.term2, (p,s) => { ((Term1LITERAL)p).Term2 = (Term2)s; }),
-    new Symbol(NotTerminals.repTerm2, (p,s) => { ((Term1LITERAL)p).RepTerm2 = (RepTerm2)s; }),
-};
+                new Symbol(NotTerminals.term2, (p,s) => { ((Term1LITERAL)p).Term2 = (Term2)s; }),
+                new Symbol(NotTerminals.repTerm2, (p,s) => { ((Term1LITERAL)p).RepTerm2 = (RepTerm2)s; }),
+            };
 
             ParseTable[NotTerminals.repTerm2] = new Dictionary<Terminals, Symbol[]>();
             ParseTable[NotTerminals.repTerm2][Terminals.RELOPR] = new Symbol[]{
-    new Symbol(Terminals.RELOPR, (p,s) => { ((RepTerm2RELOPR)p).RELOPR = (Tokennode)s; }),
-    new Symbol(NotTerminals.term2, (p,s) => { ((RepTerm2RELOPR)p).Term2 = (Term2)s; }),
-    new Symbol(NotTerminals.repTerm2, (p,s) => { ((RepTerm2RELOPR)p).RepTerm2 = (RepTerm2)s; }),
-};
+                new Symbol(Terminals.RELOPR, (p,s) => { ((RepTerm2RELOPR)p).RELOPR = (Tokennode)s; }),
+                new Symbol(NotTerminals.term2, (p,s) => { ((RepTerm2RELOPR)p).Term2 = (Term2)s; }),
+                new Symbol(NotTerminals.repTerm2, (p,s) => { ((RepTerm2RELOPR)p).RepTerm2 = (RepTerm2)s; }),
+            };
 
             ParseTable[NotTerminals.repTerm2][Terminals.COMMA] = new Symbol[]{
-};
+            };
 
             ParseTable[NotTerminals.repTerm2][Terminals.RPAREN] = new Symbol[]{
-};
+            };
 
             ParseTable[NotTerminals.repTerm2][Terminals.DO] = new Symbol[]{
-};
+            };
 
             ParseTable[NotTerminals.repTerm2][Terminals.THEN] = new Symbol[]{
-};
+            };
 
             ParseTable[NotTerminals.repTerm2][Terminals.ENDWHILE] = new Symbol[]{
-};
+            };
 
             ParseTable[NotTerminals.repTerm2][Terminals.ENDIF] = new Symbol[]{
-};
+            };
 
             ParseTable[NotTerminals.repTerm2][Terminals.ELSE] = new Symbol[]{
-};
+            };
 
             ParseTable[NotTerminals.repTerm2][Terminals.ENDPROC] = new Symbol[]{
-};
+            };
 
             ParseTable[NotTerminals.repTerm2][Terminals.ENDFUN] = new Symbol[]{
-};
+            };
 
             ParseTable[NotTerminals.repTerm2][Terminals.ENDPROGRAM] = new Symbol[]{
-};
+            };
 
             ParseTable[NotTerminals.repTerm2][Terminals.SEMICOLON] = new Symbol[]{
-};
+            };
 
             ParseTable[NotTerminals.repTerm2][Terminals.BECOMES] = new Symbol[]{
-};
+            };
 
             ParseTable[NotTerminals.repTerm2][Terminals.BOOLOPR] = new Symbol[]{
-};
+            };
 
             ParseTable[NotTerminals.term2] = new Dictionary<Terminals, Symbol[]>();
             ParseTable[NotTerminals.term2][Terminals.TYPE] = new Symbol[]{
-    new Symbol(NotTerminals.term3, (p,s) => { ((Term2TYPE)p).Term3 = (Term3)s; }),
-    new Symbol(NotTerminals.repTerm3, (p,s) => { ((Term2TYPE)p).RepTerm3 = (RepTerm3)s; }),
-};
+                new Symbol(NotTerminals.term3, (p,s) => { ((Term2TYPE)p).Term3 = (Term3)s; }),
+                new Symbol(NotTerminals.repTerm3, (p,s) => { ((Term2TYPE)p).RepTerm3 = (RepTerm3)s; }),
+            };
 
             ParseTable[NotTerminals.term2][Terminals.LPAREN] = new Symbol[]{
-    new Symbol(NotTerminals.term3, (p,s) => { ((Term2LPAREN)p).Term3 = (Term3)s; }),
-    new Symbol(NotTerminals.repTerm3, (p,s) => { ((Term2LPAREN)p).RepTerm3 = (RepTerm3)s; }),
-};
+                new Symbol(NotTerminals.term3, (p,s) => { ((Term2LPAREN)p).Term3 = (Term3)s; }),
+                new Symbol(NotTerminals.repTerm3, (p,s) => { ((Term2LPAREN)p).RepTerm3 = (RepTerm3)s; }),
+            };
 
             ParseTable[NotTerminals.term2][Terminals.ADDOPR] = new Symbol[]{
-    new Symbol(NotTerminals.term3, (p,s) => { ((Term2ADDOPR)p).Term3 = (Term3)s; }),
-    new Symbol(NotTerminals.repTerm3, (p,s) => { ((Term2ADDOPR)p).RepTerm3 = (RepTerm3)s; }),
-};
+                new Symbol(NotTerminals.term3, (p,s) => { ((Term2ADDOPR)p).Term3 = (Term3)s; }),
+                new Symbol(NotTerminals.repTerm3, (p,s) => { ((Term2ADDOPR)p).RepTerm3 = (RepTerm3)s; }),
+            };
 
             ParseTable[NotTerminals.term2][Terminals.NOT] = new Symbol[]{
-    new Symbol(NotTerminals.term3, (p,s) => { ((Term2NOT)p).Term3 = (Term3)s; }),
-    new Symbol(NotTerminals.repTerm3, (p,s) => { ((Term2NOT)p).RepTerm3 = (RepTerm3)s; }),
-};
+                new Symbol(NotTerminals.term3, (p,s) => { ((Term2NOT)p).Term3 = (Term3)s; }),
+                new Symbol(NotTerminals.repTerm3, (p,s) => { ((Term2NOT)p).RepTerm3 = (RepTerm3)s; }),
+            };
 
             ParseTable[NotTerminals.term2][Terminals.IDENT] = new Symbol[]{
-    new Symbol(NotTerminals.term3, (p,s) => { ((Term2IDENT)p).Term3 = (Term3)s; }),
-    new Symbol(NotTerminals.repTerm3, (p,s) => { ((Term2IDENT)p).RepTerm3 = (RepTerm3)s; }),
-};
+                new Symbol(NotTerminals.term3, (p,s) => { ((Term2IDENT)p).Term3 = (Term3)s; }),
+                new Symbol(NotTerminals.repTerm3, (p,s) => { ((Term2IDENT)p).RepTerm3 = (RepTerm3)s; }),
+            };
 
             ParseTable[NotTerminals.term2][Terminals.LITERAL] = new Symbol[]{
-    new Symbol(NotTerminals.term3, (p,s) => { ((Term2LITERAL)p).Term3 = (Term3)s; }),
-    new Symbol(NotTerminals.repTerm3, (p,s) => { ((Term2LITERAL)p).RepTerm3 = (RepTerm3)s; }),
-};
+                new Symbol(NotTerminals.term3, (p,s) => { ((Term2LITERAL)p).Term3 = (Term3)s; }),
+                new Symbol(NotTerminals.repTerm3, (p,s) => { ((Term2LITERAL)p).RepTerm3 = (RepTerm3)s; }),
+            };
 
             ParseTable[NotTerminals.repTerm3] = new Dictionary<Terminals, Symbol[]>();
             ParseTable[NotTerminals.repTerm3][Terminals.ADDOPR] = new Symbol[]{
-    new Symbol(Terminals.ADDOPR, (p,s) => { ((RepTerm3ADDOPR)p).ADDOPR = (Tokennode)s; }),
-    new Symbol(NotTerminals.term3, (p,s) => { ((RepTerm3ADDOPR)p).Term3 = (Term3)s; }),
-    new Symbol(NotTerminals.repTerm3, (p,s) => { ((RepTerm3ADDOPR)p).RepTerm3 = (RepTerm3)s; }),
-};
+                new Symbol(Terminals.ADDOPR, (p,s) => { ((RepTerm3ADDOPR)p).ADDOPR = (Tokennode)s; }),
+                new Symbol(NotTerminals.term3, (p,s) => { ((RepTerm3ADDOPR)p).Term3 = (Term3)s; }),
+                new Symbol(NotTerminals.repTerm3, (p,s) => { ((RepTerm3ADDOPR)p).RepTerm3 = (RepTerm3)s; }),
+            };
 
             ParseTable[NotTerminals.repTerm3][Terminals.COMMA] = new Symbol[]{
-};
+            };
 
             ParseTable[NotTerminals.repTerm3][Terminals.RPAREN] = new Symbol[]{
-};
+            };
 
             ParseTable[NotTerminals.repTerm3][Terminals.DO] = new Symbol[]{
-};
+            };
 
             ParseTable[NotTerminals.repTerm3][Terminals.THEN] = new Symbol[]{
-};
+            };
 
             ParseTable[NotTerminals.repTerm3][Terminals.ENDWHILE] = new Symbol[]{
-};
+            };
 
             ParseTable[NotTerminals.repTerm3][Terminals.ENDIF] = new Symbol[]{
-};
+            };
 
             ParseTable[NotTerminals.repTerm3][Terminals.ELSE] = new Symbol[]{
-};
+            };
 
             ParseTable[NotTerminals.repTerm3][Terminals.ENDPROC] = new Symbol[]{
-};
+            };
 
             ParseTable[NotTerminals.repTerm3][Terminals.ENDFUN] = new Symbol[]{
-};
+            };
 
             ParseTable[NotTerminals.repTerm3][Terminals.ENDPROGRAM] = new Symbol[]{
-};
+            };
 
             ParseTable[NotTerminals.repTerm3][Terminals.SEMICOLON] = new Symbol[]{
-};
+            };
 
             ParseTable[NotTerminals.repTerm3][Terminals.BECOMES] = new Symbol[]{
-};
+            };
 
             ParseTable[NotTerminals.repTerm3][Terminals.BOOLOPR] = new Symbol[]{
-};
+            };
 
             ParseTable[NotTerminals.repTerm3][Terminals.RELOPR] = new Symbol[]{
-};
+            };
 
             ParseTable[NotTerminals.term3] = new Dictionary<Terminals, Symbol[]>();
             ParseTable[NotTerminals.term3][Terminals.TYPE] = new Symbol[]{
-    new Symbol(NotTerminals.factor, (p,s) => { ((Term3TYPE)p).Factor = (Factor)s; }),
-    new Symbol(NotTerminals.repFactor, (p,s) => { ((Term3TYPE)p).RepFactor = (RepFactor)s; }),
-};
+                new Symbol(NotTerminals.factor, (p,s) => { ((Term3TYPE)p).Factor = (Factor)s; }),
+                new Symbol(NotTerminals.repFactor, (p,s) => { ((Term3TYPE)p).RepFactor = (RepFactor)s; }),
+            };
 
             ParseTable[NotTerminals.term3][Terminals.LPAREN] = new Symbol[]{
-    new Symbol(NotTerminals.factor, (p,s) => { ((Term3LPAREN)p).Factor = (Factor)s; }),
-    new Symbol(NotTerminals.repFactor, (p,s) => { ((Term3LPAREN)p).RepFactor = (RepFactor)s; }),
-};
+                new Symbol(NotTerminals.factor, (p,s) => { ((Term3LPAREN)p).Factor = (Factor)s; }),
+                new Symbol(NotTerminals.repFactor, (p,s) => { ((Term3LPAREN)p).RepFactor = (RepFactor)s; }),
+            };
 
             ParseTable[NotTerminals.term3][Terminals.ADDOPR] = new Symbol[]{
-    new Symbol(NotTerminals.factor, (p,s) => { ((Term3ADDOPR)p).Factor = (Factor)s; }),
-    new Symbol(NotTerminals.repFactor, (p,s) => { ((Term3ADDOPR)p).RepFactor = (RepFactor)s; }),
-};
+                new Symbol(NotTerminals.factor, (p,s) => { ((Term3ADDOPR)p).Factor = (Factor)s; }),
+                new Symbol(NotTerminals.repFactor, (p,s) => { ((Term3ADDOPR)p).RepFactor = (RepFactor)s; }),
+            };
 
             ParseTable[NotTerminals.term3][Terminals.NOT] = new Symbol[]{
-    new Symbol(NotTerminals.factor, (p,s) => { ((Term3NOT)p).Factor = (Factor)s; }),
-    new Symbol(NotTerminals.repFactor, (p,s) => { ((Term3NOT)p).RepFactor = (RepFactor)s; }),
-};
+                new Symbol(NotTerminals.factor, (p,s) => { ((Term3NOT)p).Factor = (Factor)s; }),
+                new Symbol(NotTerminals.repFactor, (p,s) => { ((Term3NOT)p).RepFactor = (RepFactor)s; }),
+            };
 
             ParseTable[NotTerminals.term3][Terminals.IDENT] = new Symbol[]{
-    new Symbol(NotTerminals.factor, (p,s) => { ((Term3IDENT)p).Factor = (Factor)s; }),
-    new Symbol(NotTerminals.repFactor, (p,s) => { ((Term3IDENT)p).RepFactor = (RepFactor)s; }),
-};
+                new Symbol(NotTerminals.factor, (p,s) => { ((Term3IDENT)p).Factor = (Factor)s; }),
+                new Symbol(NotTerminals.repFactor, (p,s) => { ((Term3IDENT)p).RepFactor = (RepFactor)s; }),
+            };
 
             ParseTable[NotTerminals.term3][Terminals.LITERAL] = new Symbol[]{
-    new Symbol(NotTerminals.factor, (p,s) => { ((Term3LITERAL)p).Factor = (Factor)s; }),
-    new Symbol(NotTerminals.repFactor, (p,s) => { ((Term3LITERAL)p).RepFactor = (RepFactor)s; }),
-};
+                new Symbol(NotTerminals.factor, (p,s) => { ((Term3LITERAL)p).Factor = (Factor)s; }),
+                new Symbol(NotTerminals.repFactor, (p,s) => { ((Term3LITERAL)p).RepFactor = (RepFactor)s; }),
+            };
 
             ParseTable[NotTerminals.repFactor] = new Dictionary<Terminals, Symbol[]>();
             ParseTable[NotTerminals.repFactor][Terminals.MULTOPR] = new Symbol[]{
-    new Symbol(Terminals.MULTOPR, (p,s) => { ((RepFactorMULTOPR)p).MULTOPR = (Tokennode)s; }),
-    new Symbol(NotTerminals.factor, (p,s) => { ((RepFactorMULTOPR)p).Factor = (Factor)s; }),
-    new Symbol(NotTerminals.repFactor, (p,s) => { ((RepFactorMULTOPR)p).RepFactor = (RepFactor)s; }),
-};
+                new Symbol(Terminals.MULTOPR, (p,s) => { ((RepFactorMULTOPR)p).MULTOPR = (Tokennode)s; }),
+                new Symbol(NotTerminals.factor, (p,s) => { ((RepFactorMULTOPR)p).Factor = (Factor)s; }),
+                new Symbol(NotTerminals.repFactor, (p,s) => { ((RepFactorMULTOPR)p).RepFactor = (RepFactor)s; }),
+            };
 
             ParseTable[NotTerminals.repFactor][Terminals.COMMA] = new Symbol[]{
-};
+            };
 
             ParseTable[NotTerminals.repFactor][Terminals.RPAREN] = new Symbol[]{
-};
+            };
 
             ParseTable[NotTerminals.repFactor][Terminals.DO] = new Symbol[]{
-};
+            };
 
             ParseTable[NotTerminals.repFactor][Terminals.THEN] = new Symbol[]{
-};
+            };
 
             ParseTable[NotTerminals.repFactor][Terminals.ENDWHILE] = new Symbol[]{
-};
+            };
 
             ParseTable[NotTerminals.repFactor][Terminals.ENDIF] = new Symbol[]{
-};
+            };
 
             ParseTable[NotTerminals.repFactor][Terminals.ELSE] = new Symbol[]{
-};
+            };
 
             ParseTable[NotTerminals.repFactor][Terminals.ENDPROC] = new Symbol[]{
-};
+            };
 
             ParseTable[NotTerminals.repFactor][Terminals.ENDFUN] = new Symbol[]{
-};
+            };
 
             ParseTable[NotTerminals.repFactor][Terminals.ENDPROGRAM] = new Symbol[]{
-};
+            };
 
             ParseTable[NotTerminals.repFactor][Terminals.SEMICOLON] = new Symbol[]{
-};
+            };
 
             ParseTable[NotTerminals.repFactor][Terminals.BECOMES] = new Symbol[]{
-};
+            };
 
             ParseTable[NotTerminals.repFactor][Terminals.BOOLOPR] = new Symbol[]{
-};
+            };
 
             ParseTable[NotTerminals.repFactor][Terminals.RELOPR] = new Symbol[]{
-};
+            };
 
             ParseTable[NotTerminals.repFactor][Terminals.ADDOPR] = new Symbol[]{
-};
+            };
 
             ParseTable[NotTerminals.factor] = new Dictionary<Terminals, Symbol[]>();
             ParseTable[NotTerminals.factor][Terminals.LITERAL] = new Symbol[]{
-    new Symbol(Terminals.LITERAL, (p,s) => { ((FactorLITERAL)p).LITERAL = (Tokennode)s; }),
-};
+                new Symbol(Terminals.LITERAL, (p,s) => { ((FactorLITERAL)p).LITERAL = (Tokennode)s; }),
+            };
 
             ParseTable[NotTerminals.factor][Terminals.IDENT] = new Symbol[]{
-    new Symbol(Terminals.IDENT, (p,s) => { ((FactorIDENT)p).IDENT = (Tokennode)s; }),
-    new Symbol(NotTerminals.optInitOrExprList, (p,s) => { ((FactorIDENT)p).OptInitOrExprList = (OptInitOrExprList)s; }),
-};
+                new Symbol(Terminals.IDENT, (p,s) => { ((FactorIDENT)p).IDENT = (Tokennode)s; }),
+                new Symbol(NotTerminals.optInitOrExprList, (p,s) => { ((FactorIDENT)p).OptInitOrExprList = (OptInitOrExprList)s; }),
+            };
 
             ParseTable[NotTerminals.factor][Terminals.ADDOPR] = new Symbol[]{
-    new Symbol(NotTerminals.monadicOpr, (p,s) => { ((FactorADDOPR)p).MonadicOpr = (MonadicOpr)s; }),
-    new Symbol(NotTerminals.factor, (p,s) => { ((FactorADDOPR)p).Factor = (Factor)s; }),
-};
+                new Symbol(NotTerminals.monadicOpr, (p,s) => { ((FactorADDOPR)p).MonadicOpr = (MonadicOpr)s; }),
+                new Symbol(NotTerminals.factor, (p,s) => { ((FactorADDOPR)p).Factor = (Factor)s; }),
+            };
 
             ParseTable[NotTerminals.factor][Terminals.NOT] = new Symbol[]{
-    new Symbol(NotTerminals.monadicOpr, (p,s) => { ((FactorNOT)p).MonadicOpr = (MonadicOpr)s; }),
-    new Symbol(NotTerminals.factor, (p,s) => { ((FactorNOT)p).Factor = (Factor)s; }),
-};
+                new Symbol(NotTerminals.monadicOpr, (p,s) => { ((FactorNOT)p).MonadicOpr = (MonadicOpr)s; }),
+                new Symbol(NotTerminals.factor, (p,s) => { ((FactorNOT)p).Factor = (Factor)s; }),
+            };
 
             ParseTable[NotTerminals.factor][Terminals.LPAREN] = new Symbol[]{
-    new Symbol(Terminals.LPAREN, (p,s) => { ((FactorLPAREN)p).LPAREN = (Tokennode)s; }),
-    new Symbol(NotTerminals.expr, (p,s) => { ((FactorLPAREN)p).Expr = (Expr)s; }),
-    new Symbol(Terminals.RPAREN, (p,s) => { ((FactorLPAREN)p).RPAREN = (Tokennode)s; }),
-};
+                new Symbol(Terminals.LPAREN, (p,s) => { ((FactorLPAREN)p).LPAREN = (Tokennode)s; }),
+                new Symbol(NotTerminals.expr, (p,s) => { ((FactorLPAREN)p).Expr = (Expr)s; }),
+                new Symbol(Terminals.RPAREN, (p,s) => { ((FactorLPAREN)p).RPAREN = (Tokennode)s; }),
+            };
 
             ParseTable[NotTerminals.factor][Terminals.TYPE] = new Symbol[]{
-    new Symbol(Terminals.TYPE, (p,s) => { ((FactorTYPE)p).TYPE = (Tokennode)s; }),
-    new Symbol(Terminals.LPAREN, (p,s) => { ((FactorTYPE)p).LPAREN = (Tokennode)s; }),
-    new Symbol(NotTerminals.expr, (p,s) => { ((FactorTYPE)p).Expr = (Expr)s; }),
-    new Symbol(Terminals.RPAREN, (p,s) => { ((FactorTYPE)p).RPAREN = (Tokennode)s; }),
-};
+                new Symbol(Terminals.TYPE, (p,s) => { ((FactorTYPE)p).TYPE = (Tokennode)s; }),
+                new Symbol(Terminals.LPAREN, (p,s) => { ((FactorTYPE)p).LPAREN = (Tokennode)s; }),
+                new Symbol(NotTerminals.expr, (p,s) => { ((FactorTYPE)p).Expr = (Expr)s; }),
+                new Symbol(Terminals.RPAREN, (p,s) => { ((FactorTYPE)p).RPAREN = (Tokennode)s; }),
+            };
 
             ParseTable[NotTerminals.optInitOrExprList] = new Dictionary<Terminals, Symbol[]>();
             ParseTable[NotTerminals.optInitOrExprList][Terminals.INIT] = new Symbol[]{
-    new Symbol(Terminals.INIT, (p,s) => { ((OptInitOrExprListINIT)p).INIT = (Tokennode)s; }),
-};
+                new Symbol(Terminals.INIT, (p,s) => { ((OptInitOrExprListINIT)p).INIT = (Tokennode)s; }),
+            };
 
             ParseTable[NotTerminals.optInitOrExprList][Terminals.LPAREN] = new Symbol[]{
-    new Symbol(NotTerminals.exprList, (p,s) => { ((OptInitOrExprListLPAREN)p).ExprList = (ExprList)s; }),
-};
+                new Symbol(NotTerminals.exprList, (p,s) => { ((OptInitOrExprListLPAREN)p).ExprList = (ExprList)s; }),
+            };
 
             ParseTable[NotTerminals.optInitOrExprList][Terminals.COMMA] = new Symbol[]{
-};
+            };
 
             ParseTable[NotTerminals.optInitOrExprList][Terminals.RPAREN] = new Symbol[]{
-};
+            };
 
             ParseTable[NotTerminals.optInitOrExprList][Terminals.DO] = new Symbol[]{
-};
+            };
 
             ParseTable[NotTerminals.optInitOrExprList][Terminals.THEN] = new Symbol[]{
-};
+            };
 
             ParseTable[NotTerminals.optInitOrExprList][Terminals.ENDWHILE] = new Symbol[]{
-};
+            };
 
             ParseTable[NotTerminals.optInitOrExprList][Terminals.ENDIF] = new Symbol[]{
-};
+            };
 
             ParseTable[NotTerminals.optInitOrExprList][Terminals.ELSE] = new Symbol[]{
-};
+            };
 
             ParseTable[NotTerminals.optInitOrExprList][Terminals.ENDPROC] = new Symbol[]{
-};
+            };
 
             ParseTable[NotTerminals.optInitOrExprList][Terminals.ENDFUN] = new Symbol[]{
-};
+            };
 
             ParseTable[NotTerminals.optInitOrExprList][Terminals.ENDPROGRAM] = new Symbol[]{
-};
+            };
 
             ParseTable[NotTerminals.optInitOrExprList][Terminals.SEMICOLON] = new Symbol[]{
-};
+            };
 
             ParseTable[NotTerminals.optInitOrExprList][Terminals.BECOMES] = new Symbol[]{
-};
+            };
 
             ParseTable[NotTerminals.optInitOrExprList][Terminals.BOOLOPR] = new Symbol[]{
-};
+            };
 
             ParseTable[NotTerminals.optInitOrExprList][Terminals.RELOPR] = new Symbol[]{
-};
+            };
 
             ParseTable[NotTerminals.optInitOrExprList][Terminals.ADDOPR] = new Symbol[]{
-};
+            };
 
             ParseTable[NotTerminals.optInitOrExprList][Terminals.MULTOPR] = new Symbol[]{
-};
+            };
 
             ParseTable[NotTerminals.monadicOpr] = new Dictionary<Terminals, Symbol[]>();
             ParseTable[NotTerminals.monadicOpr][Terminals.NOT] = new Symbol[]{
-    new Symbol(Terminals.NOT, (p,s) => { ((MonadicOprNOT)p).NOT = (Tokennode)s; }),
-};
+                new Symbol(Terminals.NOT, (p,s) => { ((MonadicOprNOT)p).NOT = (Tokennode)s; }),
+            };
 
             ParseTable[NotTerminals.monadicOpr][Terminals.ADDOPR] = new Symbol[]{
-    new Symbol(Terminals.ADDOPR, (p,s) => { ((MonadicOprADDOPR)p).ADDOPR = (Tokennode)s; }),
-};
+                new Symbol(Terminals.ADDOPR, (p,s) => { ((MonadicOprADDOPR)p).ADDOPR = (Tokennode)s; }),
+            };
 
             ParseTable[NotTerminals.exprList] = new Dictionary<Terminals, Symbol[]>();
             ParseTable[NotTerminals.exprList][Terminals.LPAREN] = new Symbol[]{
-    new Symbol(Terminals.LPAREN, (p,s) => { ((ExprListLPAREN)p).LPAREN = (Tokennode)s; }),
-    new Symbol(NotTerminals.optExprList, (p,s) => { ((ExprListLPAREN)p).OptExprList = (OptExprList)s; }),
-    new Symbol(Terminals.RPAREN, (p,s) => { ((ExprListLPAREN)p).RPAREN = (Tokennode)s; }),
-};
+                new Symbol(Terminals.LPAREN, (p,s) => { ((ExprListLPAREN)p).LPAREN = (Tokennode)s; }),
+                new Symbol(NotTerminals.optExprList, (p,s) => { ((ExprListLPAREN)p).OptExprList = (OptExprList)s; }),
+                new Symbol(Terminals.RPAREN, (p,s) => { ((ExprListLPAREN)p).RPAREN = (Tokennode)s; }),
+            };
 
             ParseTable[NotTerminals.optExprList] = new Dictionary<Terminals, Symbol[]>();
             ParseTable[NotTerminals.optExprList][Terminals.TYPE] = new Symbol[]{
-    new Symbol(NotTerminals.expr, (p,s) => { ((OptExprListTYPE)p).Expr = (Expr)s; }),
-    new Symbol(NotTerminals.repExprList, (p,s) => { ((OptExprListTYPE)p).RepExprList = (RepExprList)s; }),
-};
+                new Symbol(NotTerminals.expr, (p,s) => { ((OptExprListTYPE)p).Expr = (Expr)s; }),
+                new Symbol(NotTerminals.repExprList, (p,s) => { ((OptExprListTYPE)p).RepExprList = (RepExprList)s; }),
+            };
 
             ParseTable[NotTerminals.optExprList][Terminals.LPAREN] = new Symbol[]{
-    new Symbol(NotTerminals.expr, (p,s) => { ((OptExprListLPAREN)p).Expr = (Expr)s; }),
-    new Symbol(NotTerminals.repExprList, (p,s) => { ((OptExprListLPAREN)p).RepExprList = (RepExprList)s; }),
-};
+                new Symbol(NotTerminals.expr, (p,s) => { ((OptExprListLPAREN)p).Expr = (Expr)s; }),
+                new Symbol(NotTerminals.repExprList, (p,s) => { ((OptExprListLPAREN)p).RepExprList = (RepExprList)s; }),
+            };
 
             ParseTable[NotTerminals.optExprList][Terminals.ADDOPR] = new Symbol[]{
-    new Symbol(NotTerminals.expr, (p,s) => { ((OptExprListADDOPR)p).Expr = (Expr)s; }),
-    new Symbol(NotTerminals.repExprList, (p,s) => { ((OptExprListADDOPR)p).RepExprList = (RepExprList)s; }),
-};
+                new Symbol(NotTerminals.expr, (p,s) => { ((OptExprListADDOPR)p).Expr = (Expr)s; }),
+                new Symbol(NotTerminals.repExprList, (p,s) => { ((OptExprListADDOPR)p).RepExprList = (RepExprList)s; }),
+            };
 
             ParseTable[NotTerminals.optExprList][Terminals.NOT] = new Symbol[]{
-    new Symbol(NotTerminals.expr, (p,s) => { ((OptExprListNOT)p).Expr = (Expr)s; }),
-    new Symbol(NotTerminals.repExprList, (p,s) => { ((OptExprListNOT)p).RepExprList = (RepExprList)s; }),
-};
+                new Symbol(NotTerminals.expr, (p,s) => { ((OptExprListNOT)p).Expr = (Expr)s; }),
+                new Symbol(NotTerminals.repExprList, (p,s) => { ((OptExprListNOT)p).RepExprList = (RepExprList)s; }),
+            };
 
             ParseTable[NotTerminals.optExprList][Terminals.IDENT] = new Symbol[]{
-    new Symbol(NotTerminals.expr, (p,s) => { ((OptExprListIDENT)p).Expr = (Expr)s; }),
-    new Symbol(NotTerminals.repExprList, (p,s) => { ((OptExprListIDENT)p).RepExprList = (RepExprList)s; }),
-};
+                new Symbol(NotTerminals.expr, (p,s) => { ((OptExprListIDENT)p).Expr = (Expr)s; }),
+                new Symbol(NotTerminals.repExprList, (p,s) => { ((OptExprListIDENT)p).RepExprList = (RepExprList)s; }),
+            };
 
             ParseTable[NotTerminals.optExprList][Terminals.LITERAL] = new Symbol[]{
-    new Symbol(NotTerminals.expr, (p,s) => { ((OptExprListLITERAL)p).Expr = (Expr)s; }),
-    new Symbol(NotTerminals.repExprList, (p,s) => { ((OptExprListLITERAL)p).RepExprList = (RepExprList)s; }),
-};
+                new Symbol(NotTerminals.expr, (p,s) => { ((OptExprListLITERAL)p).Expr = (Expr)s; }),
+                new Symbol(NotTerminals.repExprList, (p,s) => { ((OptExprListLITERAL)p).RepExprList = (RepExprList)s; }),
+            };
 
             ParseTable[NotTerminals.optExprList][Terminals.RPAREN] = new Symbol[]{
-};
+            };
 
             ParseTable[NotTerminals.repExprList] = new Dictionary<Terminals, Symbol[]>();
             ParseTable[NotTerminals.repExprList][Terminals.COMMA] = new Symbol[]{
-    new Symbol(Terminals.COMMA, (p,s) => { ((RepExprListCOMMA)p).COMMA = (Tokennode)s; }),
-    new Symbol(NotTerminals.expr, (p,s) => { ((RepExprListCOMMA)p).Expr = (Expr)s; }),
-    new Symbol(NotTerminals.repExprList, (p,s) => { ((RepExprListCOMMA)p).RepExprList = (RepExprList)s; }),
-};
+                new Symbol(Terminals.COMMA, (p,s) => { ((RepExprListCOMMA)p).COMMA = (Tokennode)s; }),
+                new Symbol(NotTerminals.expr, (p,s) => { ((RepExprListCOMMA)p).Expr = (Expr)s; }),
+                new Symbol(NotTerminals.repExprList, (p,s) => { ((RepExprListCOMMA)p).RepExprList = (RepExprList)s; }),
+            };
 
             ParseTable[NotTerminals.repExprList][Terminals.RPAREN] = new Symbol[]{
-};
+            };
 
             //* Factories *//
 

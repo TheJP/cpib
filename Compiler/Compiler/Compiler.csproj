@@ -45,6 +45,7 @@
     <Compile Include="01Scanner\Scanner.cs" />
     <Compile Include="01Scanner\State\AndState.cs" />
     <Compile Include="01Scanner\State\ColonState.cs" />
+    <Compile Include="01Scanner\State\DecimalState.cs" />
     <Compile Include="01Scanner\State\DefaultState.cs" />
     <Compile Include="01Scanner\State\GTState.cs" />
     <Compile Include="01Scanner\State\LTState.cs" />
@@ -55,6 +56,7 @@
     <Compile Include="01Scanner\State\State.cs" />
     <Compile Include="01Scanner\State\TextState.cs" />
     <Compile Include="01Scanner\Token\ChangeModeToken.cs" />
+    <Compile Include="01Scanner\Token\DecimalLiteralToken.cs" />
     <Compile Include="01Scanner\Token\FlowModeToken.cs" />
     <Compile Include="01Scanner\Token\GenericParamToken.cs" />
     <Compile Include="01Scanner\Token\ChangeMode.cs" />

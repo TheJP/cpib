@@ -28,7 +28,7 @@ namespace Compiler
         RELOPR,
         ///<summary>&&, ||, &? or |?</summary>
         BOOLOPR,
-        ///<summary>bool or int32</summary>
+        ///<summary>decimal, bool or int32</summary>
         TYPE,
         ///<summary>call</summary>
         CALL,
@@ -54,7 +54,7 @@ namespace Compiler
         ENDPROGRAM,
         ///<summary>endwhile</summary>
         ENDWHILE,
-        ///<summary>false, true or (+|-)?[0-9]+</summary>
+        ///<summary>false, true, /[0-9]+/ or /[0-9]+\.[0-9]+m/</summary>
         LITERAL,
         ///<summary>fun (here, have some fun)</summary>
         FUN,

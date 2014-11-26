@@ -6,10 +6,8 @@ using System.Threading.Tasks;
 
 namespace Compiler
 {
-    public enum Type
+    public class DecimalLiteralToken : GenericParamToken<decimal>
     {
-        INT32,
-        BOOL,
-        DECIMAL
+        public DecimalLiteralToken(decimal value) : base(Terminals.LITERAL, value) { }
     }
 }

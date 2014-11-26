@@ -37,6 +37,7 @@ namespace Compiler
             Keywords.Add("mod", new OperatorToken(Terminals.MULTOPR, Operators.MOD));
             Keywords.Add("bool", new TypeToken(Type.BOOL));
             Keywords.Add("int32", new TypeToken(Type.INT32));
+            Keywords.Add("decimal", new TypeToken(Type.DECIMAL));
             Keywords.Add("call", new Token(Terminals.CALL));
             Keywords.Add("const", new ChangeModeToken(ChangeMode.CONST));
             Keywords.Add("var", new ChangeModeToken(ChangeMode.VAR));

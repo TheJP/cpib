@@ -31,6 +31,10 @@ namespace FixFoxi2CSharp
                 writer.WriteLine();
                 new CreatorClasses().Create(writer, parseTable);
             }
+            using (var writer = new StreamWriter("ASTPartials.cs"))
+            {
+                new CreatorAST().Create(writer, parseTable);
+            }
         }
     }
 }

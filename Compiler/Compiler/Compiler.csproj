@@ -68,6 +68,14 @@
     <Compile Include="01Scanner\Token\OperatorToken.cs" />
     <Compile Include="01Scanner\Token\BoolLiteralToken.cs" />
     <Compile Include="01Scanner\Token\IntLiteralToken.cs" />
+    <Compile Include="02Parser\AST\ASTCpsCmd.cs" />
+    <Compile Include="02Parser\AST\ASTCpsDecl.cs" />
+    <Compile Include="02Parser\AST\ASTEmpty.cs" />
+    <Compile Include="02Parser\AST\ASTPartials.cs" />
+    <Compile Include="02Parser\AST\ASTProcDeclPROC.cs" />
+    <Compile Include="02Parser\AST\ASTProgParam.cs" />
+    <Compile Include="02Parser\AST\ASTProgram.cs" />
+    <Compile Include="02Parser\AST\IASTNode.cs" />
     <Compile Include="02Parser\GrammarException.cs" />
     <Compile Include="02Parser\NotTerminals.cs" />
     <Compile Include="02Parser\Parser.cs" />

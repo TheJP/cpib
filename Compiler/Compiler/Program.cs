@@ -18,6 +18,8 @@ namespace Compiler
                 Console.WriteLine("[" + String.Join(", ", list) + "]");
                 Parser parser = new Parser();
                 var tree = parser.Parse(list);
+                var ast = tree.ToAbstractSyntax();
+                Console.WriteLine(ast.ToString());
             }
             catch (Exception ex)
             {

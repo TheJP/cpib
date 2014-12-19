@@ -36,7 +36,7 @@ namespace Compiler
     {
         public virtual IASTNode ToAbstractSyntax()
         {
-            throw new NotImplementedException();
+            return this.StoDecl.ToAbstractSyntax();
         }
     }
     public partial class DeclIDENT : Decl
@@ -71,9 +71,15 @@ namespace Compiler
     {
         public virtual IASTNode ToAbstractSyntax()
         {
-            throw new NotImplementedException();
+            var decl = new ASTStoDecl();
+            decl.Ident = ((IdentToken)((TypedIdentIDENT)this.TypedIdent).IDENT.Token).Value;
+            decl.Type = ((TypeToken)((TypedIdentIDENT)this.TypedIdent).TYPE.Token).Value;
+            decl.Changemode = ((ChangeModeToken)this.CHANGEMODE.Token).Value;
+
+            return decl;
         }
     }
+
     public partial class FunDeclFUN : FunDecl
     {
         public virtual IASTNode ToAbstractSyntax()
@@ -232,11 +238,18 @@ namespace Compiler
     {
         public virtual IASTNode ToAbstractSyntax()
         {
-            var decl = (ASTCpsDecl)this.Decl.ToAbstractSyntax();
+            var rep = this.RepCpsDecl.ToAbstractSyntax();
 
-            decl.NextDecl = this.RepCpsDecl.ToAbstractSyntax();
+            if (!(rep is ASTEmpty))
+            {
+                var decl = (ASTCpsDecl)this.Decl.ToAbstractSyntax();
 
-            return decl;
+                decl.NextDecl = rep;
+
+                return decl;
+            }
+
+            return this.Decl.ToAbstractSyntax();
         }
     }
 
@@ -265,14 +278,25 @@ namespace Compiler
     {
         public virtual IASTNode ToAbstractSyntax()
         {
-            throw new NotImplementedException();
+            var rep = this.RepCpsDecl.ToAbstractSyntax();
+
+            if (!(rep is ASTEmpty))
+            {
+                var decl = (ASTCpsDecl)this.Decl.ToAbstractSyntax();
+
+                decl.NextDecl = rep;
+
+                return decl;
+            }
+
+            return this.Decl.ToAbstractSyntax();
         }
     }
     public partial class RepCpsDeclDO : RepCpsDecl
     {
         public virtual IASTNode ToAbstractSyntax()
         {
-            throw new NotImplementedException();
+            return new ASTEmpty();
         }
     }
     public partial class OptCpsStoDeclLOCAL : OptCpsStoDecl
@@ -597,9 +621,15 @@ namespace Compiler
     {
         public virtual IASTNode ToAbstractSyntax()
         {
-            throw new NotImplementedException();
+            var call = new ASTCmdCall();
+            call.Ident = ((IdentToken)this.IDENT.Token).Value;
+            call.ExprList = this.ExprList.ToAbstractSyntax();
+            call.OptGlobInits = this.OptGlobInits.ToAbstractSyntax();
+
+            return call;
         }
     }
+
     public partial class CmdDEBUGIN : Cmd
     {
         public virtual IASTNode ToAbstractSyntax()
@@ -771,7 +801,7 @@ namespace Compiler
     {
         public virtual IASTNode ToAbstractSyntax()
         {
-            throw new NotImplementedException();
+            return new ASTEmpty();
         }
     }
     public partial class OptGlobInitsINIT : OptGlobInits
@@ -827,7 +857,7 @@ namespace Compiler
     {
         public virtual IASTNode ToAbstractSyntax()
         {
-            throw new NotImplementedException();
+            return new ASTEmpty();
         }
     }
     public partial class RepIdentsCOMMA : RepIdents
@@ -890,7 +920,17 @@ namespace Compiler
     {
         public virtual IASTNode ToAbstractSyntax()
         {
-            throw new NotImplementedException();
+            var rep = this.RepTerm1.ToAbstractSyntax();
+            if (!(rep is ASTEmpty))
+            {
+                var ident = new ASTExpr();
+                ident.Term = this.Term1.ToAbstractSyntax();
+                ident.RepTerm = this.RepTerm1.ToAbstractSyntax();
+                ident.Type = Terminals.TYPE;
+                return ident;
+            }
+
+            return this.Term1.ToAbstractSyntax();
         }
     }
     public partial class ExprLPAREN : Expr
@@ -960,14 +1000,14 @@ namespace Compiler
     {
         public virtual IASTNode ToAbstractSyntax()
         {
-            throw new NotImplementedException();
+            return new ASTEmpty();
         }
     }
     public partial class RepTerm1RPAREN : RepTerm1
     {
         public virtual IASTNode ToAbstractSyntax()
         {
-            throw new NotImplementedException();
+            return new ASTEmpty();
         }
     }
     public partial class RepTerm1DO : RepTerm1
@@ -1023,7 +1063,7 @@ namespace Compiler
     {
         public virtual IASTNode ToAbstractSyntax()
         {
-            throw new NotImplementedException();
+            return new ASTEmpty();//return EndProgram node?
         }
     }
     public partial class RepTerm1SEMICOLON : RepTerm1
@@ -1044,7 +1084,18 @@ namespace Compiler
     {
         public virtual IASTNode ToAbstractSyntax()
         {
-            throw new NotImplementedException();
+            var rep = this.RepTerm2.ToAbstractSyntax();
+
+            if (!(rep is ASTEmpty))
+            {
+                var term2 = new ASTTerm1();
+                term2.Term = this.Term2.ToAbstractSyntax();
+                term2.RepTerm = this.RepTerm2.ToAbstractSyntax();
+                term2.Type = Terminals.TYPE;
+                return term2;
+            }
+
+            return this.Term2.ToAbstractSyntax();
         }
     }
     public partial class Term1LPAREN : Term1
@@ -1120,14 +1171,14 @@ namespace Compiler
     {
         public virtual IASTNode ToAbstractSyntax()
         {
-            throw new NotImplementedException();
+            return new ASTEmpty();
         }
     }
     public partial class RepTerm2RPAREN : RepTerm2
     {
         public virtual IASTNode ToAbstractSyntax()
         {
-            throw new NotImplementedException();
+            return new ASTEmpty();
         }
     }
     public partial class RepTerm2DO : RepTerm2
@@ -1183,7 +1234,7 @@ namespace Compiler
     {
         public virtual IASTNode ToAbstractSyntax()
         {
-            throw new NotImplementedException();
+            return new ASTEmpty();
         }
     }
     public partial class RepTerm2SEMICOLON : RepTerm2
@@ -1211,7 +1262,18 @@ namespace Compiler
     {
         public virtual IASTNode ToAbstractSyntax()
         {
-            throw new NotImplementedException();
+            var rep = this.RepTerm3.ToAbstractSyntax();
+
+            if (!(rep is ASTEmpty))
+            {
+                var term2 = new ASTTerm2();
+                term2.Term = this.Term3.ToAbstractSyntax();
+                term2.RepTerm = this.RepTerm3.ToAbstractSyntax();
+                term2.Type = Terminals.TYPE;
+                return term2;
+            }
+
+            return this.Term3.ToAbstractSyntax();
         }
     }
     public partial class Term2LPAREN : Term2
@@ -1287,14 +1349,14 @@ namespace Compiler
     {
         public virtual IASTNode ToAbstractSyntax()
         {
-            throw new NotImplementedException();
+            return new ASTEmpty();
         }
     }
     public partial class RepTerm3RPAREN : RepTerm3
     {
         public virtual IASTNode ToAbstractSyntax()
         {
-            throw new NotImplementedException();
+            return new ASTEmpty();
         }
     }
     public partial class RepTerm3DO : RepTerm3
@@ -1350,7 +1412,7 @@ namespace Compiler
     {
         public virtual IASTNode ToAbstractSyntax()
         {
-            throw new NotImplementedException();
+            return new ASTEmpty();
         }
     }
     public partial class RepTerm3SEMICOLON : RepTerm3
@@ -1385,7 +1447,18 @@ namespace Compiler
     {
         public virtual IASTNode ToAbstractSyntax()
         {
-            throw new NotImplementedException();
+            var rep = this.RepFactor.ToAbstractSyntax();
+
+            if (!(rep is ASTEmpty))
+            {
+                var term3 = new ASTTerm3();
+                term3.Factor = this.Factor.ToAbstractSyntax();
+                term3.RepFactor = this.RepFactor.ToAbstractSyntax();
+                term3.Type = Terminals.TYPE;
+                return term3;
+            }
+
+            return this.Factor.ToAbstractSyntax();
         }
     }
     public partial class Term3LPAREN : Term3
@@ -1462,14 +1535,14 @@ namespace Compiler
     {
         public virtual IASTNode ToAbstractSyntax()
         {
-            throw new NotImplementedException();
+            return new ASTEmpty();
         }
     }
     public partial class RepFactorRPAREN : RepFactor
     {
         public virtual IASTNode ToAbstractSyntax()
         {
-            throw new NotImplementedException();
+            return new ASTEmpty();
         }
     }
     public partial class RepFactorDO : RepFactor
@@ -1525,7 +1598,7 @@ namespace Compiler
     {
         public virtual IASTNode ToAbstractSyntax()
         {
-            throw new NotImplementedException();
+            return new ASTEmpty();
         }
     }
     public partial class RepFactorSEMICOLON : RepFactor
@@ -1631,9 +1704,13 @@ namespace Compiler
     {
         public virtual IASTNode ToAbstractSyntax()
         {
-            throw new NotImplementedException();
+            var ident = new ASTType();
+            ident.Type = ((TypeToken)this.TYPE.Token).Value;
+            ident.Expr = this.Expr.ToAbstractSyntax();
+            return ident;
         }
     }
+
     public partial class OptInitOrExprListINIT : OptInitOrExprList
     {
         public virtual IASTNode ToAbstractSyntax()
@@ -1652,7 +1729,7 @@ namespace Compiler
     {
         public virtual IASTNode ToAbstractSyntax()
         {
-            throw new NotImplementedException();
+            return new ASTEmpty();
         }
     }
     public partial class OptInitOrExprListRPAREN : OptInitOrExprList
@@ -1778,7 +1855,7 @@ namespace Compiler
     {
         public virtual IASTNode ToAbstractSyntax()
         {
-            throw new NotImplementedException();
+            return this.OptExprList.ToAbstractSyntax();
         }
     }
     public partial class OptExprListTYPE : OptExprList
@@ -1820,9 +1897,20 @@ namespace Compiler
     {
         public virtual IASTNode ToAbstractSyntax()
         {
-            throw new NotImplementedException();
+            var rep = this.RepExprList.ToAbstractSyntax();
+            if (!(rep is ASTEmpty))
+            {
+                var list = new ASTOptExprList();
+                list.Expr = this.Expr.ToAbstractSyntax();
+                list.RepExpr = rep;
+
+                return list;
+            }
+
+            return this.Expr.ToAbstractSyntax();
         }
     }
+
     public partial class OptExprListRPAREN : OptExprList
     {
         public virtual IASTNode ToAbstractSyntax()
@@ -1834,14 +1922,24 @@ namespace Compiler
     {
         public virtual IASTNode ToAbstractSyntax()
         {
-            throw new NotImplementedException();
+            var rep = this.RepExprList.ToAbstractSyntax();
+            if (!(rep is ASTEmpty))
+            {
+                var comma = new ASTComma();
+                comma.Expr = this.Expr.ToAbstractSyntax();
+                comma.RepExpr = rep;
+                return comma;
+            }
+
+            return this.Expr.ToAbstractSyntax();
         }
     }
+
     public partial class RepExprListRPAREN : RepExprList
     {
         public virtual IASTNode ToAbstractSyntax()
         {
-            throw new NotImplementedException();
+            return new ASTEmpty();
         }
     }
 

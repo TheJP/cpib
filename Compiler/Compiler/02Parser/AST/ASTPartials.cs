@@ -91,7 +91,7 @@ namespace Compiler
     {
         public virtual IASTNode ToAbstractSyntax()
         {
-            var decl = new ASTProcDeclPROC();
+            var decl = new ASTProcDecl();
             decl.Ident = ((IdentToken)this.IDENT.Token).Value;
             decl.OptCpsStoDecl = this.OptCpsStoDecl.ToAbstractSyntax();
             decl.OptGlobImps = this.OptGlobImps.ToAbstractSyntax();
@@ -585,7 +585,7 @@ namespace Compiler
     {
         public virtual IASTNode ToAbstractSyntax()
         {
-            var ident = new ASTCmdIDENT();
+            var ident = new ASTCmdIdent();
             ident.LValue = this.Expr.ToAbstractSyntax();
             ident.RValue = this.Expr2.ToAbstractSyntax();
             return ident;

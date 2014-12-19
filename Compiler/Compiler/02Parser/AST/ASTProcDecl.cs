@@ -2,7 +2,7 @@ using Compiler._02Parser.AST;
 
 namespace Compiler
 {
-    public class ASTProcDeclPROC:ASTCpsDecl
+    public class ASTProcDecl:ASTCpsDecl
     {
         public string Ident { get; set; }
 

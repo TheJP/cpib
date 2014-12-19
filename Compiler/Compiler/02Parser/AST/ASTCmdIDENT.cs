@@ -2,7 +2,7 @@ using Compiler._02Parser.AST;
 
 namespace Compiler
 {
-    public class ASTCmdIDENT : ASTCpsCmd
+    public class ASTCmdIdent : ASTCpsCmd
     {
         public IASTNode LValue { get; set; }
 

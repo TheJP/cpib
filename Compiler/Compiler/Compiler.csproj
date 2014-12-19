@@ -84,7 +84,7 @@
     <Compile Include="02Parser\AST\ASTOptExprList.cs" />
     <Compile Include="02Parser\AST\ASTParam.cs" />
     <Compile Include="02Parser\AST\ASTPartials.cs" />
-    <Compile Include="02Parser\AST\ASTProcDeclPROC.cs" />
+    <Compile Include="02Parser\AST\ASTProcDecl.cs" />
     <Compile Include="02Parser\AST\ASTProgram.cs" />
     <Compile Include="02Parser\AST\ASTRelOpr.cs" />
     <Compile Include="02Parser\AST\ASTStoDecl.cs" />

@@ -4,6 +4,11 @@ namespace Compiler
 {
     public class ASTParam : IASTNode
     {
+        public ASTParam()
+        {
+            NextParam = new ASTEmpty();
+        }
+
         public IASTNode NextParam { get; set; }
 
         public Type Type { get; set; }

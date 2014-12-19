@@ -357,8 +357,8 @@ namespace Compiler
     {
         public virtual IASTNode ToAbstractSyntax()
         {
-            var result = (ASTProgParam)this.ProgParam.ToAbstractSyntax();
-            result.NextParam = (ASTProgParam)this.RepProgParamList.ToAbstractSyntax();
+            var result = (ASTParam)this.ProgParam.ToAbstractSyntax();
+            result.NextParam = (ASTParam)this.RepProgParamList.ToAbstractSyntax();
 
             return result;
         }
@@ -389,7 +389,7 @@ namespace Compiler
     {
         public virtual IASTNode ToAbstractSyntax()
         {
-            var result = (ASTProgParam)this.ProgParam.ToAbstractSyntax();
+            var result = (ASTParam)this.ProgParam.ToAbstractSyntax();
             result.NextParam = this.RepProgParamList.ToAbstractSyntax();
 
             return result;
@@ -420,7 +420,7 @@ namespace Compiler
     {
         public virtual IASTNode ToAbstractSyntax()
         {
-            var param = new ASTProgParam();
+            var param = new ASTParam();
             param.Type = ((TypeToken)((TypedIdentIDENT)this.TypedIdent).TYPE.Token).Value;
             param.Ident = ((IdentToken)((TypedIdentIDENT)this.TypedIdent).IDENT.Token).Value;
             param.FlowMode = ((FlowModeToken)this.FLOWMODE.Token).Value;
@@ -850,7 +850,7 @@ namespace Compiler
     {
         public virtual IASTNode ToAbstractSyntax()
         {
-            throw new NotImplementedException();
+            return new ASTEmpty();
         }
     }
     public partial class OptGlobInitsSEMICOLON : OptGlobInits
@@ -1743,7 +1743,7 @@ namespace Compiler
     {
         public virtual IASTNode ToAbstractSyntax()
         {
-            throw new NotImplementedException();
+            return new ASTEmpty();
         }
     }
     public partial class OptInitOrExprListTHEN : OptInitOrExprList
@@ -1757,7 +1757,7 @@ namespace Compiler
     {
         public virtual IASTNode ToAbstractSyntax()
         {
-            throw new NotImplementedException();
+            return new ASTEmpty();
         }
     }
     public partial class OptInitOrExprListENDIF : OptInitOrExprList
@@ -1890,7 +1890,17 @@ namespace Compiler
     {
         public virtual IASTNode ToAbstractSyntax()
         {
-            throw new NotImplementedException();
+            var rep = this.RepExprList.ToAbstractSyntax();
+            if (!(rep is ASTEmpty))
+            {
+                var list = new ASTOptExprList();
+                list.Expr = this.Expr.ToAbstractSyntax();
+                list.RepExpr = rep;
+
+                return list;
+            }
+
+            return this.Expr.ToAbstractSyntax();
         }
     }
     public partial class OptExprListLITERAL : OptExprList

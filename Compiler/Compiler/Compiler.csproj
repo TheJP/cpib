@@ -70,6 +70,7 @@
     <Compile Include="01Scanner\Token\IntLiteralToken.cs" />
     <Compile Include="02Parser\AST\ASTAddOpr.cs" />
     <Compile Include="02Parser\AST\ASTBoolLiteral.cs" />
+    <Compile Include="02Parser\AST\ASTBoolOpr.cs" />
     <Compile Include="02Parser\AST\ASTCmdCall.cs" />
     <Compile Include="02Parser\AST\ASTCmdIDENT.cs" />
     <Compile Include="02Parser\AST\ASTComma.cs" />
@@ -77,7 +78,6 @@
     <Compile Include="02Parser\AST\ASTCpsDecl.cs" />
     <Compile Include="02Parser\AST\ASTDecimalLiteral.cs" />
     <Compile Include="02Parser\AST\ASTEmpty.cs" />
-    <Compile Include="02Parser\AST\ASTExpr.cs" />
     <Compile Include="02Parser\AST\ASTIdent.cs" />
     <Compile Include="02Parser\AST\ASTIntLiteral.cs" />
     <Compile Include="02Parser\AST\ASTMultOpr.cs" />
@@ -88,9 +88,6 @@
     <Compile Include="02Parser\AST\ASTProgram.cs" />
     <Compile Include="02Parser\AST\ASTRelOpr.cs" />
     <Compile Include="02Parser\AST\ASTStoDecl.cs" />
-    <Compile Include="02Parser\AST\ASTTerm1.cs" />
-    <Compile Include="02Parser\AST\ASTTerm2.cs" />
-    <Compile Include="02Parser\AST\ASTTerm3.cs" />
     <Compile Include="02Parser\AST\ASTType.cs" />
     <Compile Include="02Parser\AST\ASTWhile.cs" />
     <Compile Include="02Parser\AST\IASTNode.cs" />

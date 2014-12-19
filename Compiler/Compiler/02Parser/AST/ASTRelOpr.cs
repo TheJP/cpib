@@ -4,7 +4,7 @@ namespace Compiler
 {
     public class ASTRelOpr : IASTNode
     {
-        public Operators Operation { get; set; }
+        public Operators Operator { get; set; }
 
         public IASTNode Term { get; set; }
 

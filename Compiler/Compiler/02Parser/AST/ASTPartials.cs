@@ -923,10 +923,8 @@ namespace Compiler
             var rep = this.RepTerm1.ToAbstractSyntax();
             if (!(rep is ASTEmpty))
             {
-                var ident = new ASTExpr();
+                var ident = (ASTBoolOpr)rep;
                 ident.Term = this.Term1.ToAbstractSyntax();
-                ident.RepTerm = this.RepTerm1.ToAbstractSyntax();
-                ident.Type = Terminals.TYPE;
                 return ident;
             }
 
@@ -961,10 +959,8 @@ namespace Compiler
             var rep = this.RepTerm1.ToAbstractSyntax();
             if (!(rep is ASTEmpty))
             {
-                var ident = new ASTExpr();
+                var ident = (ASTBoolOpr)rep;
                 ident.Term = this.Term1.ToAbstractSyntax();
-                ident.RepTerm = this.RepTerm1.ToAbstractSyntax();
-                ident.Type = Terminals.IDENT;
                 return ident;
             }
 
@@ -979,21 +975,23 @@ namespace Compiler
             var rep = this.RepTerm1.ToAbstractSyntax();
             if (!(rep is ASTEmpty))
             {
-                var ident = new ASTExpr();
+                var ident = (ASTBoolOpr)rep;
                 ident.Term = this.Term1.ToAbstractSyntax();
-                ident.RepTerm = this.RepTerm1.ToAbstractSyntax();
-                ident.Type = Terminals.LITERAL;
                 return ident;
             }
 
             return this.Term1.ToAbstractSyntax();
         }
     }
+
     public partial class RepTerm1BOOLOPR : RepTerm1
     {
         public virtual IASTNode ToAbstractSyntax()
         {
-            throw new NotImplementedException();
+            var relop = new ASTBoolOpr();
+            relop.Operator = ((OperatorToken)this.BOOLOPR.Token).Value;
+            relop.RepTerm = this.Term1.ToAbstractSyntax();
+            return relop;
         }
     }
     public partial class RepTerm1COMMA : RepTerm1
@@ -1088,11 +1086,9 @@ namespace Compiler
 
             if (!(rep is ASTEmpty))
             {
-                var term2 = new ASTTerm1();
-                term2.Term = this.Term2.ToAbstractSyntax();
-                term2.RepTerm = this.RepTerm2.ToAbstractSyntax();
-                term2.Type = Terminals.TYPE;
-                return term2;
+                var relOpr = (ASTRelOpr)rep;
+                relOpr.Term = this.Term2.ToAbstractSyntax();
+                return relOpr;
             }
 
             return this.Term2.ToAbstractSyntax();
@@ -1126,11 +1122,9 @@ namespace Compiler
             var rep = this.RepTerm2.ToAbstractSyntax();
 
             if(!(rep is ASTEmpty)){
-                var term2 = new ASTTerm1();
-                term2.Term = this.Term2.ToAbstractSyntax();
-                term2.RepTerm = this.RepTerm2.ToAbstractSyntax();
-                term2.Type = Terminals.IDENT;
-                return term2;
+                var relOpr = (ASTRelOpr)rep;
+                relOpr.Term = this.Term2.ToAbstractSyntax();
+                return relOpr;
             }
 
             return this.Term2.ToAbstractSyntax();
@@ -1145,11 +1139,9 @@ namespace Compiler
 
             if (!(rep is ASTEmpty))
             {
-                var term2 = new ASTTerm1();
-                term2.Term = this.Term2.ToAbstractSyntax();
-                term2.RepTerm = this.RepTerm2.ToAbstractSyntax();
-                term2.Type = Terminals.LITERAL;
-                return term2;
+                var relOpr = (ASTRelOpr)rep;
+                relOpr.Term = this.Term2.ToAbstractSyntax();
+                return relOpr;
             }
 
             return this.Term2.ToAbstractSyntax();
@@ -1160,9 +1152,8 @@ namespace Compiler
         public virtual IASTNode ToAbstractSyntax()
         {
             var relop = new ASTRelOpr();
-            relop.Operation = ((OperatorToken)this.RELOPR.Token).Value;
-            relop.Term = this.Term2.ToAbstractSyntax();
-            relop.RepTerm = this.RepTerm2.ToAbstractSyntax();
+            relop.Operator = ((OperatorToken)this.RELOPR.Token).Value;
+            relop.RepTerm = this.Term2.ToAbstractSyntax();
             return relop;
         }
     }
@@ -1266,10 +1257,8 @@ namespace Compiler
 
             if (!(rep is ASTEmpty))
             {
-                var term2 = new ASTTerm2();
+                var term2 = (ASTAddOpr)rep;
                 term2.Term = this.Term3.ToAbstractSyntax();
-                term2.RepTerm = this.RepTerm3.ToAbstractSyntax();
-                term2.Type = Terminals.TYPE;
                 return term2;
             }
 
@@ -1305,10 +1294,8 @@ namespace Compiler
 
             if (!(rep is ASTEmpty))
             {
-                var term2 = new ASTTerm2();
+                var term2 = (ASTAddOpr)rep;
                 term2.Term = this.Term3.ToAbstractSyntax();
-                term2.RepTerm = this.RepTerm3.ToAbstractSyntax();
-                term2.Type = Terminals.IDENT;
                 return term2;
             }
 
@@ -1323,10 +1310,8 @@ namespace Compiler
 
             if (!(rep is ASTEmpty))
             {
-                var term2 = new ASTTerm2();
+                var term2 = (ASTAddOpr)rep;
                 term2.Term = this.Term3.ToAbstractSyntax();
-                term2.RepTerm = this.RepTerm3.ToAbstractSyntax();
-                term2.Type = Terminals.LITERAL;
                 return term2;
             }
 
@@ -1339,8 +1324,7 @@ namespace Compiler
         {
             var addOpr = new ASTAddOpr();
             addOpr.Operator = ((OperatorToken)this.ADDOPR.Token).Value;
-            addOpr.Term = this.Term3.ToAbstractSyntax();
-            addOpr.RepTerm = this.RepTerm3.ToAbstractSyntax();
+            addOpr.Term = this.RepTerm3.ToAbstractSyntax();
             return addOpr;
         }
     }
@@ -1433,7 +1417,7 @@ namespace Compiler
     {
         public virtual IASTNode ToAbstractSyntax()
         {
-            throw new NotImplementedException();
+            return new ASTEmpty();
         }
     }
     public partial class RepTerm3RELOPR : RepTerm3
@@ -1451,10 +1435,8 @@ namespace Compiler
 
             if (!(rep is ASTEmpty))
             {
-                var term3 = new ASTTerm3();
+                var term3 = (ASTMultOpr)rep;
                 term3.Factor = this.Factor.ToAbstractSyntax();
-                term3.RepFactor = this.RepFactor.ToAbstractSyntax();
-                term3.Type = Terminals.TYPE;
                 return term3;
             }
 
@@ -1490,10 +1472,8 @@ namespace Compiler
 
             if (!(rep is ASTEmpty))
             {
-                var term3 = new ASTTerm3();
+                var term3 = (ASTMultOpr)rep;
                 term3.Factor = this.Factor.ToAbstractSyntax();
-                term3.RepFactor = this.RepFactor.ToAbstractSyntax();
-                term3.Type = Terminals.IDENT;
                 return term3;
             }
 
@@ -1509,10 +1489,8 @@ namespace Compiler
 
             if (!(rep is ASTEmpty))
             {
-                var term3 = new ASTTerm3();
+                var term3 = (ASTMultOpr)rep;
                 term3.Factor = this.Factor.ToAbstractSyntax();
-                term3.RepFactor = this.RepFactor.ToAbstractSyntax();
-                term3.Type = Terminals.LITERAL;
                 return term3;
             }
 
@@ -1619,7 +1597,7 @@ namespace Compiler
     {
         public virtual IASTNode ToAbstractSyntax()
         {
-            throw new NotImplementedException();
+            return new ASTEmpty();
         }
     }
     public partial class RepFactorRELOPR : RepFactor

@@ -79,12 +79,13 @@
     <Compile Include="02Parser\AST\ASTDecimalLiteral.cs" />
     <Compile Include="02Parser\AST\ASTEmpty.cs" />
     <Compile Include="02Parser\AST\ASTIdent.cs" />
+    <Compile Include="02Parser\AST\ASTIf.cs" />
     <Compile Include="02Parser\AST\ASTIntLiteral.cs" />
     <Compile Include="02Parser\AST\ASTMultOpr.cs" />
     <Compile Include="02Parser\AST\ASTOptExprList.cs" />
     <Compile Include="02Parser\AST\ASTParam.cs" />
     <Compile Include="02Parser\AST\ASTPartials.cs" />
-    <Compile Include="02Parser\AST\ASTProcDecl.cs" />
+    <Compile Include="02Parser\AST\ASTProcFuncDecl.cs" />
     <Compile Include="02Parser\AST\ASTProgram.cs" />
     <Compile Include="02Parser\AST\ASTRelOpr.cs" />
     <Compile Include="02Parser\AST\ASTStoDecl.cs" />
@@ -106,6 +107,9 @@
     <Compile Include="01Scanner\Token\TypeToken.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="test04.iml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="test03.iml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

@@ -2,7 +2,7 @@ using Compiler._02Parser.AST;
 
 namespace Compiler
 {
-    public class ASTProcDecl:ASTCpsDecl
+    public class ASTProcFuncDecl:ASTCpsDecl
     {
         public string Ident { get; set; }
 
@@ -13,5 +13,7 @@ namespace Compiler
         public IASTNode ParamList { get; set; }
 
         public IASTNode CpsCmd { get; set; }
+
+        public bool IsFunc { get; set; }
     }
 }

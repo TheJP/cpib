@@ -9,5 +9,10 @@ namespace Compiler
         public IASTNode Factor { get; set; }
 
         public IASTNode RepFactor { get; set; }
+
+        public override string ToString()
+        {
+            return string.Format("({0} {1} {2})", Factor, Operator, RepFactor);
+        }
     }
 }

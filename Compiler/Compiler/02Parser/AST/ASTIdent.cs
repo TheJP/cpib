@@ -9,5 +9,10 @@ namespace Compiler
         public IASTNode OptInitOrExprList { get; set; }
 
         public bool IsInit { get; set; }
+
+        public override string ToString()
+        {
+            return Ident;
+        }
     }
 }

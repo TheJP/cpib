@@ -50,7 +50,7 @@ namespace Compiler
     {
         public virtual IASTNode ToAbstractSyntax()
         {
-            throw new NotImplementedException();
+            return this.FunDecl.ToAbstractSyntax();
         }
     }
     public partial class DeclPROC : Decl
@@ -84,19 +84,39 @@ namespace Compiler
     {
         public virtual IASTNode ToAbstractSyntax()
         {
-            throw new NotImplementedException();
+            var decl = new ASTProcFuncDecl();
+
+            //add return param to param list as out param, so we can use the same class for funcs and procedures
+            var returnParam = (ASTStoDecl)this.StoDecl.ToAbstractSyntax();
+
+            var rootParam = new ASTParam();
+            rootParam.OptChangemode = returnParam.Changemode;
+            rootParam.Ident = returnParam.Ident;
+            rootParam.Type = returnParam.Type;
+            rootParam.FlowMode = FlowMode.OUT;
+
+            rootParam.NextParam = this.ParamList.ToAbstractSyntax();
+
+            decl.Ident = ((IdentToken)this.IDENT.Token).Value;
+            decl.OptCpsStoDecl = this.OptCpsStoDecl.ToAbstractSyntax();
+            decl.OptGlobImps = this.OptGlobImps.ToAbstractSyntax();
+            decl.ParamList = returnParam;
+            decl.CpsCmd = this.CpsCmd.ToAbstractSyntax();
+            decl.IsFunc = true;
+            return decl;
         }
     }
     public partial class ProcDeclPROC : ProcDecl
     {
         public virtual IASTNode ToAbstractSyntax()
         {
-            var decl = new ASTProcDecl();
+            var decl = new ASTProcFuncDecl();
             decl.Ident = ((IdentToken)this.IDENT.Token).Value;
             decl.OptCpsStoDecl = this.OptCpsStoDecl.ToAbstractSyntax();
             decl.OptGlobImps = this.OptGlobImps.ToAbstractSyntax();
             decl.ParamList = this.ParamList.ToAbstractSyntax();
             decl.CpsCmd = this.CpsCmd.ToAbstractSyntax();
+            decl.IsFunc = false;
             return decl;
         }
     }
@@ -257,7 +277,18 @@ namespace Compiler
     {
         public virtual IASTNode ToAbstractSyntax()
         {
-            throw new NotImplementedException();
+            var rep = this.RepCpsDecl.ToAbstractSyntax();
+
+            if (!(rep is ASTEmpty))
+            {
+                var decl = (ASTCpsDecl)this.Decl.ToAbstractSyntax();
+
+                decl.NextDecl = rep;
+
+                return decl;
+            }
+
+            return this.Decl.ToAbstractSyntax();
         }
     }
     public partial class CpsDeclCHANGEMODE : CpsDecl
@@ -603,16 +634,25 @@ namespace Compiler
     {
         public virtual IASTNode ToAbstractSyntax()
         {
-            throw new NotImplementedException();
+            var ifCmd = new ASTIf();
+
+            ifCmd.Condition = this.Expr.ToAbstractSyntax();
+            ifCmd.TrueCommand = this.CpsCmd.ToAbstractSyntax();
+            ifCmd.FalseCommand = this.CpsCmd2.ToAbstractSyntax();
+
+            return ifCmd;
         }
     }
+
     public partial class CmdWHILE : Cmd
     {
         public virtual IASTNode ToAbstractSyntax()
         {
             var whileCmd = new ASTWhile();
+
             whileCmd.Condition = this.Expr.ToAbstractSyntax();
             whileCmd.Command = this.CpsCmd.ToAbstractSyntax();
+
             return whileCmd;
         }
     }
@@ -773,14 +813,14 @@ namespace Compiler
     {
         public virtual IASTNode ToAbstractSyntax()
         {
-            throw new NotImplementedException();
+            return new ASTEmpty();
         }
     }
     public partial class RepCpsCmdELSE : RepCpsCmd
     {
         public virtual IASTNode ToAbstractSyntax()
         {
-            throw new NotImplementedException();
+            return new ASTEmpty();
         }
     }
     public partial class RepCpsCmdENDPROC : RepCpsCmd
@@ -794,7 +834,7 @@ namespace Compiler
     {
         public virtual IASTNode ToAbstractSyntax()
         {
-            throw new NotImplementedException();
+            return new ASTEmpty();
         }
     }
     public partial class RepCpsCmdENDPROGRAM : RepCpsCmd
@@ -925,6 +965,7 @@ namespace Compiler
             {
                 var ident = (ASTBoolOpr)rep;
                 ident.Term = this.Term1.ToAbstractSyntax();
+                ident.RepTerm = rep;
                 return ident;
             }
 
@@ -935,7 +976,15 @@ namespace Compiler
     {
         public virtual IASTNode ToAbstractSyntax()
         {
-            throw new NotImplementedException();
+            var rep = this.RepTerm1.ToAbstractSyntax();
+            if (!(rep is ASTEmpty))
+            {
+                var ident = (ASTBoolOpr)rep;
+                ident.Term = this.Term1.ToAbstractSyntax();
+                return ident;
+            }
+
+            return this.Term1.ToAbstractSyntax();
         }
     }
     public partial class ExprADDOPR : Expr
@@ -960,7 +1009,7 @@ namespace Compiler
             if (!(rep is ASTEmpty))
             {
                 var ident = (ASTBoolOpr)rep;
-                ident.Term = this.Term1.ToAbstractSyntax();
+                ident.SetLeftChild(this.Term1.ToAbstractSyntax());
                 return ident;
             }
 
@@ -977,6 +1026,7 @@ namespace Compiler
             {
                 var ident = (ASTBoolOpr)rep;
                 ident.Term = this.Term1.ToAbstractSyntax();
+                ident.RepTerm = rep;
                 return ident;
             }
 
@@ -990,7 +1040,33 @@ namespace Compiler
         {
             var relop = new ASTBoolOpr();
             relop.Operator = ((OperatorToken)this.BOOLOPR.Token).Value;
-            relop.RepTerm = this.Term1.ToAbstractSyntax();
+            relop.Term = this.Term1.ToAbstractSyntax();
+            relop.RepTerm = this.RepTerm1.ToAbstractSyntax();
+
+            //To rebalance the tree correctly, switch left and right nodes if right node is empty
+            if (relop.RepTerm is ASTEmpty)
+            {
+                relop.RepTerm = relop.Term;
+                relop.Term = new ASTEmpty();
+            }
+            else if (relop.RepTerm is ASTBoolOpr)
+            {
+                var tmp = (ASTBoolOpr)relop.RepTerm;
+
+                if (relop.Operator == Operators.AND && tmp.Operator == Operators.OR)
+                {
+                    relop.RepTerm = relop.Term;
+                    relop.Term = new ASTEmpty();
+                    tmp.Term = relop;
+                    relop = tmp;
+                }
+                else
+                {
+                    tmp.SetLeftChild(relop.Term);
+                    relop.Term = new ASTEmpty();
+                }
+            }
+
             return relop;
         }
     }
@@ -1019,7 +1095,7 @@ namespace Compiler
     {
         public virtual IASTNode ToAbstractSyntax()
         {
-            throw new NotImplementedException();
+            return new ASTEmpty();
         }
     }
     public partial class RepTerm1ENDWHILE : RepTerm1
@@ -1033,14 +1109,14 @@ namespace Compiler
     {
         public virtual IASTNode ToAbstractSyntax()
         {
-            throw new NotImplementedException();
+            return new ASTEmpty();
         }
     }
     public partial class RepTerm1ELSE : RepTerm1
     {
         public virtual IASTNode ToAbstractSyntax()
         {
-            throw new NotImplementedException();
+            return new ASTEmpty();
         }
     }
     public partial class RepTerm1ENDPROC : RepTerm1
@@ -1054,7 +1130,7 @@ namespace Compiler
     {
         public virtual IASTNode ToAbstractSyntax()
         {
-            throw new NotImplementedException();
+            return new ASTEmpty();
         }
     }
     public partial class RepTerm1ENDPROGRAM : RepTerm1
@@ -1098,7 +1174,7 @@ namespace Compiler
     {
         public virtual IASTNode ToAbstractSyntax()
         {
-            throw new NotImplementedException();
+            return this.Term2.ToAbstractSyntax();
         }
     }
     public partial class Term1ADDOPR : Term1
@@ -1197,14 +1273,14 @@ namespace Compiler
     {
         public virtual IASTNode ToAbstractSyntax()
         {
-            throw new NotImplementedException();
+            return new ASTEmpty();
         }
     }
     public partial class RepTerm2ELSE : RepTerm2
     {
         public virtual IASTNode ToAbstractSyntax()
         {
-            throw new NotImplementedException();
+            return new ASTEmpty();
         }
     }
     public partial class RepTerm2ENDPROC : RepTerm2
@@ -1218,7 +1294,7 @@ namespace Compiler
     {
         public virtual IASTNode ToAbstractSyntax()
         {
-            throw new NotImplementedException();
+            return new ASTEmpty();
         }
     }
     public partial class RepTerm2ENDPROGRAM : RepTerm2
@@ -1269,14 +1345,23 @@ namespace Compiler
     {
         public virtual IASTNode ToAbstractSyntax()
         {
-            throw new NotImplementedException();
+            return this.Term3.ToAbstractSyntax();
         }
     }
     public partial class Term2ADDOPR : Term2
     {
         public virtual IASTNode ToAbstractSyntax()
         {
-            throw new NotImplementedException();
+            var rep = this.RepTerm3.ToAbstractSyntax();
+
+            if (!(rep is ASTEmpty))
+            {
+                var term2 = (ASTAddOpr)rep;
+                term2.Term = this.Term3.ToAbstractSyntax();
+                return term2;
+            }
+
+            return this.Term3.ToAbstractSyntax();
         }
     }
     public partial class Term2NOT : Term2
@@ -1324,7 +1409,7 @@ namespace Compiler
         {
             var addOpr = new ASTAddOpr();
             addOpr.Operator = ((OperatorToken)this.ADDOPR.Token).Value;
-            addOpr.Term = this.RepTerm3.ToAbstractSyntax();
+            addOpr.RepTerm = this.Term3.ToAbstractSyntax();
             return addOpr;
         }
     }
@@ -1354,7 +1439,7 @@ namespace Compiler
     {
         public virtual IASTNode ToAbstractSyntax()
         {
-            throw new NotImplementedException();
+            return new ASTEmpty();
         }
     }
     public partial class RepTerm3ENDWHILE : RepTerm3
@@ -1368,14 +1453,14 @@ namespace Compiler
     {
         public virtual IASTNode ToAbstractSyntax()
         {
-            throw new NotImplementedException();
+            return new ASTEmpty();
         }
     }
     public partial class RepTerm3ELSE : RepTerm3
     {
         public virtual IASTNode ToAbstractSyntax()
         {
-            throw new NotImplementedException();
+            return new ASTEmpty();
         }
     }
     public partial class RepTerm3ENDPROC : RepTerm3
@@ -1389,7 +1474,7 @@ namespace Compiler
     {
         public virtual IASTNode ToAbstractSyntax()
         {
-            throw new NotImplementedException();
+            return new ASTEmpty();
         }
     }
     public partial class RepTerm3ENDPROGRAM : RepTerm3
@@ -1447,14 +1532,23 @@ namespace Compiler
     {
         public virtual IASTNode ToAbstractSyntax()
         {
-            throw new NotImplementedException();
+            return this.Factor.ToAbstractSyntax();
         }
     }
     public partial class Term3ADDOPR : Term3
     {
         public virtual IASTNode ToAbstractSyntax()
         {
-            throw new NotImplementedException();
+            var rep = this.RepFactor.ToAbstractSyntax();
+
+            if (!(rep is ASTEmpty))
+            {
+                var term3 = (ASTMultOpr)rep;
+                term3.Factor = this.Factor.ToAbstractSyntax();
+                return term3;
+            }
+
+            return this.Factor.ToAbstractSyntax();
         }
     }
     public partial class Term3NOT : Term3
@@ -1534,7 +1628,7 @@ namespace Compiler
     {
         public virtual IASTNode ToAbstractSyntax()
         {
-            throw new NotImplementedException();
+            return new ASTEmpty();
         }
     }
     public partial class RepFactorENDWHILE : RepFactor
@@ -1548,14 +1642,14 @@ namespace Compiler
     {
         public virtual IASTNode ToAbstractSyntax()
         {
-            throw new NotImplementedException();
+            return new ASTEmpty();
         }
     }
     public partial class RepFactorELSE : RepFactor
     {
         public virtual IASTNode ToAbstractSyntax()
         {
-            throw new NotImplementedException();
+            return new ASTEmpty();
         }
     }
     public partial class RepFactorENDPROC : RepFactor
@@ -1569,7 +1663,7 @@ namespace Compiler
     {
         public virtual IASTNode ToAbstractSyntax()
         {
-            throw new NotImplementedException();
+            return new ASTEmpty();
         }
     }
     public partial class RepFactorENDPROGRAM : RepFactor
@@ -1661,7 +1755,22 @@ namespace Compiler
     {
         public virtual IASTNode ToAbstractSyntax()
         {
-            throw new NotImplementedException();
+            var lit = this.Factor.ToAbstractSyntax();
+
+            if (lit is ASTIntLiteral)
+            {
+                ((ASTIntLiteral)lit).Value *= -1;
+            }
+            else if (lit is ASTDecimalLiteral)
+            {
+                ((ASTDecimalLiteral)lit).Value *= -1;
+            }
+            else
+            {
+                throw new GrammarException("Monadic - can only be applied to int or decimal");
+            }
+
+            return lit;
         }
     }
     public partial class FactorNOT : Factor
@@ -1675,7 +1784,7 @@ namespace Compiler
     {
         public virtual IASTNode ToAbstractSyntax()
         {
-            throw new NotImplementedException();
+            return this.Expr.ToAbstractSyntax();
         }
     }
     public partial class FactorTYPE : Factor
@@ -1714,7 +1823,7 @@ namespace Compiler
     {
         public virtual IASTNode ToAbstractSyntax()
         {
-            throw new NotImplementedException();
+            return new ASTEmpty();
         }
     }
     public partial class OptInitOrExprListDO : OptInitOrExprList
@@ -1728,7 +1837,7 @@ namespace Compiler
     {
         public virtual IASTNode ToAbstractSyntax()
         {
-            throw new NotImplementedException();
+            return new ASTEmpty();
         }
     }
     public partial class OptInitOrExprListENDWHILE : OptInitOrExprList
@@ -1742,7 +1851,7 @@ namespace Compiler
     {
         public virtual IASTNode ToAbstractSyntax()
         {
-            throw new NotImplementedException();
+            return new ASTEmpty();
         }
     }
     public partial class OptInitOrExprListELSE : OptInitOrExprList
@@ -1763,7 +1872,7 @@ namespace Compiler
     {
         public virtual IASTNode ToAbstractSyntax()
         {
-            throw new NotImplementedException();
+            return new ASTEmpty();
         }
     }
     public partial class OptInitOrExprListENDPROGRAM : OptInitOrExprList
@@ -1791,7 +1900,7 @@ namespace Compiler
     {
         public virtual IASTNode ToAbstractSyntax()
         {
-            throw new NotImplementedException();
+            return new ASTEmpty();
         }
     }
     public partial class OptInitOrExprListRELOPR : OptInitOrExprList

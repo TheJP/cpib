@@ -14,7 +14,7 @@ namespace Compiler
             try
             {
                 Scanner scanner = new Scanner();
-                var list = scanner.Scan(new StreamReader("test03.iml"));
+                var list = scanner.Scan(new StreamReader("test04.iml"));
                 Console.WriteLine("[" + String.Join(", ", list) + "]");
                 Parser parser = new Parser();
                 var tree = parser.Parse(list);

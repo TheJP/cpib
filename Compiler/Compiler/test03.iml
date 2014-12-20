@@ -5,7 +5,7 @@ global
 		out ref var o:decimal)
 	do
 		o init := 1.0m;
-		while exp > 0 && 0 = 0 do
+		while exp > 0 do
 			o := o * base;
 			exp := exp - 1
 		endwhile

@@ -1,0 +1,39 @@
+﻿program test(in const test1:decimal, in const test2:int32,
+	in const test3:bool, out const test4:decimal)
+global
+	//proc testproc(in copy const t1:decimal, in ref const t2:int32, in copy var t3:bool, in ref var t4:decimal,
+    //    inout copy const t11:decimal, inout ref const t21:int32, inout copy var t31:bool, inout ref var t41:decimal,
+    //    out copy const t12:decimal, out ref const t22:int32, out copy var t32:bool, out ref var t42:decimal)
+	//do
+	//	t42 init := 1.0m;
+	//	
+    //    if t1 = t2 && t2 < t3 && t3 > t4 || t11 /= t21 div t11 &? t31 <= t41 * t11 |? t1 - t2 >=t4 + t3 then
+    //        t11 := t22 + t32
+    //    else
+    //        t11 := t12 + t31
+    //    endif
+	//endproc;
+	//var ipown:decimal; //pow(i, years)
+	//var captialur:decimal; //Unrounded capital
+    fun testfun(in copy const t1:decimal, in ref const t2:int32, in copy var t3:bool, in ref var t4:decimal,
+        inout copy const t11:decimal, inout ref const t21:int32, inout copy var t31:bool, inout ref var t41:decimal,
+        out copy const t12:decimal, out ref const t22:int32, out copy var t32:bool, out ref var t42:decimal) returns const y:int32
+	do
+        t42 init := 1.0m;
+		
+        if t2 < t3 || t1 < t2 || t2 < t3 && t4 > t5 && t1 < t4 || t4 < t2 then
+        //if t1 + t2 < t3 - t4 then
+            t11 := t22 + t32
+        else
+            t11 := t12 + t31
+        endif;
+
+        y := t11
+	endfun
+do
+	//Calculate interest
+	call pow(1 + interest, years, ipown init);
+	captialur := capital0 * ipown;
+	//Round to 5 centime (Rappen)
+	capitaln init := decimal(int32(captialur * 20.0m)) div 20.0m
+endprogram

@@ -2,13 +2,16 @@
 	in const test3:bool, out const test4:decimal)
 global
     var globTest : decimal;
-	proc testproc(in copy const t1:decimal, in ref const t2:int32, in copy var t3:bool, in ref var t4:decimal,
+    	proc testproc(in copy const t1:decimal, in ref const t2:int32, in copy var t3:bool, in ref var t4:decimal,
         inout copy const t11:decimal, inout ref const t21:int32, inout copy var t31:bool, inout ref var t41:decimal,
-        out copy const t12:decimal, out ref const t22:int32, out copy var t32:bool, out ref var t42:decimal)
+        out copy const t12:decimal, out const t22:int32, out copy var t32:bool, out ref var t42:decimal)
     global
         var globTest, globalTest2
+    local
+        var locTest: decimal
 	do
 		t42 init := 1.0m;
+        t42 := 5.0m;
 		
         if t1 = t2 && t2 < t3 && t3 > t4 || t11 /= t21 div t11 &? t31 <= t41 * t11 |? t1 - t2 >=t4 + t3 then
             t11 := t22 + t32
@@ -20,7 +23,12 @@ global
     var captialur:decimal; //Unrounded capital
     fun testfun(in copy const t1:decimal, in ref const t2:int32, in copy var t3:bool, in ref var t4:decimal,
         inout copy const t11:decimal, inout ref const t21:int32, inout copy var t31:bool, inout ref var t41:decimal,
-        out copy const t12:decimal, out ref const t22:int32, out copy var t32:bool, out ref var t42:decimal) returns const y:int32
+        out copy const t12:decimal, out ref const t22:int32, out var t32:bool, out ref var t42:decimal) returns const y:int32
+    global
+        a,b,c
+    local
+        var loctest2 : decimal;
+        var locTest3 : int32
 	do
         t42 init := 1.0m;
 		
@@ -35,7 +43,7 @@ global
 	endfun
 do
 	//Calculate interest
-	call pow(1 + interest, years, ipown init);
+	call pow(1 + interest, years, ipown init) init a,b,c,d;
 	captialur := capital0 * ipown;
 	//Round to 5 centime (Rappen)
 	capitaln init := decimal(int32(captialur * 20.0m)) div 20.0m

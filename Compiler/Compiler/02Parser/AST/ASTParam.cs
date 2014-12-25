@@ -21,6 +21,8 @@ namespace Compiler
 
         public ChangeMode? OptChangemode { get; set; }
 
+        public MechMode? OptMechmode { get; set; }
+
         public override string ToString()
         {
             return String.Format("{0} {1} {2} {3}", this.OptChangemode, this.FlowMode, this.Type, this.Ident);

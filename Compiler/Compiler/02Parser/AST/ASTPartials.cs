@@ -425,7 +425,7 @@ namespace Compiler
     {
         public virtual IASTNode ToAbstractSyntax()
         {
-            throw new NotImplementedException();
+            return this.CpsStoDecl.ToAbstractSyntax();
         }
     }
     public partial class OptCpsStoDeclDO : OptCpsStoDecl
@@ -439,21 +439,30 @@ namespace Compiler
     {
         public virtual IASTNode ToAbstractSyntax()
         {
-            throw new NotImplementedException();
+            var result = (ASTStoDecl)this.StoDecl.ToAbstractSyntax();
+            result.NextDecl = this.RepCpsStoDecl.ToAbstractSyntax();
+
+            return result;
         }
     }
     public partial class CpsStoDeclIDENT : CpsStoDecl
     {
         public virtual IASTNode ToAbstractSyntax()
         {
-            throw new NotImplementedException();
+            var result = (ASTStoDecl)this.StoDecl.ToAbstractSyntax();
+            result.NextDecl = this.RepCpsStoDecl.ToAbstractSyntax();
+
+            return result;
         }
     }
     public partial class RepCpsStoDeclSEMICOLON : RepCpsStoDecl
     {
         public virtual IASTNode ToAbstractSyntax()
         {
-            throw new NotImplementedException();
+            var result = (ASTStoDecl)this.StoDecl.ToAbstractSyntax();
+            result.NextDecl = this.RepCpsStoDecl.ToAbstractSyntax();
+
+            return result;
         }
     }
     public partial class RepCpsStoDeclDO : RepCpsStoDecl
@@ -490,14 +499,20 @@ namespace Compiler
     {
         public virtual IASTNode ToAbstractSyntax()
         {
-            throw new NotImplementedException();
+            var result = (ASTParam)this.ProgParam.ToAbstractSyntax();
+            result.NextParam = this.RepProgParamList.ToAbstractSyntax();
+
+            return result;
         }
     }
     public partial class OptProgParamListCHANGEMODE : OptProgParamList
     {
         public virtual IASTNode ToAbstractSyntax()
         {
-            throw new NotImplementedException();
+            var result = (ASTParam)this.ProgParam.ToAbstractSyntax();
+            result.NextParam = this.RepProgParamList.ToAbstractSyntax();
+
+            return result;
         }
     }
     public partial class OptProgParamListRPAREN : OptProgParamList
@@ -528,14 +543,32 @@ namespace Compiler
     {
         public virtual IASTNode ToAbstractSyntax()
         {
-            throw new NotImplementedException();
+            var param = new ASTParam();
+            param.Type = ((TypeToken)((TypedIdentIDENT)this.TypedIdent).TYPE.Token).Value;
+            param.Ident = ((IdentToken)((TypedIdentIDENT)this.TypedIdent).IDENT.Token).Value;
+            if (this.OptChangemode is OptChangemodeCHANGEMODE)
+            {
+                param.OptChangemode =
+                    ((ChangeModeToken)((OptChangemodeCHANGEMODE)this.OptChangemode).CHANGEMODE.Token).Value;
+            }
+
+            return param;
         }
     }
     public partial class ProgParamCHANGEMODE : ProgParam
     {
         public virtual IASTNode ToAbstractSyntax()
         {
-            throw new NotImplementedException();
+            var param = new ASTParam();
+            param.Type = ((TypeToken)((TypedIdentIDENT)this.TypedIdent).TYPE.Token).Value;
+            param.Ident = ((IdentToken)((TypedIdentIDENT)this.TypedIdent).IDENT.Token).Value;
+            if (this.OptChangemode is OptChangemodeCHANGEMODE)
+            {
+                param.OptChangemode =
+                    ((ChangeModeToken)((OptChangemodeCHANGEMODE)this.OptChangemode).CHANGEMODE.Token).Value;
+            }
+
+            return param;
         }
     }
     public partial class ProgParamFLOWMODE : ProgParam
@@ -582,21 +615,30 @@ namespace Compiler
     {
         public virtual IASTNode ToAbstractSyntax()
         {
-            throw new NotImplementedException();
+            var result = (ASTParam)this.Param.ToAbstractSyntax();
+            result.NextParam = this.RepParamList.ToAbstractSyntax();
+
+            return result;
         }
     }
     public partial class OptParamListCHANGEMODE : OptParamList
     {
         public virtual IASTNode ToAbstractSyntax()
         {
-            throw new NotImplementedException();
+            var result = (ASTParam)this.Param.ToAbstractSyntax();
+            result.NextParam = this.RepParamList.ToAbstractSyntax();
+
+            return result;
         }
     }
     public partial class OptParamListMECHMODE : OptParamList
     {
         public virtual IASTNode ToAbstractSyntax()
         {
-            throw new NotImplementedException();
+            var result = (ASTParam)this.Param.ToAbstractSyntax();
+            result.NextParam = this.RepParamList.ToAbstractSyntax();
+
+            return result;
         }
     }
     public partial class OptParamListRPAREN : OptParamList
@@ -627,21 +669,69 @@ namespace Compiler
     {
         public virtual IASTNode ToAbstractSyntax()
         {
-            throw new NotImplementedException();
+            var param = new ASTParam();
+            param.Type = ((TypeToken)((TypedIdentIDENT)this.TypedIdent).TYPE.Token).Value;
+            param.Ident = ((IdentToken)((TypedIdentIDENT)this.TypedIdent).IDENT.Token).Value;
+
+            if (this.OptMechmode is OptMechmodeMECHMODE)
+            {
+                param.OptMechmode =
+                    ((MechModeToken)((OptMechmodeMECHMODE)this.OptMechmode).MECHMODE.Token).Value;
+            }
+
+            if (this.OptChangemode is OptChangemodeCHANGEMODE)
+            {
+                param.OptChangemode =
+                    ((ChangeModeToken)((OptChangemodeCHANGEMODE)this.OptChangemode).CHANGEMODE.Token).Value;
+            }
+
+            return param;
         }
     }
     public partial class ParamCHANGEMODE : Param
     {
         public virtual IASTNode ToAbstractSyntax()
         {
-            throw new NotImplementedException();
+            var param = new ASTParam();
+            param.Type = ((TypeToken)((TypedIdentIDENT)this.TypedIdent).TYPE.Token).Value;
+            param.Ident = ((IdentToken)((TypedIdentIDENT)this.TypedIdent).IDENT.Token).Value;
+
+            if (this.OptMechmode is OptMechmodeMECHMODE)
+            {
+                param.OptMechmode =
+                    ((MechModeToken)((OptMechmodeMECHMODE)this.OptMechmode).MECHMODE.Token).Value;
+            }
+
+            if (this.OptChangemode is OptChangemodeCHANGEMODE)
+            {
+                param.OptChangemode =
+                    ((ChangeModeToken)((OptChangemodeCHANGEMODE)this.OptChangemode).CHANGEMODE.Token).Value;
+            }
+
+            return param;
         }
     }
     public partial class ParamMECHMODE : Param
     {
         public virtual IASTNode ToAbstractSyntax()
         {
-            throw new NotImplementedException();
+            var param = new ASTParam();
+            param.Type = ((TypeToken)((TypedIdentIDENT)this.TypedIdent).TYPE.Token).Value;
+            param.Ident = ((IdentToken)((TypedIdentIDENT)this.TypedIdent).IDENT.Token).Value;
+
+            if (this.OptMechmode is OptMechmodeMECHMODE)
+            {
+                param.OptMechmode =
+                    ((MechModeToken)((OptMechmodeMECHMODE)this.OptMechmode).MECHMODE.Token).Value;
+            }
+
+            if (this.OptChangemode is OptChangemodeCHANGEMODE)
+            {
+                param.OptChangemode =
+                    ((ChangeModeToken)((OptChangemodeCHANGEMODE)this.OptChangemode).CHANGEMODE.Token).Value;
+            }
+
+            return param;
         }
     }
     public partial class ParamFLOWMODE : Param
@@ -652,6 +742,13 @@ namespace Compiler
             param.Type = ((TypeToken)((TypedIdentIDENT)this.TypedIdent).TYPE.Token).Value;
             param.Ident = ((IdentToken)((TypedIdentIDENT)this.TypedIdent).IDENT.Token).Value;
             param.FlowMode = ((FlowModeToken)this.FLOWMODE.Token).Value;
+
+            if (this.OptMechmode is OptMechmodeMECHMODE)
+            {
+                param.OptMechmode =
+                    ((MechModeToken)((OptMechmodeMECHMODE)this.OptMechmode).MECHMODE.Token).Value;
+            }
+
             if (this.OptChangemode is OptChangemodeCHANGEMODE)
             {
                 param.OptChangemode =
@@ -665,42 +762,55 @@ namespace Compiler
     {
         public virtual IASTNode ToAbstractSyntax()
         {
-            throw new NotImplementedException();
+            return new ASTEmpty();
         }
     }
     public partial class CmdSKIP : Cmd
     {
         public virtual IASTNode ToAbstractSyntax()
         {
-            throw new NotImplementedException();
+            return new ASTCmdSkip();
         }
     }
+
     public partial class CmdTYPE : Cmd
     {
         public virtual IASTNode ToAbstractSyntax()
         {
-            throw new NotImplementedException();
+            var ident = new ASTCmdIdent();
+            ident.LValue = this.Expr.ToAbstractSyntax();
+            ident.RValue = this.Expr2.ToAbstractSyntax();
+            return ident;
         }
     }
     public partial class CmdLPAREN : Cmd
     {
         public virtual IASTNode ToAbstractSyntax()
         {
-            throw new NotImplementedException();
+            var ident = new ASTCmdIdent();
+            ident.LValue = this.Expr.ToAbstractSyntax();
+            ident.RValue = this.Expr2.ToAbstractSyntax();
+            return ident;
         }
     }
     public partial class CmdADDOPR : Cmd
     {
         public virtual IASTNode ToAbstractSyntax()
         {
-            throw new NotImplementedException();
+            var ident = new ASTCmdIdent();
+            ident.LValue = this.Expr.ToAbstractSyntax();
+            ident.RValue = this.Expr2.ToAbstractSyntax();
+            return ident;
         }
     }
     public partial class CmdNOT : Cmd
     {
         public virtual IASTNode ToAbstractSyntax()
         {
-            throw new NotImplementedException();
+            var ident = new ASTCmdIdent();
+            ident.LValue = this.Expr.ToAbstractSyntax();
+            ident.RValue = this.Expr2.ToAbstractSyntax();
+            return ident;
         }
     }
     public partial class CmdIDENT : Cmd
@@ -718,7 +828,10 @@ namespace Compiler
     {
         public virtual IASTNode ToAbstractSyntax()
         {
-            throw new NotImplementedException();
+            var ident = new ASTCmdIdent();
+            ident.LValue = this.Expr.ToAbstractSyntax();
+            ident.RValue = this.Expr2.ToAbstractSyntax();
+            return ident;
         }
     }
     public partial class CmdIF : Cmd
@@ -765,16 +878,22 @@ namespace Compiler
     {
         public virtual IASTNode ToAbstractSyntax()
         {
-            throw new NotImplementedException();
+            var ident = new ASTCmdDebugIn();
+            ident.Expr = this.Expr.ToAbstractSyntax();
+            return ident;
         }
     }
+
     public partial class CmdDEBUGOUT : Cmd
     {
         public virtual IASTNode ToAbstractSyntax()
         {
-            throw new NotImplementedException();
+            var ident = new ASTCmdDebugOut();
+            ident.Expr = this.Expr.ToAbstractSyntax();
+            return ident;
         }
     }
+
     public partial class CpsCmdDEBUGOUT : CpsCmd
     {
         public virtual IASTNode ToAbstractSyntax()
@@ -939,7 +1058,7 @@ namespace Compiler
     {
         public virtual IASTNode ToAbstractSyntax()
         {
-            throw new NotImplementedException();
+            return this.RepIdents.ToAbstractSyntax();
         }
     }
     public partial class OptGlobInitsENDWHILE : OptGlobInits
@@ -995,9 +1114,13 @@ namespace Compiler
     {
         public virtual IASTNode ToAbstractSyntax()
         {
-            throw new NotImplementedException();
+            var optinit = new ASTOptInit();
+            optinit.Ident = ((IdentToken)this.IDENT.Token).Value;
+            optinit.NextInit = this.RepIdents.ToAbstractSyntax();
+            return optinit;
         }
     }
+
     public partial class RepIdentsENDWHILE : RepIdents
     {
         public virtual IASTNode ToAbstractSyntax()
@@ -1978,14 +2101,14 @@ namespace Compiler
     {
         public virtual IASTNode ToAbstractSyntax()
         {
-            throw new NotImplementedException();
+            return new ASTEmpty();
         }
     }
     public partial class OptInitOrExprListLPAREN : OptInitOrExprList
     {
         public virtual IASTNode ToAbstractSyntax()
         {
-            throw new NotImplementedException();
+            return this.ExprList.ToAbstractSyntax();
         }
     }
     public partial class OptInitOrExprListCOMMA : OptInitOrExprList
@@ -2104,14 +2227,14 @@ namespace Compiler
     {
         public virtual IASTNode ToAbstractSyntax()
         {
-            throw new NotImplementedException();
+            return new ASTEmpty();
         }
     }
     public partial class MonadicOprADDOPR : MonadicOpr
     {
         public virtual IASTNode ToAbstractSyntax()
         {
-            throw new NotImplementedException();
+            return new ASTEmpty();
         }
     }
     public partial class ExprListLPAREN : ExprList

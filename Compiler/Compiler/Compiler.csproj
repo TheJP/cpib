@@ -74,7 +74,7 @@
     <Compile Include="02Parser\AST\ASTCmdCall.cs" />
     <Compile Include="02Parser\AST\ASTCmdDebugIn.cs" />
     <Compile Include="02Parser\AST\ASTCmdDebugOut.cs" />
-    <Compile Include="02Parser\AST\ASTCmdIDENT.cs" />
+    <Compile Include="02Parser\AST\ASTCmdIdent.cs" />
     <Compile Include="02Parser\AST\ASTCmdSkip.cs" />
     <Compile Include="02Parser\AST\ASTComma.cs" />
     <Compile Include="02Parser\AST\ASTCpsCmd.cs" />

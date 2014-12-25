@@ -34,9 +34,26 @@ namespace Compiler
                 currentParam = astparam.NextParam;
             }
 
-            program.CpsDecls = this.OptCpsDecl.ToAbstractSyntax();
+            var currentDecl = this.OptCpsDecl.ToAbstractSyntax();
+            program.Declarations = new List<ASTCpsDecl>();
 
-            program.Commands = this.CpsCmd.ToAbstractSyntax();
+            while (!(currentDecl is ASTEmpty))
+            {
+                var cpsDecl = (ASTCpsDecl)currentDecl;
+                program.Declarations.Add(cpsDecl);
+                currentDecl = cpsDecl.NextDecl;
+            }
+
+            program.Commands = new List<ASTCpsCmd>();
+
+            var currentCmd = this.CpsCmd.ToAbstractSyntax();
+
+            while (!(currentCmd is ASTEmpty))
+            {
+                var cpsCmd = (ASTCpsCmd)currentCmd;
+                program.Commands.Add(cpsCmd);
+                currentCmd = cpsCmd.NextCmd;
+            }
 
             return program;
         }
@@ -116,10 +133,29 @@ namespace Compiler
                 currentParam = astparam.NextParam;
             }
 
+            var currentDecl = this.OptCpsStoDecl.ToAbstractSyntax();
+            decl.Declarations = new List<ASTCpsDecl>();
+
+            while (!(currentDecl is ASTEmpty))
+            {
+                var cpsDecl = (ASTCpsDecl)currentDecl;
+                decl.Declarations.Add(cpsDecl);
+                currentDecl = cpsDecl.NextDecl;
+            }
+
+            decl.Commands = new List<ASTCpsCmd>();
+
+            var currentCmd = this.CpsCmd.ToAbstractSyntax();
+
+            while (!(currentCmd is ASTEmpty))
+            {
+                var cpsCmd = (ASTCpsCmd)currentCmd;
+                decl.Commands.Add(cpsCmd);
+                currentCmd = cpsCmd.NextCmd;
+            }
+
             decl.Ident = ((IdentToken)this.IDENT.Token).Value;
-            decl.OptCpsStoDecl = this.OptCpsStoDecl.ToAbstractSyntax();
             decl.OptGlobImps = this.OptGlobImps.ToAbstractSyntax();
-            decl.CpsCmd = this.CpsCmd.ToAbstractSyntax();
             decl.IsFunc = true;
             return decl;
         }
@@ -130,7 +166,26 @@ namespace Compiler
         {
             var decl = new ASTProcFuncDecl();
             decl.Ident = ((IdentToken)this.IDENT.Token).Value;
-            decl.OptCpsStoDecl = this.OptCpsStoDecl.ToAbstractSyntax();
+            var currentDecl = this.OptCpsStoDecl.ToAbstractSyntax();
+            decl.Declarations = new List<ASTCpsDecl>();
+
+            while (!(currentDecl is ASTEmpty))
+            {
+                var cpsDecl = (ASTCpsDecl)currentDecl;
+                decl.Declarations.Add(cpsDecl);
+                currentDecl = cpsDecl.NextDecl;
+            }
+
+            decl.Commands = new List<ASTCpsCmd>();
+
+            var currentCmd = this.CpsCmd.ToAbstractSyntax();
+
+            while (!(currentCmd is ASTEmpty))
+            {
+                var cpsCmd = (ASTCpsCmd)currentCmd;
+                decl.Commands.Add(cpsCmd);
+                currentCmd = cpsCmd.NextCmd;
+            }
             decl.OptGlobImps = this.OptGlobImps.ToAbstractSyntax();
             decl.Params = new List<ASTParam>();
             
@@ -143,7 +198,6 @@ namespace Compiler
                 currentParam = astparam.NextParam;
             }
 
-            decl.CpsCmd = this.CpsCmd.ToAbstractSyntax();
             decl.IsFunc = false;
             return decl;
         }

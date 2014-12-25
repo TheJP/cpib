@@ -9,13 +9,13 @@ namespace Compiler
     {
         public string Ident { get; set; }
 
-        public IASTNode OptCpsStoDecl { get; set; }
+        public List<ASTCpsDecl> Declarations { get; set; }
 
         public IASTNode OptGlobImps { get; set; }
 
         public IList<ASTParam> Params { get; set; }
 
-        public IASTNode CpsCmd { get; set; }
+        public List<ASTCpsCmd> Commands { get; set; }
 
         public bool IsFunc { get; set; }
 

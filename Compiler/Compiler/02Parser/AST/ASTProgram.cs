@@ -9,9 +9,9 @@ public class ASTProgram : IASTNode
 
     public IList<ASTParam> Params { get; set; }
 
-    public IASTNode CpsDecls { get; set; }
+    public List<ASTCpsDecl> CpsDecls { get; set; }
 
-    public IASTNode Commands { get; set; }
+    public List<ASTCpsCmd> Commands { get; set; }
 
     public override string ToString()
     {

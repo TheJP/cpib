@@ -11,7 +11,7 @@ namespace Compiler
 
         public List<ASTCpsDecl> Declarations { get; set; }
 
-        public IASTNode OptGlobImps { get; set; }
+        public List<ASTGlobalParam> OptGlobImps { get; set; }
 
         public IList<ASTParam> Params { get; set; }
 

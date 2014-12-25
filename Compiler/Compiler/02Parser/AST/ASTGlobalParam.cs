@@ -16,5 +16,10 @@ namespace Compiler
         public ChangeMode? OptChangemode { get; set; }
 
         public FlowMode? FlowMode { get; set; }
+
+        public override string ToString()
+        {
+            return string.Format("{0} {1} {2}", FlowMode, OptChangemode, Ident);
+        }
     }
 }

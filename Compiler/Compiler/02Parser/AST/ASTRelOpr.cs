@@ -2,8 +2,13 @@ using Compiler._02Parser.AST;
 
 namespace Compiler
 {
-    public class ASTRelOpr : IASTNode
+    public class ASTRelOpr : ASTExpression
     {
+        public ASTRelOpr()
+        {
+            Term = new ASTEmpty();
+            RepTerm = new ASTEmpty();
+        }
         public Operators Operator { get; set; }
 
         public IASTNode Term { get; set; }

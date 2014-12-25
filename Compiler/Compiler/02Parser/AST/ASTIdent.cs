@@ -2,7 +2,7 @@ using Compiler._02Parser.AST;
 
 namespace Compiler
 {
-    public class ASTIdent : IASTNode
+    public class ASTIdent : ASTExpression
     {
         public string Ident { get; set; }
 
@@ -12,7 +12,7 @@ namespace Compiler
 
         public override string ToString()
         {
-            return Ident;
+            return string.Format("{0}{1}", IsInit? "init ":"", Ident);
         }
     }
 }

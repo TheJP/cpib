@@ -9,7 +9,7 @@ public class ASTProgram : IASTNode
 
     public IList<ASTParam> Params { get; set; }
 
-    public List<ASTCpsDecl> CpsDecls { get; set; }
+    public List<ASTCpsDecl> Declarations { get; set; }
 
     public List<ASTCpsCmd> Commands { get; set; }
 

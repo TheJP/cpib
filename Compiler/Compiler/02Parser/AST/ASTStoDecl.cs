@@ -9,5 +9,10 @@ namespace Compiler
         public Type Type { get; set; }
 
         public ChangeMode Changemode { get; set; }
+
+        public override string ToString()
+        {
+            return string.Format("{0} {1} : {2}", Changemode, Ident, Type);
+        }
     }
 }

@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 using Compiler._02Parser.AST;
 
 namespace Compiler
@@ -6,25 +8,21 @@ namespace Compiler
     {
         public IASTNode Condition { get; set; }
 
-        public IASTNode TrueCommand { get; set; }
+        public List<ASTCpsCmd> TrueCommands { get; set; }
 
-        public IASTNode FalseCommand { get; set; }
+        public List<ASTCpsCmd> FalseCommands { get; set; }
 
         public override string ToString()
         {
-            if (FalseCommand is ASTEmpty)
+            if (this.FalseCommands is ASTEmpty)
             {
                 return string.Format(@"if {0} then
     {1}
-endif", Condition, TrueCommand);
+endif", Condition, this.TrueCommands);
             }
             else
             {
-                return string.Format(@"if {0} then
-    {1}
-else
-    {2}
-endif", Condition, TrueCommand, FalseCommand);
+                return string.Format(@"if {0} then", Condition);
             }
         }
     }

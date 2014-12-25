@@ -13,7 +13,7 @@ global
 		t42 init := 1.0m;
         t42 := 5.0m;
 		
-        if t1 = t2 && t2 < t3 && t3 > t4 || t11 /= t21 div t11 &? t31 <= t41 * t11 |? t1 - t2 >=t4 + t3 then
+        if t1 = t2 && t2 < t3 && t3 > t4 || t11 /= t41 div t31 div t21 div t11 &? t31 <= t41 * t11 |? t1 - t2 >=t4 + t3 then
             t11 := t22 + t32
         else
             t11 := t12 + t31
@@ -39,6 +39,10 @@ global
             t11 := t12 + t31
         endif;
 
+        while t3 > t4 do
+            t3 := t4 - 1
+        endwhile;
+
         y := t11
 	endfun
 do
@@ -46,5 +50,11 @@ do
 	call pow(1 + interest, years, ipown init) init a,b,c,d;
 	captialur := capital0 * ipown;
 	//Round to 5 centime (Rappen)
-	capitaln init := decimal(int32(captialur * 20.0m)) div 20.0m
+	capitaln init := decimal(int32(captialur * 20.0m)) div 20.0m div 1.0m div 4.0m;
+    capital := 1 + 2 + 3 - 4 - 5;
+    if a < b && b < c && c < d then
+        capital := 4m
+    else
+        skip
+    endif
 endprogram

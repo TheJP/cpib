@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 using Compiler._02Parser.AST;
 
 namespace Compiler
@@ -6,7 +8,7 @@ namespace Compiler
     {
         public string Ident { get; set; }
 
-        public IASTNode ExprList { get; set; }
+        public List<ASTExpression> ExprList { get; set; }
 
         public IASTNode OptGlobInits { get; set; }
 

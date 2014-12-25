@@ -2,7 +2,7 @@ using Compiler._02Parser.AST;
 
 namespace Compiler
 {
-    public class ASTBoolOpr : IASTNode
+    public class ASTBoolOpr : ASTExpression
     {
         public IASTNode Term { get; set; }
         public IASTNode RepTerm { get; set; }

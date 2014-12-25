@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 using Compiler._02Parser.AST;
 
 namespace Compiler
@@ -6,6 +8,11 @@ namespace Compiler
     {
         public IASTNode Condition { get; set; }
 
-        public IASTNode Command { get; set; }
+        public List<ASTCpsCmd> Commands { get; set; }
+
+        public override string ToString()
+        {
+            return string.Format("while {0} do", Condition);
+        }
     }
 }

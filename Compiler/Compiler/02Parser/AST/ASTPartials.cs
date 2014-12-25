@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+using System.Text.RegularExpressions;
 
 using Compiler._02Parser.AST;
 
@@ -154,8 +155,18 @@ namespace Compiler
                 currentCmd = cpsCmd.NextCmd;
             }
 
+            decl.OptGlobImps = new List<ASTGlobalParam>();
+
+            var currentGlob = this.OptGlobImps.ToAbstractSyntax();
+
+            while (!(currentGlob is ASTEmpty))
+            {
+                var glob = (ASTGlobalParam)currentGlob;
+                decl.OptGlobImps.Add(glob);
+                currentGlob = glob.NextParam;
+            }
+
             decl.Ident = ((IdentToken)this.IDENT.Token).Value;
-            decl.OptGlobImps = this.OptGlobImps.ToAbstractSyntax();
             decl.IsFunc = true;
             return decl;
         }
@@ -186,7 +197,18 @@ namespace Compiler
                 decl.Commands.Add(cpsCmd);
                 currentCmd = cpsCmd.NextCmd;
             }
-            decl.OptGlobImps = this.OptGlobImps.ToAbstractSyntax();
+
+            decl.OptGlobImps = new List<ASTGlobalParam>();
+
+            var currentGlob = this.OptGlobImps.ToAbstractSyntax();
+
+            while (!(currentGlob is ASTEmpty))
+            {
+                var glob = (ASTGlobalParam)currentGlob;
+                decl.OptGlobImps.Add(glob);
+                currentGlob = glob.NextParam;
+            }
+
             decl.Params = new List<ASTParam>();
             
             IASTNode currentParam = this.ParamList.ToAbstractSyntax();
@@ -895,8 +917,28 @@ namespace Compiler
             var ifCmd = new ASTIf();
 
             ifCmd.Condition = this.Expr.ToAbstractSyntax();
-            ifCmd.TrueCommand = this.CpsCmd.ToAbstractSyntax();
-            ifCmd.FalseCommand = this.CpsCmd2.ToAbstractSyntax();
+
+            ifCmd.TrueCommands = new List<ASTCpsCmd>();
+
+            var currentCmd = this.CpsCmd.ToAbstractSyntax();
+
+            while (!(currentCmd is ASTEmpty))
+            {
+                var cpsCmd = (ASTCpsCmd)currentCmd;
+                ifCmd.TrueCommands.Add(cpsCmd);
+                currentCmd = cpsCmd.NextCmd;
+            }
+
+            ifCmd.FalseCommands = new List<ASTCpsCmd>();
+
+            currentCmd = this.CpsCmd2.ToAbstractSyntax();
+
+            while (!(currentCmd is ASTEmpty))
+            {
+                var cpsCmd = (ASTCpsCmd)currentCmd;
+                ifCmd.FalseCommands.Add(cpsCmd);
+                currentCmd = cpsCmd.NextCmd;
+            }
 
             return ifCmd;
         }
@@ -909,7 +951,17 @@ namespace Compiler
             var whileCmd = new ASTWhile();
 
             whileCmd.Condition = this.Expr.ToAbstractSyntax();
-            whileCmd.Command = this.CpsCmd.ToAbstractSyntax();
+
+            whileCmd.Commands = new List<ASTCpsCmd>();
+
+            var currentCmd = this.CpsCmd.ToAbstractSyntax();
+
+            while (!(currentCmd is ASTEmpty))
+            {
+                var cpsCmd = (ASTCpsCmd)currentCmd;
+                whileCmd.Commands.Add(cpsCmd);
+                currentCmd = cpsCmd.NextCmd;
+            }
 
             return whileCmd;
         }
@@ -921,7 +973,15 @@ namespace Compiler
         {
             var call = new ASTCmdCall();
             call.Ident = ((IdentToken)this.IDENT.Token).Value;
-            call.ExprList = this.ExprList.ToAbstractSyntax();
+
+            call.ExprList = new List<ASTExpression>();
+            var currentExpr = this.ExprList.ToAbstractSyntax();
+            while (!(currentExpr is ASTEmpty))
+            {
+                var expr = (ASTExpression)currentExpr;
+                call.ExprList.Add(expr);
+                currentExpr = expr.NextExpression;
+            }
             call.OptGlobInits = this.OptGlobInits.ToAbstractSyntax();
 
             return call;
@@ -1447,6 +1507,7 @@ namespace Compiler
             if (!(rep is ASTEmpty))
             {
                 var relOpr = (ASTRelOpr)rep;
+
                 relOpr.Term = this.Term2.ToAbstractSyntax();
                 return relOpr;
             }
@@ -1463,6 +1524,7 @@ namespace Compiler
             if (!(rep is ASTEmpty))
             {
                 var relOpr = (ASTRelOpr)rep;
+
                 relOpr.Term = this.Term2.ToAbstractSyntax();
                 return relOpr;
             }
@@ -1479,6 +1541,7 @@ namespace Compiler
             if (!(rep is ASTEmpty))
             {
                 var relOpr = (ASTRelOpr)rep;
+
                 relOpr.Term = this.Term2.ToAbstractSyntax();
                 return relOpr;
             }
@@ -1495,6 +1558,7 @@ namespace Compiler
             if (!(rep is ASTEmpty))
             {
                 var relOpr = (ASTRelOpr)rep;
+
                 relOpr.Term = this.Term2.ToAbstractSyntax();
                 return relOpr;
             }
@@ -1510,6 +1574,7 @@ namespace Compiler
 
             if(!(rep is ASTEmpty)){
                 var relOpr = (ASTRelOpr)rep;
+
                 relOpr.Term = this.Term2.ToAbstractSyntax();
                 return relOpr;
             }
@@ -1527,6 +1592,7 @@ namespace Compiler
             if (!(rep is ASTEmpty))
             {
                 var relOpr = (ASTRelOpr)rep;
+
                 relOpr.Term = this.Term2.ToAbstractSyntax();
                 return relOpr;
             }
@@ -1538,9 +1604,23 @@ namespace Compiler
     {
         public virtual IASTNode ToAbstractSyntax()
         {
+            
+
             var relop = new ASTRelOpr();
             relop.Operator = ((OperatorToken)this.RELOPR.Token).Value;
             relop.RepTerm = this.Term2.ToAbstractSyntax();
+
+            var term = this.RepTerm2.ToAbstractSyntax();
+            if (!(term is ASTEmpty))
+            {
+                relop.Term = term;
+                throw new GrammarException(
+                    string.Format(
+                        "Row: {0}, Col: {1}: Implicit chaining of relative Operators is not allowed (E.G. true = 3 = 3, use brackets in this case: true = (3 = 3) )",
+                        this.RELOPR.Token.Row,
+                        this.RELOPR.Token.Column));
+            }
+
             return relop;
         }
     }
@@ -1667,9 +1747,9 @@ namespace Compiler
 
             if (!(rep is ASTEmpty))
             {
-                var term2 = (ASTAddOpr)rep;
-                term2.Term = this.Term3.ToAbstractSyntax();
-                return term2;
+                var term3 = (ASTAddOpr)rep;
+                term3.SetLeftChild(this.Term3.ToAbstractSyntax());
+                return term3;
             }
 
             return this.Term3.ToAbstractSyntax();
@@ -1683,9 +1763,9 @@ namespace Compiler
 
             if (!(rep is ASTEmpty))
             {
-                var term2 = (ASTAddOpr)rep;
-                term2.Term = this.Term3.ToAbstractSyntax();
-                return term2;
+                var term3 = (ASTAddOpr)rep;
+                term3.SetLeftChild(this.Term3.ToAbstractSyntax());
+                return term3;
             }
 
             return this.Term3.ToAbstractSyntax();
@@ -1699,9 +1779,9 @@ namespace Compiler
 
             if (!(rep is ASTEmpty))
             {
-                var term2 = (ASTAddOpr)rep;
-                term2.Term = this.Term3.ToAbstractSyntax();
-                return term2;
+                var term3 = (ASTAddOpr)rep;
+                term3.SetLeftChild(this.Term3.ToAbstractSyntax());
+                return term3;
             }
 
             return this.Term3.ToAbstractSyntax();
@@ -1715,9 +1795,9 @@ namespace Compiler
 
             if (!(rep is ASTEmpty))
             {
-                var term2 = (ASTAddOpr)rep;
-                term2.Term = this.Term3.ToAbstractSyntax();
-                return term2;
+                var term3 = (ASTAddOpr)rep;
+                term3.SetLeftChild(this.Term3.ToAbstractSyntax());
+                return term3;
             }
 
             return this.Term3.ToAbstractSyntax();
@@ -1727,9 +1807,22 @@ namespace Compiler
     {
         public virtual IASTNode ToAbstractSyntax()
         {
+            var fac = this.Term3.ToAbstractSyntax();
+            var rep = this.RepTerm3.ToAbstractSyntax();
+
             var addOpr = new ASTAddOpr();
             addOpr.Operator = ((OperatorToken)this.ADDOPR.Token).Value;
+
+            if (!(rep is ASTEmpty))
+            {
+                var parent = (ASTAddOpr)rep;
+                addOpr.RepTerm = fac;
+                parent.SetLeftChild(addOpr);
+                return parent;
+            }
+
             addOpr.RepTerm = this.Term3.ToAbstractSyntax();
+
             return addOpr;
         }
     }
@@ -1841,7 +1934,7 @@ namespace Compiler
             if (!(rep is ASTEmpty))
             {
                 var term3 = (ASTMultOpr)rep;
-                term3.Factor = this.Factor.ToAbstractSyntax();
+                term3.SetLeftChild(this.Factor.ToAbstractSyntax());
                 return term3;
             }
 
@@ -1857,7 +1950,7 @@ namespace Compiler
             if (!(rep is ASTEmpty))
             {
                 var term3 = (ASTMultOpr)rep;
-                term3.Factor = this.Factor.ToAbstractSyntax();
+                term3.SetLeftChild(this.Factor.ToAbstractSyntax());
                 return term3;
             }
 
@@ -1873,7 +1966,7 @@ namespace Compiler
             if (!(rep is ASTEmpty))
             {
                 var term3 = (ASTMultOpr)rep;
-                term3.Factor = this.Factor.ToAbstractSyntax();
+                term3.SetLeftChild(this.Factor.ToAbstractSyntax());
                 return term3;
             }
 
@@ -1889,7 +1982,7 @@ namespace Compiler
             if (!(rep is ASTEmpty))
             {
                 var term3 = (ASTMultOpr)rep;
-                term3.Factor = this.Factor.ToAbstractSyntax();
+                term3.SetLeftChild(this.Factor.ToAbstractSyntax());
                 return term3;
             }
 
@@ -1905,7 +1998,7 @@ namespace Compiler
             if (!(rep is ASTEmpty))
             {
                 var term3 = (ASTMultOpr)rep;
-                term3.Factor = this.Factor.ToAbstractSyntax();
+                term3.SetLeftChild(this.Factor.ToAbstractSyntax());
                 return term3;
             }
 
@@ -1922,7 +2015,7 @@ namespace Compiler
             if (!(rep is ASTEmpty))
             {
                 var term3 = (ASTMultOpr)rep;
-                term3.Factor = this.Factor.ToAbstractSyntax();
+                term3.SetLeftChild(this.Factor.ToAbstractSyntax());
                 return term3;
             }
 
@@ -1933,10 +2026,22 @@ namespace Compiler
     {
         public virtual IASTNode ToAbstractSyntax()
         {
+            var fac = this.Factor.ToAbstractSyntax();
+            var rep = this.RepFactor.ToAbstractSyntax();
+
             var multOpr = new ASTMultOpr();
             multOpr.Operator = ((OperatorToken)this.MULTOPR.Token).Value;
-            multOpr.Factor = this.Factor.ToAbstractSyntax();
-            multOpr.RepFactor = this.RepFactor.ToAbstractSyntax();
+
+            if (!(rep is ASTEmpty))
+            {
+                var parent = (ASTMultOpr)rep;
+                multOpr.RepFactor = fac;
+                parent.SetLeftChild(multOpr);
+                return parent;
+            }
+
+            multOpr.RepFactor = this.Factor.ToAbstractSyntax();
+
             return multOpr;
         }
     }
@@ -2305,11 +2410,10 @@ namespace Compiler
             var rep = this.RepExprList.ToAbstractSyntax();
             if (!(rep is ASTEmpty))
             {
-                var list = new ASTOptExprList();
-                list.Expr = this.Expr.ToAbstractSyntax();
-                list.RepExpr = rep;
+                var expr = (ASTExpression)this.Expr.ToAbstractSyntax();
+                expr.NextExpression = rep;
 
-                return list;
+                return expr;
             }
 
             return this.Expr.ToAbstractSyntax();
@@ -2322,11 +2426,10 @@ namespace Compiler
             var rep = this.RepExprList.ToAbstractSyntax();
             if (!(rep is ASTEmpty))
             {
-                var list = new ASTOptExprList();
-                list.Expr = this.Expr.ToAbstractSyntax();
-                list.RepExpr = rep;
+                var expr = (ASTExpression)this.Expr.ToAbstractSyntax();
+                expr.NextExpression = rep;
 
-                return list;
+                return expr;
             }
 
             return this.Expr.ToAbstractSyntax();
@@ -2339,11 +2442,10 @@ namespace Compiler
             var rep = this.RepExprList.ToAbstractSyntax();
             if (!(rep is ASTEmpty))
             {
-                var list = new ASTOptExprList();
-                list.Expr = this.Expr.ToAbstractSyntax();
-                list.RepExpr = rep;
+                var expr = (ASTExpression)this.Expr.ToAbstractSyntax();
+                expr.NextExpression = rep;
 
-                return list;
+                return expr;
             }
 
             return this.Expr.ToAbstractSyntax();
@@ -2356,11 +2458,10 @@ namespace Compiler
             var rep = this.RepExprList.ToAbstractSyntax();
             if (!(rep is ASTEmpty))
             {
-                var list = new ASTOptExprList();
-                list.Expr = this.Expr.ToAbstractSyntax();
-                list.RepExpr = rep;
+                var expr = (ASTExpression)this.Expr.ToAbstractSyntax();
+                expr.NextExpression = rep;
 
-                return list;
+                return expr;
             }
 
             return this.Expr.ToAbstractSyntax();
@@ -2373,11 +2474,10 @@ namespace Compiler
             var rep = this.RepExprList.ToAbstractSyntax();
             if (!(rep is ASTEmpty))
             {
-                var list = new ASTOptExprList();
-                list.Expr = this.Expr.ToAbstractSyntax();
-                list.RepExpr = rep;
+                var expr = (ASTExpression)this.Expr.ToAbstractSyntax();
+                expr.NextExpression = rep;
 
-                return list;
+                return expr;
             }
 
             return this.Expr.ToAbstractSyntax();
@@ -2390,11 +2490,10 @@ namespace Compiler
             var rep = this.RepExprList.ToAbstractSyntax();
             if (!(rep is ASTEmpty))
             {
-                var list = new ASTOptExprList();
-                list.Expr = this.Expr.ToAbstractSyntax();
-                list.RepExpr = rep;
+                var expr = (ASTExpression)this.Expr.ToAbstractSyntax();
+                expr.NextExpression = rep;
 
-                return list;
+                return expr;
             }
 
             return this.Expr.ToAbstractSyntax();
@@ -2415,10 +2514,9 @@ namespace Compiler
             var rep = this.RepExprList.ToAbstractSyntax();
             if (!(rep is ASTEmpty))
             {
-                var comma = new ASTComma();
-                comma.Expr = this.Expr.ToAbstractSyntax();
-                comma.RepExpr = rep;
-                return comma;
+                var expr = (ASTExpression)this.Expr.ToAbstractSyntax();
+                expr.NextExpression = rep;
+                return expr;
             }
 
             return this.Expr.ToAbstractSyntax();

@@ -1736,6 +1736,15 @@ namespace Compiler
     {
         public virtual IASTNode ToAbstractSyntax()
         {
+            var rep = this.RepTerm3.ToAbstractSyntax();
+
+            if (!(rep is ASTEmpty))
+            {
+                var term3 = (ASTAddOpr)rep;
+                term3.SetLeftChild(this.Term3.ToAbstractSyntax());
+                return term3;
+            }
+
             return this.Term3.ToAbstractSyntax();
         }
     }

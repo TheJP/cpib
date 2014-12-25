@@ -53,7 +53,7 @@ do
 	capitaln init := decimal(int32(captialur * 20.0m)) div 20.0m div 1.0m div 4.0m;
     capital := 1 + 2 + 3 - 4 - 5;
     if a < b && b < c && c < d then
-        capital := 4m
+        capital := 4m * 3 * 4 + 2 * 3 + 4 - 1 * 2
     else
         skip
     endif

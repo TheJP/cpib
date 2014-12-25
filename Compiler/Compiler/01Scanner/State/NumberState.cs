@@ -17,6 +17,11 @@ namespace Compiler
         {
             if (Char.IsDigit(data)) { value = (value * 10) + (long)Char.GetNumericValue(data); }
             else if (data == '.') { scanner.CurrentState = new DecimalState(value); }
+            else if (data == 'm')
+            {
+                scanner.AddToken(new DecimalLiteralToken((decimal)value));
+                scanner.CurrentState = new DefaultState();
+            }
             else if (data != '\'') //Ignore ' (Allows to write int32 literals as 1''000'000'000)
             {
                 if (-value < Int32.MinValue) { throw new LexicalException("Int32 Literal '" + value + "' is to large or to small"); }

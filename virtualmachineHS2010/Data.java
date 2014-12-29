@@ -6,28 +6,164 @@ class Data
 {
     static interface IBaseData {}
 	
+	//Decimal Implementation start
 	static class DecimalData implements IBaseData
 	{
-		//data[0] contains the exponent and part of the significand, data[1] and data[2] is for the significand, data[3] is the rest of the significand and the sign
+		//data[0] - data[2] contains the base, with data[2] containing the most significant bits, data[3] contains the exponent (least significant 5 bits) and the sign (the 6th bit)
 		private int[] dec;
 		
 		DecimalData(int[] dec) { this.dec = dec;}
 		int[] getData(){ return dec; }
 		
-		bool isNegative()
+		int getDecimalSign()//returns 0 or 1, 1 = negative
 		{
 			return ((data[3] & 32) >> 5) == 1;
 		}
 		
-		int exponent(){
-			return data[0] & 31;
+		int getExponent(){
+			return data[3] & 31;
 		}
+		
+		
 	}
 	
-	static IntData decimalGet(IBaseData a)
+	static DecimalData decimalNew(int[] dec)
 	{
-		...
+		return new DecimalData(dec);
 	}
+	
+	static int[] decimalGet(IBaseData a)
+	{
+		return ((DecimalData)a).getData();
+	}
+	
+	static int decimalExponentGet(IBaseData a)
+	{
+		return ((DecimalData)a).getExponent();
+	}
+	
+	static int decimalSignGet(IBaseData a)
+	{
+		return ((DecimalData)a).getDecimalSign();
+	}
+	
+	static DecimalData intMult(IBaseData a, IBaseData b)
+    {
+        int[] dec1 = decimalGet(a);
+		int[] dec2 = decimalGet(b);
+		
+		int[] result = new int[6];
+		
+		//terminology h, m, l = high, middle, low, 1 = dec1, 2=dec 2, so l2 = low 32 bits of dec2
+		
+		//l1 * l2
+		long temp = ((long)dec1[0])*((long)dec2[0]);
+		
+		result[0] += (int)temp;
+		result[1] += (int)(temp >> 32 );
+		
+		//m1 * l2
+		temp = ((long)dec1[1])*((long)dec2[0]);
+		
+		result[1] += (int)temp;
+		result[2] += (int)(temp >> 32 );
+		
+		//h1 * l2
+		temp = ((long)dec1[2])*((long)dec2[0]);
+		
+		result[2] += (int)temp;
+		result[3] += (int)(temp >> 32 );
+		
+		//l1 * m2
+		temp = ((long)dec1[0])*((long)dec2[1]);
+		
+		result[1] += (int)temp;
+		result[2] += (int)(temp >> 32 );
+		
+		//m1 * m2
+		temp = ((long)dec1[1])*((long)dec2[1]);
+		result[2] += (int)temp;
+		result[3] += (int)(temp >> 32 );
+		
+		//h1 * m2
+		temp = ((long)dec1[2])*((long)dec2[1]);
+		result[3] += (int)temp;
+		result[4] += (int)(temp >> 32 );
+		
+		//l1 * h2
+		temp = ((long)dec1[0])*((long)dec2[2]);
+		
+		result[2] += (int)temp;
+		result[3] += (int)(temp >> 32 );
+		
+		//m1 * h2
+		temp = ((long)dec1[1])*((long)dec2[2]);
+		result[3] += (int)temp;
+		result[4] += (int)(temp >> 32 );
+		
+		//h1 * h2
+		temp = ((long)dec1[2])*((long)dec2[2]);
+		result[4] += (int)temp;
+		result[5] += (int)(temp >> 32 );
+		
+		int exponent = decimalExponentGet(a) + decimalExponentGet(b);		
+		
+		long carry = 0;
+		
+		while( result[5] > 0 || result[4] > 0 || result[3] > 0)
+		{
+			//divide by 10 to make the result fit
+			exponent--;
+			
+			if(exponent < 0)
+			{
+				throw new Exception("Overflow!");
+			}
+			
+			carry = 0;
+						
+			for(int i = 5; i >= 0; i--)
+			{
+				int current = (long)result[i] + carry;
+				result[i] = (int)(current / 10);
+				
+				carry = ((long)(result[i] % 10))<<32;				
+			}
+			
+			carry = carry >> 32;
+		}
+		
+		//rounding
+		bool addOne = false;
+		
+		if(carry > 5 || carry == 5 && result[0] & 1 == 1)
+		{
+			int ccarry = 1;
+			
+			for(int i = 0; i <= 5; i++)
+			{
+				if(result[i] == Integer.MAX_VALUE)
+				{
+					result[i] = 0;
+					ccarry = 1;
+				}else{
+					result[i] += 1;
+				}
+			}
+		}
+		
+		int[] actualResult = new int[4];
+		actualResult[0] = result[0];
+		actualResult[1] = result[1];
+		actualResult[2] = result[2];
+		actualResult[3] = exponent & ((decimalSignGet(a)&decimalSignGet(b))<<5);
+		
+		return decimalNew(actualResult); 
+    }
+	
+	static void mult64bitInt(int[] dec1, int[] dec2, int[] result)
+	
+	//Decimal Implementation end
 
     static class IntData implements IBaseData
     {

@@ -107,6 +107,7 @@
     <Compile Include="02Parser\Treenode.cs" />
     <Compile Include="05VirtualMachine\Data.cs" />
     <Compile Include="05VirtualMachine\IVirtualMachine.cs" />
+    <Compile Include="05VirtualMachine\TestVirtualMachine.cs" />
     <Compile Include="05VirtualMachine\VirtualMachine.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -11,6 +11,7 @@ namespace Compiler
     {
         static void Main(string[] args)
         {
+            //TestVirtualMachine.Test(); return;
             try
             {
                 Scanner scanner = new Scanner();

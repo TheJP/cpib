@@ -17,7 +17,7 @@ class Data
 		
 		int getDecimalSign()//returns 0 or 1, 1 = negative
 		{
-			return ((data[3] & 32) >> 5) == 1;
+			return ((data[3] & 32) >> 5);
 		}
 		
 		int getExponent(){
@@ -47,7 +47,7 @@ class Data
 		return ((DecimalData)a).getDecimalSign();
 	}
 	
-	static DecimalData intMult(IBaseData a, IBaseData b)
+	static DecimalData decimalMult(IBaseData a, IBaseData b)
     {
         int[] dec1 = decimalGet(a);
 		int[] dec2 = decimalGet(b);
@@ -110,7 +110,17 @@ class Data
 		
 		long carry = 0;
 		
-		while( result[5] > 0 || result[4] > 0 || result[3] > 0)
+		if(result[5].equals(0) && result[4].equals(0) && result[3].equals(0) && result[2].equals(0) && result[1].equals(0) && result[0].equals(0)){
+			int[] actualResult = new int[4];
+			actualResult[0] = 0;
+			actualResult[1] = 0;
+			actualResult[2] = 0;
+			actualResult[3] = 0;
+			
+			return decimalNew(actualResult);
+		}
+		
+		while( result[5] > 0 || result[4] > 0 || result[3] > 0 || exponent > 28)
 		{
 			//divide by 10 to make the result fit
 			exponent--;
@@ -118,13 +128,16 @@ class Data
 			if(exponent < 0)
 			{
 				throw new Exception("Overflow!");
+			}else if(result[5].equals(0) && result[4].equals(0) && result[3].equals(0) && result[2].equals(0) && result[1].equals(0) && result[0].equals(0))
+			{
+				throw new Exception("Underflow Error");
 			}
 			
 			carry = 0;
 						
 			for(int i = 5; i >= 0; i--)
 			{
-				int current = (long)result[i] + carry;
+				long current = (long)result[i] + carry;
 				result[i] = (int)(current / 10);
 				
 				carry = ((long)(result[i] % 10))<<32;				
@@ -136,18 +149,19 @@ class Data
 		//rounding
 		bool addOne = false;
 		
-		if(carry > 5 || carry == 5 && result[0] & 1 == 1)
+		if(carry > 5 || carry.equals(5) && (result[0] & 1) == 1)
 		{
 			int ccarry = 1;
 			
-			for(int i = 0; i <= 5; i++)
+			for(int i = 0; i <= 5 && ccarry.equals(1); i++)
 			{
-				if(result[i] == Integer.MAX_VALUE)
+				if(result[i].equaks(Integer.MAX_VALUE) && ccarry.equals(1))
 				{
 					result[i] = 0;
 					ccarry = 1;
 				}else{
-					result[i] += 1;
+					result[i] += ccarry;
+					ccarry = 0;
 				}
 			}
 		}
@@ -156,12 +170,438 @@ class Data
 		actualResult[0] = result[0];
 		actualResult[1] = result[1];
 		actualResult[2] = result[2];
-		actualResult[3] = exponent & ((decimalSignGet(a)&decimalSignGet(b))<<5);
+		actualResult[3] = exponent & ((decimalSignGet(a)^decimalSignGet(b))<<5);
 		
 		return decimalNew(actualResult); 
     }
 	
-	static void mult64bitInt(int[] dec1, int[] dec2, int[] result)
+	static DecimalData decimalAdd(IBaseData a, IBaseData b)
+	{
+		int[] dec1 = decimalGet(a);
+		int[] dec2 = decimalGet(b);
+		
+		int exponent1 = decimalExponentGet(a);
+		int exponent2 = decimalExponentGet(b);
+		
+		int sign1 = decimalSignGet(a);
+		int sign2 = decimalSignGet(b);
+		
+		//check if it's actually a subtraction
+		if(sign1 != sign2)
+		{
+			if(sign1.equals(0))
+			{
+				dec2[3] = dec2[3] ^ (1<<5);
+				
+				return decimalSub(a,decimalNew(dec2));
+			}else
+			{
+				dec1[3] = dec1[3] ^ (1<<5);
+				
+				return decimalSub(b,decimalNew(dec1));
+			}
+		}
+		
+		if(exponent1 != exponent2)
+		{
+			if(exponent2 > exponent1)
+			{
+				int tempInt = exponent1;
+				exponent1 = exponent2;
+				exponent2 = tempInt;
+				int[] tempDec = dec1;
+				dec1 = dec2;
+				dec2 = tempDec;
+			}
+			
+			//adjust the exponent so they're equal
+			int carry = 0;
+			int[] dec2temp;
+			while( exponent1 != exponent2)
+			{
+				//divide by 10 to make the result fit
+				exponent2++;
+				dec2temp = dec2;
+				if(exponent2 < 0)
+				{
+					throw new Exception("Overflow!");
+				}
+				
+				carry = 0;
+							
+				for(int i = 0; i <= 2; i++)
+				{
+					long current = 10 * (long)dec2temp[i] + carry;
+					dec2temp[i] = (int)current;
+					
+					carry = (int)(current>>32);				
+				}
+				
+				if(carry > 0)
+				{
+					//we can't make the bigger number have a smaller exponent, otherwise we lose significant digits
+					//so we raise the smaller number to the exponent of the larger number, losing precision in the least significant digits
+					while( exponent1 != exponent2)
+					{
+						//divide by 10 to make the result fit
+						exponent1--;
+						
+						if(exponent1 < 0)
+						{
+							throw new Exception("Overflow!");
+						}
+						
+						carry = 0;
+									
+						for(int i = 2; i >= 0; i--)
+						{
+							long current = (long)dec1[i] + carry;
+							dec1[i] = (int)(current / 10);
+							
+							carry = ((long)(dec1[i] % 10))<<32;				
+						}
+					}
+				}else{
+					dec2 = dec2temp;
+				}
+			}
+			
+		}
+		
+		int[] result = new int[4];
+		
+		long temp = ((long)dec1[0])+((long)dec2[0]);
+		long temp2 = ((long)dec1[1])+((long)dec2[1]);
+		long temp3 = ((long)dec1[2])+((long)dec2[2]);
+		
+		result[0] = (int)temp;
+		result[1] = (int)(temp >> 32 ) + (int)temp2;
+		result[2] = (int)(temp2 >> 32 ) + (int)temp3;
+		result[3] = (int)(temp3 >> 32 );
+		
+		while( result[3] > 0 || exponent1 > 28)
+		{
+			//divide by 10 to make the result fit
+			exponent1--;
+			
+			if(exponent1 < 0)
+			{
+				throw new Exception("Overflow!");
+			}else if(result[3].equals(0) && result[2].equals(0) && result[1].equals(0) && result[0].equals(0))
+			{
+				throw new Exception("Underflow Error");
+			}
+			
+			carry = 0;
+						
+			for(int i = 3; i >= 0; i--)
+			{
+				long current = (long)result[i] + carry;
+				result[i] = (int)(current / 10);
+				
+				carry = ((long)(result[i] % 10))<<32;				
+			}
+			
+			carry = carry >> 32;
+		}
+		
+		//rounding
+		bool addOne = false;
+		
+		if(carry > 5 || carry.equals(5) && (result[0] & 1) == 1)
+		{
+			int ccarry = 1;
+			
+			for(int i = 0; i <= 5 && ccarry.equals(1); i++)
+			{
+				if(result[i].equaks(Integer.MAX_VALUE) && ccarry.equals(1))
+				{
+					result[i] = 0;
+					ccarry = 1;
+				}else{
+					result[i] += ccarry;
+					ccarry = 0;
+				}
+			}
+		}
+		
+		int[] actualResult = new int[4];
+		actualResult[0] = result[0];
+		actualResult[1] = result[1];
+		actualResult[2] = result[2];
+		actualResult[3] = exponent & (sign1<<5);
+		
+		return decimalNew(actualResult); 
+	}
+	
+	static DecimalData decimalSub(IBaseData a, IBaseData b)
+	{
+		int[] dec1 = decimalGet(a);
+		int[] dec2 = decimalGet(b);
+		
+		int exponent1 = decimalExponentGet(a);
+		int exponent2 = decimalExponentGet(b);
+		
+		int sign1 = decimalSignGet(a);
+		int sign2 = decimalSignGet(b);
+		
+		//check if it's actually a subtraction
+		if(sign1 != sign2)
+		{
+			if(sign1.equals(0))
+			{
+				dec2[3] = dec2[3] ^ (1<<5);
+				
+				return decimalAdd(a,decimalNew(dec2));
+			}else
+			{
+				dec2[3] = dec2[3] ^ (1<<5);
+				
+				return decimalAdd(a,decimalNew(dec2));
+			}
+		}
+		
+		bool switched = false;
+		
+		if(exponent1 != exponent2)
+		{
+			if(exponent2 > exponent1)
+			{
+				int tempInt = exponent1;
+				exponent1 = exponent2;
+				exponent2 = tempInt;
+				int[] tempDec = dec1;
+				dec1 = dec2;
+				dec2 = tempDec;
+				
+				switched = true;
+			}
+			
+			//adjust the exponent so they're equal
+			int carry = 0;
+			int[] dec2temp;
+			while( exponent1 != exponent2)
+			{
+				//divide by 10 to make the result fit
+				exponent2++;
+				dec2temp = dec2;
+				if(exponent2 < 0)
+				{
+					throw new Exception("Overflow!");
+				}
+				
+				carry = 0;
+							
+				for(int i = 0; i <= 2; i++)
+				{
+					long current = 10 * (long)dec2temp[i] + carry;
+					dec2temp[i] = (int)current;
+					
+					carry = (int)(current>>32);				
+				}
+				
+				if(carry > 0)
+				{
+					//we can't make the bigger number have a smaller exponent, otherwise we lose significant digits
+					//so we raise the smaller number to the exponent of the larger number, losing precision in the least significant digits
+					while( exponent1 != exponent2)
+					{
+						//divide by 10 to make the result fit
+						exponent1--;
+						
+						if(exponent1 < 0)
+						{
+							throw new Exception("Overflow!");
+						}
+						
+						carry = 0;
+									
+						for(int i = 2; i >= 0; i--)
+						{
+							long current = (long)dec1[i] + carry;
+							dec1[i] = (int)(current / 10);
+							
+							carry = ((long)(dec1[i] % 10))<<32;				
+						}
+						
+						//rounding
+						bool addOne = false;
+						
+						carry = carry>>32;
+						
+						if(carry > 5 || carry.equals(5) && (dec1[0] & 1) == 1)
+						{
+							int ccarry = 1;
+							
+							for(int i = 0; i <= 2 && ccarry.equals(1); i++)
+							{
+								if(dec1[i].equals(Integer.MAX_VALUE) && ccarry.equals(1))
+								{
+									dec1[i] = 0;
+									ccarry = 1;
+								}else{
+									dec1[i] += ccarry;
+									ccarry = 0;
+								}
+							}
+						}
+					}
+				}else{
+					dec2 = dec2temp;
+				}
+			}
+			
+		}
+		
+		if(switched)
+		{
+			//switch back the numbers to the original order
+			int tempInt = exponent1;
+			exponent1 = exponent2;
+			exponent2 = tempInt;
+			int[] tempDec = dec1;
+			dec1 = dec2;
+			dec2 = tempDec;
+		}
+		
+		switched = false;
+		
+		if(dec1[2] < dec2[2] || (dec1[2].equals(dec2[2]) && dec1[1] < dec2[1]) || (dec1[2].equals(dec2[2]) && (dec1[1].equals(dec2[1]) && dec1[0] < dec2[0])
+		{
+			//switch again to subtract the smaller number from the larger
+			
+			switched = true;
+			int tempInt = exponent1;
+			exponent1 = exponent2;
+			exponent2 = tempInt;
+			int[] tempDec = dec1;
+			dec1 = dec2;
+			dec2 = tempDec;
+		}
+		
+		int[] result = new int[4];
+		int carry = 0;
+		
+		long temp = ((long)dec1[0]) - ((long)dec2[0]);
+		if(temp < 0)
+		{
+			carry = 1;
+			temp += 2<<31;
+		}
+		
+		result[0] = (int)temp;
+		
+		long temp2 = ((long)dec1[1]) - ((long)dec2[1]) - carry;
+		
+		carry = 0;
+		
+		if(temp2 < 0)
+		{
+			carry = 1;
+			temp2 += 2<<31;
+		}
+		
+		result[1] = (int)temp2;
+		
+		result[2] =(int)( ((long)dec1[2]) - ((long)dec2[2]) - carry);
+		
+		if(switched)
+		{
+			sign1 = sign1 ^ 1;
+		}
+		
+		int[] actualResult = new int[4];
+		actualResult[0] = result[0];
+		actualResult[1] = result[1];
+		actualResult[2] = result[2];
+		actualResult[3] = exponent1 & (sign1)<<5);
+		
+		return decimalNew(actualResult); 
+	}
+	
+	static DecimalData decimalDiv(IBaseData a, IBaseData b)
+	{
+		int[] dec1 = decimalGet(a);
+		int[] dec2 = decimalGet(b);
+		
+		int exponent1 = decimalExponentGet(a);
+		int exponent2 = decimalExponentGet(b);
+		
+		int sign1 = decimalSignGet(a);
+		int sign2 = decimalSignGet(b);
+		
+		if(dec1[0].equals(0) && dec1[1].equals(0) && dec1[2].equals(0))
+		{
+			//return 0 if 0
+			return a;
+		}else if(dec2[0].equals(0) && dec2[1].equals(0) && dec2[2].equals(0))
+		{
+			throw new Exception("Division by zero");
+		}
+		
+		//make dec1 as big as possible
+		
+		int carry = 0:
+		
+		int carry = 0;
+		int[] dec1temp;
+		while( carry.equals(0) && exponent1 < 28)
+		{
+			//raise exponent until the denominator is "full"
+			exponent1++;
+			dec1temp = dec1;
+			if(exponent1 < 0)
+			{
+				throw new Exception("Overflow!");
+			}
+			
+			carry = 0;
+						
+			for(int i = 0; i <= 2; i++)
+			{
+				long current = 10 * (long)dec1temp[i] + carry;
+				dec1temp[i] = (int)current;
+				
+				carry = (int)(current>>32);				
+			}
+			
+			if(carry.equals(0))
+			{
+				dec1 = dec1temp;
+			}
+		}
+		
+		//make dec2 as small as possible (doesn't do anything if it's normalized)
+		carry = 0;
+		int[] dec2temp;
+		
+		while(carry.equals(0) && exponent2 > 0)
+		{
+			//divide by 10 to make the result fit
+			exponent2--;
+			dec2temp = dec2;
+			
+			if(exponent2 < 0)
+			{
+				throw new Exception("Overflow!");
+			}
+			
+			carry = 0;
+						
+			for(int i = 2; i >= 0; i--)
+			{
+				long current = (long)dec2temp[i] + carry;
+				dec2temp[i] = (int)(current / 10);
+				
+				carry = ((long)(dec2temp[i] % 10))<<32;				
+			}
+			
+			if(carry.equals(0))
+			{
+				dec2 = dec2temp;
+			}
+		}
+	}
 	
 	//Decimal Implementation end
 

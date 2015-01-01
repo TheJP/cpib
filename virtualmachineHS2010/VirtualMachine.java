@@ -329,6 +329,36 @@ public class VirtualMachine implements IVirtualMachine
     }
 
     // load values (value -> stack)
+	
+	private class DecimalLoad implements IInstruction
+    {
+        private int[] value;
+
+        private IntLoad(int value0, int value1, int value2, int value3) { 
+			int[] value = new int[4];
+			value[0] = value0;
+			value[1] = value1;
+			value[2] = value2;
+			value[3] = value3;
+			this.value = value;
+		}
+
+        public void execute() throws ExecutionError
+        {
+            if (sp > hp) { throw new ExecutionError(SP_GT_HP); }
+            store[sp]= Data.decimalNew(value);
+            sp= sp + 1;
+            pc= pc + 1;
+        }
+
+        public String toString() { return "DecimalLoad(" + value[0] + "," + value[1] + ","+ value[2] + ","+ value[3] + "," + ")"; }
+    }
+
+    public void DecimalLoad(int loc, int value0, int value1, int value2, int value3) throws CodeTooSmallError
+    {
+        if (loc >= code.length) { throw new CodeTooSmallError(); }
+        code[loc]= new DecimalLoad(int value0, int value1, int value2, int value3);
+    }
 
     private class IntLoad implements IInstruction
     {
@@ -486,6 +516,226 @@ public class VirtualMachine implements IVirtualMachine
     }
 
     // dyadic instructions
+	
+	private class DecimalAdd implements IInstruction
+    {
+        private DecimalAdd() {}
+
+        public void execute()
+        {
+            sp= sp - 1;
+            store[sp-1]= Data.decimalAdd(store[sp-1], store[sp]);
+            pc= pc + 1;
+        }
+
+        public String toString() { return "DecimalAdd"; }
+    }
+
+    public void DecimalAdd(int loc) throws CodeTooSmallError
+    {
+        if (loc >= code.length) { throw new CodeTooSmallError(); }
+        code[loc]= new DecimalAdd();
+    }
+
+    private class DecimalSub implements IInstruction
+    {
+        private DecimalSub() {}
+
+        public void execute()
+        {
+            sp= sp - 1;
+            store[sp-1]= Data.decimalSub(store[sp-1], store[sp]);
+            pc= pc + 1;
+        }
+
+        public String toString() { return "DecimalSub"; }
+    }
+
+    public void DecimalSub(int loc) throws CodeTooSmallError
+    {
+        if (loc >= code.length) { throw new CodeTooSmallError(); }
+        code[loc]= new DecimalSub();
+    }
+
+    private class DecimalMult implements IInstruction
+    {
+        private DecimalMult() {}
+
+        public void execute()
+        {
+            sp= sp - 1;
+            store[sp-1]= Data.decimalMult(store[sp-1], store[sp]);
+            pc= pc + 1;
+        }
+
+        public String toString() { return "DecimalMult"; }
+    }
+
+    public void DecimalMult(int loc) throws CodeTooSmallError
+    {
+        if (loc >= code.length) { throw new CodeTooSmallError(); }
+        code[loc]= new DecimalMult();
+    }
+
+    private class DecimalDiv implements IInstruction
+    {
+        private DecimalDiv() {}
+
+        public void execute() throws ExecutionError
+        {
+            sp= sp - 1;
+            store[sp-1]= Data.decimalDiv(store[sp-1], store[sp]);
+            pc= pc + 1;
+        }
+
+        public String toString() { return "DecimalDiv"; }
+    }
+
+    public void DecimalDiv(int loc) throws CodeTooSmallError
+    {
+        if (loc >= code.length) { throw new CodeTooSmallError(); }
+        code[loc]= new DecimalDiv();
+    }
+
+    private class DecimalMod implements IInstruction
+    {
+        private DecimalMod() {}
+
+        public void execute() throws ExecutionError
+        {
+            sp= sp - 1;
+            store[sp-1]= Data.decimalMod(store[sp-1], store[sp]);
+            pc= pc + 1;
+        }
+
+        public String toString() { return "DecimalMod"; }
+    }
+
+    public void DecimalMod(int loc) throws CodeTooSmallError
+    {
+        if (loc >= code.length) { throw new CodeTooSmallError(); }
+        code[loc]= new DecimalMod();
+    }
+
+    private class DecimalEQ implements IInstruction
+    {
+        private DecimalEQ() {}
+
+        public void execute()
+        {
+            sp= sp - 1;
+            store[sp-1]= Data.decimalEQ(store[sp-1], store[sp]);
+            pc= pc + 1;
+        }
+
+        public String toString() { return "DecimalEQ"; }
+    }
+
+    public void DecimalEQ(int loc) throws CodeTooSmallError
+    {
+        if (loc >= code.length) { throw new CodeTooSmallError(); }
+        code[loc]= new DecimalEQ();
+    }
+
+    private class DecimalNE implements IInstruction
+    {
+        private DecimalNE() {}
+
+        public void execute()
+        {
+            sp= sp - 1;
+            store[sp-1]= Data.decimalNE(store[sp-1], store[sp]);
+            pc= pc + 1;
+        }
+
+        public String toString() { return "DecimalNE"; }
+    }
+
+    public void DecimalNE(int loc) throws CodeTooSmallError
+    {
+        if (loc >= code.length) { throw new CodeTooSmallError(); }
+        code[loc]= new DecimalNE();
+    }
+
+    private class DecimalGT implements IInstruction
+    {
+        private DecimalGT() {}
+
+        public void execute()
+        {
+            sp= sp - 1;
+            store[sp-1]= Data.decimalGT(store[sp-1], store[sp]);
+            pc= pc + 1;
+        }
+
+        public String toString() { return "DecimalGT"; }
+    }
+
+    public void DecimalGT(int loc) throws CodeTooSmallError
+    {
+        if (loc >= code.length) { throw new CodeTooSmallError(); }
+        code[loc]= new DecimalGT();
+    }
+
+    private class DecimalLT implements IInstruction
+    {
+        private DecimalLT() {}
+
+        public void execute()
+        {
+            sp= sp - 1;
+            store[sp-1]= Data.decimalLT(store[sp-1], store[sp]);
+            pc= pc + 1;
+        }
+
+        public String toString() { return "DecimalLT"; }
+    }
+
+    public void DecimalLT(int loc) throws CodeTooSmallError
+    {
+        if (loc >= code.length) { throw new CodeTooSmallError(); }
+        code[loc]= new DecimalLT();
+    }
+
+    private class DecimalGE implements IInstruction
+    {
+        private DecimalGE() {}
+
+        public void execute()
+        {
+            sp= sp - 1;
+            store[sp-1]= Data.decimalGE(store[sp-1], store[sp]);
+            pc= pc + 1;
+        }
+
+        public String toString() { return "DecimalGE"; }
+    }
+
+    public void DecimalGE(int loc) throws CodeTooSmallError
+    {
+        if (loc >= code.length) { throw new CodeTooSmallError(); }
+        code[loc]= new DecimalGE();
+    }
+
+    private class DecimalLE implements IInstruction
+    {
+        private DecimalLE() {}
+
+        public void execute()
+        {
+            sp= sp - 1;
+            store[sp-1]= Data.decimalLE(store[sp-1], store[sp]);
+            pc= pc + 1;
+        }
+
+        public String toString() { return "DecimalLE"; }
+    }
+
+    public void DecimalLE(int loc) throws CodeTooSmallError
+    {
+        if (loc >= code.length) { throw new CodeTooSmallError(); }
+        code[loc]= new DecimalLE();
+    }
 
     private class IntAdd implements IInstruction
     {

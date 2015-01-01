@@ -521,6 +521,11 @@ class Data
 	
 	static DecimalData decimalDiv(IBaseData a, IBaseData b)
 	{
+		//sample applications can be found at:
+		// http://opensource.apple.com/source/clang/clang-137/src/projects/compiler-rt/lib/udivmoddi4.c
+		// https://github.com/gbarnett/shared-source-cli-2.0/blob/master/clr/src/vm/comdecimal.cpp
+		
+		//since this is way too complex/difficult to implement in this context, use java BigDecimal instead
 		int[] dec1 = decimalGet(a);
 		int[] dec2 = decimalGet(b);
 		
@@ -530,77 +535,38 @@ class Data
 		int sign1 = decimalSignGet(a);
 		int sign2 = decimalSignGet(b);
 		
-		if(dec1[0].equals(0) && dec1[1].equals(0) && dec1[2].equals(0))
-		{
-			//return 0 if 0
-			return a;
-		}else if(dec2[0].equals(0) && dec2[1].equals(0) && dec2[2].equals(0))
-		{
-			throw new Exception("Division by zero");
+		byte[] dec1Bytes = ByteBuffer.allocate(12).putInt(dec1[0]).putInt(dec1[1]).putInt(dec1[2]).array();
+		byte[] dec2Bytes = ByteBuffer.allocate(12).putInt(dec2[0]).putInt(dec2[1]).putInt(dec2[2]).array();
+		
+		BigInteger bigint1 = new BigInteger(dec1Bytes);
+		BigInteger bigint2 = new BigInteger(dec2Bytes);
+		
+		BigDecimal javaDec1 = new BigDecimal(bigint1, exponent1);
+		BigDecimal javaDec2 = new BigDecimal(bigint2, exponent2);
+		
+		if(sign1.equals(1)){
+			javaDec1 = javaDec1.negate();
 		}
 		
-		//make dec1 as big as possible
-		
-		int carry = 0:
-		
-		int carry = 0;
-		int[] dec1temp;
-		while( carry.equals(0) && exponent1 < 28)
-		{
-			//raise exponent until the denominator is "full"
-			exponent1++;
-			dec1temp = dec1;
-			if(exponent1 < 0)
-			{
-				throw new Exception("Overflow!");
-			}
-			
-			carry = 0;
-						
-			for(int i = 0; i <= 2; i++)
-			{
-				long current = 10 * (long)dec1temp[i] + carry;
-				dec1temp[i] = (int)current;
-				
-				carry = (int)(current>>32);				
-			}
-			
-			if(carry.equals(0))
-			{
-				dec1 = dec1temp;
-			}
+		if(sign2.equals(1)){
+			javaDec2 = javaDec2.negate();
 		}
 		
-		//make dec2 as small as possible (doesn't do anything if it's normalized)
-		carry = 0;
-		int[] dec2temp;
+		BigDecimal result = javaDec1.divide(javaDec2, ROUND_HALF_EVEN);
 		
-		while(carry.equals(0) && exponent2 > 0)
-		{
-			//divide by 10 to make the result fit
-			exponent2--;
-			dec2temp = dec2;
-			
-			if(exponent2 < 0)
-			{
-				throw new Exception("Overflow!");
-			}
-			
-			carry = 0;
-						
-			for(int i = 2; i >= 0; i--)
-			{
-				long current = (long)dec2temp[i] + carry;
-				dec2temp[i] = (int)(current / 10);
-				
-				carry = ((long)(dec2temp[i] % 10))<<32;				
-			}
-			
-			if(carry.equals(0))
-			{
-				dec2 = dec2temp;
-			}
-		}
+		byte[] resultbigint = result.unscaledValue().toByteArray();
+		int scale = result.scale() & 31;
+		int sign = result.signum().equals(-1) ? 1 : 0;
+		
+		
+		
+		int[] actualResult = new int[4];
+		actualResult[0] = resultbigint[0] + resultbigint[1]<<8 + resultbigint[2]<<16+resultbigint[3]<<24;
+		actualResult[1] = resultbigint[4] + resultbigint[5]<<8 + resultbigint[6]<<16+resultbigint[7]<<24;
+		actualResult[2] = resultbigint[8] + resultbigint[9]<<8 + resultbigint[10]<<16+resultbigint[11]<<24;
+		actualResult[3] = exponent1 & (sign1)<<5);
+		
+		return decimalNew(actualResult); 
 	}
 	
 	//Decimal Implementation end

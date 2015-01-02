@@ -16,7 +16,7 @@ namespace Compiler
             return string.Format("{0}m", this.Value);
         }
 
-        public int GenerateCode(int loc, IVirtualMachine vm, CheckerInformation info)
+        public override int GenerateCode(int loc, IVirtualMachine vm, CheckerInformation info)
         {
             throw new System.NotImplementedException();
         }

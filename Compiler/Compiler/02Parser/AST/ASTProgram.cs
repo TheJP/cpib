@@ -54,14 +54,21 @@ public class ASTProgram : IASTNode
         //Generate main code
         foreach (ASTCpsCmd cmd in Commands)
         {
-            //loc = cmd.GenerateCode(loc, vm, info);
+            loc = cmd.GenerateCode(loc, vm, info);
         }
         //Add stop as last command
         vm.Stop(loc++);
         //Generate functions/procedures
         foreach (string ident in info.ProcFuncs)
         {
-            //TODO: Generate Calls to correct address with know given idents!
+            //Add calls, now that the function/procedure address is known
+            if (info.Calls.ContainsKey(ident) && info.Calls[ident] != null)
+            {
+                foreach (int callLoc in info.Calls[ident])
+                {
+                    vm.Call(callLoc, loc); //loc is the address of the function/procedure
+                }
+            }
             //loc = info.ProcFuncs[ident].GenerateCode(loc, vm, info);
         }
         return loc;

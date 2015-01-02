@@ -20,6 +20,16 @@ namespace Compiler
         public int Count { get { return declarations.Count; } }
 
         /// <summary>
+        /// Resturns if the given ident is contained in this namespace
+        /// </summary>
+        /// <param name="ident"></param>
+        /// <returns></returns>
+        public bool ContainsIdent(string ident)
+        {
+            return declarations.ContainsKey(ident);
+        }
+
+        /// <summary>
         /// Add declaration to the namespace. Throws an exception if the declaration already exists in this namespace.
         /// </summary>
         /// <param name="ident"></param>

@@ -17,7 +17,20 @@ namespace Compiler
 
         public override int GenerateCode(int loc, IVirtualMachine vm, CheckerInformation info)
         {
-            throw new System.NotImplementedException();
+            //TODO: Could also be a function call!
+            if (info.CurrentNamespace != null &&
+                info.Namespaces.ContainsKey(info.CurrentNamespace) &&
+                info.Namespaces[info.CurrentNamespace].ContainsIdent(Ident))
+            {
+                //TODO: Load local ident
+                vm.LoadRel(loc++, 0);
+            }
+            else if (info.Globals.ContainsIdent(Ident))
+            {
+                //TODO: Load global Ident
+                vm.LoadRel(loc++, 0);
+            }
+            return loc;
         }
     }
 }

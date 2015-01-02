@@ -1397,7 +1397,7 @@ namespace Compiler
             {
                 var tmp = (ASTBoolOpr)relop.RepTerm;
 
-                if (relop.Operator == Operators.AND && tmp.Operator == Operators.OR)
+                if ((relop.Operator == Operators.AND || relop.Operator == Operators.CAND) && (tmp.Operator == Operators.OR || tmp.Operator == Operators.COR))
                 {
                     relop.RepTerm = relop.Term;
                     relop.Term = new ASTEmpty();

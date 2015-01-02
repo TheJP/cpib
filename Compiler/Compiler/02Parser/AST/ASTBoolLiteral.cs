@@ -2,7 +2,7 @@ using Compiler._02Parser.AST;
 
 namespace Compiler
 {
-    public class ASTBoolLiteral : IASTNode
+    public class ASTBoolLiteral : ASTExpression
     {
         public ASTBoolLiteral(bool value)
         {

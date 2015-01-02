@@ -47,7 +47,7 @@ global
 	endfun
 do
 	//Calculate interest
-	call pow(1 + interest, years, ipown init) init a,b,c,d;
+	call pow(1 + interest, 0.5m, years, ipown init) init a,b,c,d;
 	captialur := capital0 * ipown;
 	//Round to 5 centime (Rappen)
 	capitaln init := decimal(int32(captialur * 20.0m)) div 20.0m div 1.0m div 4.0m;

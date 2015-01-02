@@ -1,7 +1,5 @@
 using System.Collections.Generic;
 
-using Compiler._02Parser.AST;
-
 namespace Compiler
 {
     public class ASTWhile : ASTCpsCmd

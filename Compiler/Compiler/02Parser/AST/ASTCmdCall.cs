@@ -1,7 +1,5 @@
 using System.Collections.Generic;
 
-using Compiler._02Parser.AST;
-
 namespace Compiler
 {
     public class ASTCmdCall : ASTCpsCmd
@@ -27,6 +25,7 @@ namespace Compiler
                 vm.Alloc(loc++, 1);
             }
             //Evaluate argument expressions
+            var paramIttr = callee.Params.GetEnumerator();
             foreach (ASTExpression expr in ExprList)
             {
                 loc = expr.GenerateCode(loc, vm, info);
@@ -34,9 +33,9 @@ namespace Compiler
             }
             //Address of the function is not known.
             //So it has to be stored that at this loc should be a call to the function/procedure.
-            if (info.ProcFuncAddresses.ContainsKey(Ident))
+            if (callee.Address >= 0)
             {
-                vm.Call(loc, info.ProcFuncAddresses[Ident]);
+                vm.Call(loc, callee.Address);
             }
             else
             {

@@ -4,8 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-using Compiler._02Parser.AST;
-
 namespace Compiler
 {
     /// <summary>

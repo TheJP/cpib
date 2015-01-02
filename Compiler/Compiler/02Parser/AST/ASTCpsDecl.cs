@@ -1,10 +1,9 @@
-using Compiler._02Parser.AST;
-
 namespace Compiler
 {
     public abstract class ASTCpsDecl : IASTNode, IASTDecl
     {
         public string Ident { get; set; }
+        public int Address { get; set; }
 
         public ASTCpsDecl()
         {

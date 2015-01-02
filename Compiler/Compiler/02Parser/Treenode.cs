@@ -1,6 +1,4 @@
-﻿using Compiler._02Parser.AST;
-
-namespace Compiler
+﻿namespace Compiler
 {
     public interface Treenode
     {

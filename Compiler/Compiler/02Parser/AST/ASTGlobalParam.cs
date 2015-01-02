@@ -1,5 +1,3 @@
-using Compiler._02Parser.AST;
-
 namespace Compiler
 {
     public class ASTGlobalParam : IASTNode
@@ -24,7 +22,7 @@ namespace Compiler
 
         public int GenerateCode(int loc, IVirtualMachine vm, CheckerInformation info)
         {
-            throw new System.NotImplementedException();
+            throw new IVirtualMachine.InternalError("ASTGlobalParam.GenerateCode was called. This should never happen!");
         }
     }
 }

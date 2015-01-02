@@ -1,5 +1,3 @@
-using Compiler._02Parser.AST;
-
 namespace Compiler
 {
     public class ASTRelOpr : ASTExpression
@@ -27,8 +25,6 @@ namespace Compiler
 
             var termType = ((ASTExpression)Term).GetExpressionType(info);
             var repTermType = ((ASTExpression)RepTerm).GetExpressionType(info);
-
-            Type type;
 
             if (termType == Type.INT32 && repTermType == Type.INT32)
             {

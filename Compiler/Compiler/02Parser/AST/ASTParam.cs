@@ -1,7 +1,5 @@
 using System;
 
-using Compiler._02Parser.AST;
-
 namespace Compiler
 {
     public class ASTParam : IASTNode, IASTStoDecl
@@ -9,13 +7,20 @@ namespace Compiler
         public ASTParam()
         {
             NextParam = new ASTEmpty();
+            AddressLocation = null;
         }
+        public string Ident { get; set; }
 
         public IASTNode NextParam { get; set; }
 
         public Type Type { get; set; }
+        public int Address { get; set; }
+        /// <summary>
+        /// Location where the address of this identifier is stored.
+        /// This is only used for: out copy and inout copy parameters
+        /// </summary>
+        public int? AddressLocation { get; set; }
 
-        public string Ident { get; set; }
 
         public FlowMode? FlowMode { get; set; }
 
@@ -30,7 +35,7 @@ namespace Compiler
 
         public int GenerateCode(int loc, IVirtualMachine vm, CheckerInformation info)
         {
-            return loc;
+            throw new IVirtualMachine.InternalError("ASTParam.GenerateCode was called. This should never happen!");
         }
     }
 }

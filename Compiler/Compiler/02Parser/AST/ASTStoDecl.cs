@@ -1,5 +1,3 @@
-using Compiler._02Parser.AST;
-
 namespace Compiler
 {
     public class ASTStoDecl : ASTCpsDecl, IASTStoDecl
@@ -15,7 +13,7 @@ namespace Compiler
 
         public override int GenerateCode(int loc, IVirtualMachine vm, CheckerInformation info)
         {
-            return loc;
+            throw new IVirtualMachine.InternalError("ASTStoDecl.GenerateCode was called. This should never happen!");
         }
     }
 }

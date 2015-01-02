@@ -1,4 +1,4 @@
-﻿namespace Compiler._02Parser.AST
+﻿namespace Compiler
 {
     public class ASTEmpty : IASTNode
     {

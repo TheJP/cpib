@@ -1,8 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 
-using Compiler._02Parser.AST;
-
 namespace Compiler
 {
     public class ASTProcFuncDecl : ASTCpsDecl

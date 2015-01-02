@@ -1,5 +1,3 @@
-using Compiler._02Parser.AST;
-
 namespace Compiler
 {
     public class ASTDecimalLiteral : ASTExpression

@@ -10,9 +10,11 @@ namespace Compiler
     {
         private void OptainNamespaceInformation(ASTProgram root, CheckerInformation info)
         {
+            int globalAddress = 0;
             //Add global parameters
             foreach (ASTParam param in root.Params)
             {
+                param.Address = globalAddress++;
                 info.Globals.addDeclaration(param);
             }
             //Add Global Variables, Functions and Procedures
@@ -22,17 +24,33 @@ namespace Compiler
                 if (declaration is ASTStoDecl)
                 {
                     //Add global storage identifier
+                    declaration.Address = globalAddress++;
                     info.Globals.addDeclaration((ASTStoDecl)declaration);
                 }
                 else if (declaration is ASTProcFuncDecl)
                 {
+                    ASTProcFuncDecl procFunc = (ASTProcFuncDecl)declaration;
                     //Add function or procedure identifier
-                    info.ProcFuncs.addDeclaration((ASTProcFuncDecl)declaration);
+                    declaration.Address = -1;
+                    info.ProcFuncs.addDeclaration(procFunc);
                     Namespace<IASTStoDecl> ns = new Namespace<IASTStoDecl>();
                     info.Namespaces.Add(declaration.Ident, ns);
+                    //Relative address: The framepointer is one above the last parameter. Meaning the last parameter has the relative address -1 and the first -Params.Count
+                    int paramAddress = -procFunc.Params.Count;
+                    //Relative address: out copy, inout copy and local identifiers. Starting 3 addresses behind the frame pointer.
+                    int localAddress = 3;
                     //Add local params of this function/procedure
-                    foreach (ASTParam localParam in ((ASTProcFuncDecl)declaration).Params)
+                    foreach (ASTParam localParam in procFunc.Params)
                     {
+                        if (localParam.OptMechmode == MechMode.COPY && (localParam.FlowMode == FlowMode.OUT || localParam.FlowMode == FlowMode.INOUT))
+                        {
+                            localParam.Address = localAddress++;
+                            localParam.AddressLocation = paramAddress++;
+                        }
+                        else
+                        {
+                            localParam.Address = paramAddress++;
+                        }
                         ns.addDeclaration(localParam);
                     }
                     //Add local storage identifier of this function/procedure
@@ -40,6 +58,7 @@ namespace Compiler
                     {
                         if (localDeclaration is ASTStoDecl)
                         {
+                            localDeclaration.Address = localAddress++;
                             ns.addDeclaration((ASTStoDecl)localDeclaration);
                         }
                     }

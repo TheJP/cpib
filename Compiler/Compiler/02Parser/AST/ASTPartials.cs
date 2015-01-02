@@ -5,8 +5,6 @@ using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 
-using Compiler._02Parser.AST;
-
 namespace Compiler
 {
     public partial class Tokennode : Treenode

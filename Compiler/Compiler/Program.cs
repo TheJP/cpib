@@ -33,7 +33,7 @@ namespace Compiler
                 ASTProgram program = (ASTProgram)ast;
                 //Checker
                 CheckerInformation info = new CheckerInformation();
-                ContextChecker contextChecker = new ContextChecker();
+                ScopeChecker contextChecker = new ScopeChecker();
                 contextChecker.Check(program, info);
                 //Code Generator
                 IVirtualMachine vm = new VirtualMachine(1000, 1000);

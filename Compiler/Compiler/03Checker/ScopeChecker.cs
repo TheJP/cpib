@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Compiler
 {
-    public class ContextChecker : Checker
+    public class ScopeChecker : Checker
     {
         private void OptainNamespaceInformation(ASTProgram root, CheckerInformation info)
         {

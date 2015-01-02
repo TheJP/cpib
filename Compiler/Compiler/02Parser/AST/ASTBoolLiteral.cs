@@ -1,3 +1,4 @@
+using System;
 using Compiler._02Parser.AST;
 
 namespace Compiler
@@ -16,7 +17,7 @@ namespace Compiler
             return Value.ToString();
         }
 
-        public int GenerateCode(int loc, IVirtualMachine vm, CheckerInformation info)
+        public override int GenerateCode(int loc, IVirtualMachine vm, CheckerInformation info)
         {
             vm.IntLoad(loc++, Value ? 1 : 0);
             return loc;

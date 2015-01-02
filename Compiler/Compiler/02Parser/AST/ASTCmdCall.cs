@@ -16,5 +16,10 @@ namespace Compiler
         {
             return string.Format("call {0}", this.Ident);
         }
+
+        public override int GenerateCode(int loc, IVirtualMachine vm, CheckerInformation info)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

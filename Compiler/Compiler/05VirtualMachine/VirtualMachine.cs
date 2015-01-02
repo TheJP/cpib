@@ -176,9 +176,9 @@ namespace Compiler
 
         private void Alloc(int size)
         {
-            sp= sp + size;
+            sp = sp + size;
             if (sp > hp + 1) { throw new IVirtualMachine.ExecutionError(SP_GT_HP); }
-            pc= pc + 1;
+            pc = pc + 1;
         }
 
         public override void Alloc(int loc, int size)

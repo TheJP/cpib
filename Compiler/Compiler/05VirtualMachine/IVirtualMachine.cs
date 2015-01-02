@@ -99,6 +99,6 @@ namespace Compiler
         public abstract void BoolOutput(int loc, String indicator);
         public abstract void IntOutput(int loc, String indicator);
 
-        public abstract String ToString();
+        public override abstract String ToString();
     }
 }

@@ -17,4 +17,50 @@ public class ASTProgram : IASTNode
     {
         return string.Format("Program {0}", Ident);
     }
+
+    public int GenerateCode(int loc, IVirtualMachine vm, CheckerInformation info)
+    {
+        //Allocate global storage
+        vm.Alloc(loc++, info.Globals.Count);
+        //Load input params
+        int address = 0;
+        foreach (string ident in info.Globals)
+        {
+            IASTStoDecl decl = info.Globals[ident];
+            if (decl is ASTParam)
+            {
+                ASTParam param = (ASTParam)decl;
+                if (param.FlowMode == FlowMode.IN || param.FlowMode == FlowMode.INOUT)
+                {
+                    //Load address where to save the input
+                    vm.IntLoad(loc++, address);
+                    //Switch between types:
+                    switch (param.Type)
+                    {
+                        case Type.INT32:
+                            vm.IntInput(loc++, ident);
+                            break;
+                        case Type.BOOL:
+                            vm.BoolInput(loc++, ident);
+                            break;
+                        case Type.DECIMAL:
+                            //TODO: implement
+                            break;
+                    }
+                }
+            }
+            address++;
+        }
+        //Generate main code
+        foreach (ASTCpsCmd cmd in Commands)
+        {
+            loc = cmd.GenerateCode(loc, vm, info);
+        }
+        //Generate functions/procedures
+        foreach (string ident in info.ProcFuncs)
+        {
+            //TODO: Generate Calls to correct address with know given idents!
+            loc = info.ProcFuncs[ident].GenerateCode(loc, vm, info);
+        }
+    }
 }

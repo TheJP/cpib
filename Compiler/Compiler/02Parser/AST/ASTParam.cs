@@ -4,7 +4,7 @@ using Compiler._02Parser.AST;
 
 namespace Compiler
 {
-    public class ASTParam : IASTNode
+    public class ASTParam : IASTNode, IASTDecl, IASTStoDecl
     {
         public ASTParam()
         {

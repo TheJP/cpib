@@ -12,5 +12,10 @@ namespace Compiler
         {
             return string.Format("{0}({1})", Type, Expr);
         }
+
+        public int GenerateCode(int loc, IVirtualMachine vm, CheckerInformation info)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

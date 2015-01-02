@@ -80,6 +80,7 @@
     <Compile Include="02Parser\AST\ASTCpsCmd.cs" />
     <Compile Include="02Parser\AST\ASTCpsDecl.cs" />
     <Compile Include="02Parser\AST\ASTDecimalLiteral.cs" />
+    <Compile Include="02Parser\AST\IASTDecl.cs" />
     <Compile Include="02Parser\AST\ASTEmpty.cs" />
     <Compile Include="02Parser\AST\ASTExpression.cs" />
     <Compile Include="02Parser\AST\ASTGlobalParam.cs" />
@@ -98,6 +99,7 @@
     <Compile Include="02Parser\AST\ASTType.cs" />
     <Compile Include="02Parser\AST\ASTWhile.cs" />
     <Compile Include="02Parser\AST\IASTNode.cs" />
+    <Compile Include="02Parser\AST\IASTStoDecl.cs" />
     <Compile Include="02Parser\GrammarException.cs" />
     <Compile Include="02Parser\NotTerminals.cs" />
     <Compile Include="02Parser\Parser.cs" />
@@ -105,6 +107,11 @@
     <Compile Include="02Parser\Symbol.cs" />
     <Compile Include="02Parser\Productions.cs" />
     <Compile Include="02Parser\Treenode.cs" />
+    <Compile Include="03Checker\Checker.cs" />
+    <Compile Include="03Checker\CheckerException.cs" />
+    <Compile Include="03Checker\CheckerInformation.cs" />
+    <Compile Include="03Checker\ContextChecker.cs" />
+    <Compile Include="03Checker\Namespace.cs" />
     <Compile Include="05VirtualMachine\Data.cs" />
     <Compile Include="05VirtualMachine\IVirtualMachine.cs" />
     <Compile Include="05VirtualMachine\TestVirtualMachine.cs" />
@@ -135,7 +142,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="03Checker\" />
     <Folder Include="04CodeGenerator\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

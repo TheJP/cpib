@@ -19,5 +19,17 @@ namespace Compiler
         {
             return string.Format("({0} {1} {2})", Term, Operator, RepTerm);
         }
+
+        public override int GenerateCode(int loc, IVirtualMachine vm, CheckerInformation info)
+        {
+            loc = Term.GenerateCode(loc, vm, info);
+            loc = RepTerm.GenerateCode(loc, vm, info);
+            switch (Operator)
+            {
+                case Operators.AND:
+                    break;
+            }
+            return loc;
+        }
     }
 }

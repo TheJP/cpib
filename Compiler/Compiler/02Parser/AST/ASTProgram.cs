@@ -44,7 +44,7 @@ public class ASTProgram : IASTNode
                             vm.BoolInput(loc++, ident);
                             break;
                         case Type.DECIMAL:
-                            //TODO: implement
+                            vm.DecimalInput(loc++, ident);
                             break;
                     }
                 }

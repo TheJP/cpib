@@ -29,6 +29,11 @@ namespace Compiler
             return declarations.ContainsKey(ident);
         }
 
+        public T GetIdent(string ident)
+        {
+            return declarations[ident];
+        }
+
         /// <summary>
         /// Add declaration to the namespace. Throws an exception if the declaration already exists in this namespace.
         /// </summary>

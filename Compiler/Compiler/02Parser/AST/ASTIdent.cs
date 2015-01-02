@@ -1,3 +1,6 @@
+using System;
+using System.Linq;
+
 using Compiler._02Parser.AST;
 
 namespace Compiler
@@ -31,6 +34,24 @@ namespace Compiler
                 vm.LoadRel(loc++, 0);
             }
             return loc;
+        }
+
+        public override Type GetExpressionType(CheckerInformation info)
+        {
+            //TODO: Could also be a function call!
+            if (info.CurrentNamespace != null &&
+                info.Namespaces.ContainsKey(info.CurrentNamespace) &&
+                info.Namespaces[info.CurrentNamespace].ContainsIdent(Ident))
+            {
+                return info.Namespaces[info.CurrentNamespace].GetIdent(Ident).Type;
+            }
+
+            if (info.Globals.ContainsIdent(Ident))
+            {
+                return info.Globals.GetIdent(Ident).Type;
+            }
+
+            throw new NotImplementedException();
         }
     }
 }

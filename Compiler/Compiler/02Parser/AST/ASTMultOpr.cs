@@ -37,21 +37,71 @@ namespace Compiler
         {
             loc = Factor.GenerateCode(loc, vm, info);
             loc = RepFactor.GenerateCode(loc, vm, info);
-            switch (Operator)
+
+            var type = GetExpressionType(info);
+
+            if (type == Type.INT32)
             {
-                case Operators.TIMES:
-                    vm.IntMult(loc++);
-                    break;
-                case Operators.DIV:
-                    vm.IntDiv(loc++);
-                    break;
-                case Operators.MOD:
-                    vm.IntMod(loc++);
-                    break;
-                default:
-                    throw new IVirtualMachine.InternalError("There's an invalid operator in ASTMultOpr. Operator: " + Operator.ToString());
+
+                switch (Operator)
+                {
+                    case Operators.TIMES:
+                        vm.IntMult(loc++);
+                        break;
+                    case Operators.DIV:
+                        vm.IntDiv(loc++);
+                        break;
+                    case Operators.MOD:
+                        vm.IntMod(loc++);
+                        break;
+                    default:
+                        throw new IVirtualMachine.InternalError(
+                            "There's an invalid operator in ASTMultOpr. Operator: " + Operator.ToString());
+                }
+            }else if (type == Type.DECIMAL)
+            {
+                switch (Operator)
+                {
+                    case Operators.TIMES:
+                        vm.DecimalMult(loc++);
+                        break;
+                    case Operators.DIV:
+                        vm.DecimalDiv(loc++);
+                        break;
+                    case Operators.MOD:
+                        vm.DecimalMod(loc++);
+                        break;
+                    default:
+                        throw new IVirtualMachine.InternalError(
+                            "There's an invalid operator in ASTMultOpr. Operator: " + Operator.ToString());
+                }
+            }
+            else
+            {
+                throw new IVirtualMachine.InternalError(
+                            "There's an invalid operand in ASTMultOpr. operand: " + type.ToString());
             }
             return loc;
+        }
+
+        public override Type GetExpressionType(CheckerInformation info)
+        {
+            var termType = ((ASTExpression)Factor).GetExpressionType(info);
+            var repTermType = ((ASTExpression)RepFactor).GetExpressionType(info);
+
+            if (termType == Type.INT32 && repTermType == Type.INT32)
+            {
+                return Type.INT32;
+            }
+
+            if ((termType == Type.INT32 && repTermType == Type.DECIMAL)
+                      || (termType == Type.DECIMAL && repTermType == Type.INT32)
+                      || (termType == Type.DECIMAL && repTermType == Type.DECIMAL))
+            {
+                return Type.DECIMAL;
+            }
+
+            throw new GrammarException(string.Format("Types {0}, {1} are not a valid combination for AddOperation {2}", termType, repTermType, this.ToString()));
         }
     }
 }

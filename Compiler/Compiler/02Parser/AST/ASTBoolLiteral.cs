@@ -22,5 +22,10 @@ namespace Compiler
             vm.IntLoad(loc++, Value ? 1 : 0);
             return loc;
         }
+
+        public override Type GetExpressionType(CheckerInformation info)
+        {
+            return Type.BOOL;
+        }
     }
 }

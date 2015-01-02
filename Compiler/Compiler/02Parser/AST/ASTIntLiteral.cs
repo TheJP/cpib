@@ -21,5 +21,10 @@ namespace Compiler
             vm.IntLoad(loc++, Value);
             return loc;
         }
+
+        public override Type GetExpressionType(CheckerInformation info)
+        {
+            return Type.INT32;
+        }
     }
 }

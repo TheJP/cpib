@@ -18,7 +18,13 @@ namespace Compiler
 
         public override int GenerateCode(int loc, IVirtualMachine vm, CheckerInformation info)
         {
-            throw new System.NotImplementedException();
+            vm.DecimalLoad(loc++, Value);
+            return loc;
+        }
+
+        public override Type GetExpressionType(CheckerInformation info)
+        {
+            return Type.DECIMAL;
         }
     }
 }

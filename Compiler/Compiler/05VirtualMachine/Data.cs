@@ -15,10 +15,120 @@ namespace Compiler
 
         public interface IBaseData {}
 
+        #region decimal implementation
+
+        public class DecimalData : IBaseData
+        {
+            private decimal dec;
+
+            public DecimalData(decimal dec)
+            {
+                this.dec = dec;
+            }
+
+            public decimal getData()
+            {
+                return dec;
+            }
+        }
+
+        public static DecimalData decimalNew(decimal dec)
+        {
+            return new DecimalData(dec);
+        }
+
+        // pre: a has type DecimalData
+        public static decimal decimalGet(IBaseData a)
+        {
+            if (a is IntData)
+            {
+                return ((IntData)a).getData();
+            }
+
+            return ((DecimalData)a).getData();
+        }
+
+        public static DecimalData decimalInv(IBaseData a)
+        {
+            return decimalNew(-decimalGet(a));
+        }
+        
+        public static DecimalData decimalAdd(IBaseData a, IBaseData b)
+        {
+            return decimalNew(decimalGet(a) + decimalGet(b));
+        }
+
+        public static DecimalData decimalSub(IBaseData a, IBaseData b)
+        {
+            return decimalNew(decimalGet(a) - decimalGet(b));
+        }
+
+        public static DecimalData decimalMult(IBaseData a, IBaseData b)
+        {
+            return decimalNew(decimalGet(a) * decimalGet(b));
+        }
+
+        public static DecimalData decimalDiv(IBaseData a, IBaseData b)
+        {
+            try
+            {
+                return decimalNew(decimalGet(a) / decimalGet(b));
+            }
+            catch (ArithmeticException)
+            {
+                throw new IVirtualMachine.ExecutionError("Decimal division by zero.");
+            }
+        }
+
+        public static DecimalData decimalMod(IBaseData a, IBaseData b)
+        {
+            try
+            {
+                return decimalNew(decimalGet(a) % decimalGet(b));
+            }
+            catch (ArithmeticException)
+            {
+                throw new IVirtualMachine.ExecutionError("Decimal remainder by zero.");
+            }
+        }
+
+        public static IntData decimalEQ(IBaseData a, IBaseData b)
+        {
+            return boolNew(decimalGet(a) == decimalGet(b));
+        }
+
+        public static IntData decimalNE(IBaseData a, IBaseData b)
+        {
+            return boolNew(decimalGet(a) != decimalGet(b));
+        }
+
+        public static IntData decimalGT(IBaseData a, IBaseData b)
+        {
+            return boolNew(decimalGet(a) > decimalGet(b));
+        }
+
+        public static IntData decimalLT(IBaseData a, IBaseData b)
+        {
+            return boolNew(decimalGet(a) < decimalGet(b));
+        }
+
+        public static IntData decimalGE(IBaseData a, IBaseData b)
+        {
+            return boolNew(decimalGet(a) >= decimalGet(b));
+        }
+
+        public static IntData decimalLE(IBaseData a, IBaseData b)
+        {
+            return boolNew(decimalGet(a) <= decimalGet(b));
+        }
+
+        #endregion
+
         public class IntData : IBaseData
         {
             private int i;
-            public IntData(int i) { this.i = i; }
+            public IntData(int i) { this.i = i;
+            }
             public int getData() { return i; }
         }
 

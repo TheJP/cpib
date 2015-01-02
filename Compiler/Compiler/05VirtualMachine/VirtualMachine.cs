@@ -72,6 +72,27 @@ namespace Compiler
             }
         }
 
+        private decimal ReadDecimal()
+        {
+            String s;
+            try
+            {
+                s = Console.ReadLine();
+            }
+            catch (Exception)
+            {
+                throw new IVirtualMachine.ExecutionError("Input failed.");
+            }
+            try
+            {
+                return Decimal.Parse(s);
+            }
+            catch (Exception)
+            {
+                throw new IVirtualMachine.ExecutionError("Not a decimal.");
+            }
+        }
+
         // stores the program
         private KeyValuePair<Action, string>[] code;
 
@@ -113,6 +134,16 @@ namespace Compiler
                 throw new IVirtualMachine.HeapTooSmallError();
             }
             store[hp] = Data.boolNew(false);
+            return hp--;
+        }
+
+        public override int DecimalInitHeapCell()
+        {
+            if (hp < sp)
+            {
+                throw new IVirtualMachine.HeapTooSmallError();
+            }
+            store[hp] = Data.intNew(0);
             return hp--;
         }
 
@@ -257,12 +288,26 @@ namespace Compiler
 
         // load values (value -> stack)
 
+        private void DecimalLoad(decimal value)
+        {
+            if (sp > hp) { throw new IVirtualMachine.ExecutionError(SP_GT_HP); }
+            store[sp] = Data.decimalNew(value);
+            sp = sp + 1;
+            pc = pc + 1;
+        }
+
         private void IntLoad(int value)
         {
             if (sp > hp) { throw new IVirtualMachine.ExecutionError(SP_GT_HP); }
             store[sp] = Data.intNew(value);
             sp = sp + 1;
             pc = pc + 1;
+        }
+
+        public override void DecimalLoad(int loc, decimal value)
+        {
+            if (loc >= code.Length) { throw new IVirtualMachine.CodeTooSmallError(); }
+            code[loc] = new KeyValuePair<Action, string>(() => DecimalLoad(value), "DecimalLoad(" + value + ")");
         }
 
         public override void IntLoad(int loc, int value)
@@ -333,6 +378,18 @@ namespace Compiler
 
         // monadic instructions
 
+        private void DecimalInv()
+        {
+            store[sp - 1] = Data.decimalInv(store[sp - 1]);
+            pc = pc + 1;
+        }
+
+        public override void DecimalInv(int loc)
+        {
+            if (loc >= code.Length) { throw new IVirtualMachine.CodeTooSmallError(); }
+            code[loc] = new KeyValuePair<Action, string>(() => DecimalInv(), "DecimalInv");
+        }
+
         private void IntInv()
         {
             store[sp-1] = Data.intInv(store[sp-1]);
@@ -358,6 +415,150 @@ namespace Compiler
         }
 
         // dyadic instructions
+
+        private void DecimalAdd()
+        {
+            sp = sp - 1;
+            store[sp - 1] = Data.decimalAdd(store[sp - 1], store[sp]);
+            pc = pc + 1;
+        }
+
+        public override void DecimalAdd(int loc)
+        {
+            if (loc >= code.Length) { throw new IVirtualMachine.CodeTooSmallError(); }
+            code[loc] = new KeyValuePair<Action, string>(() => DecimalAdd(), "DecimalAdd");
+        }
+
+        private void DecimalSub()
+        {
+            sp = sp - 1;
+            store[sp - 1] = Data.decimalSub(store[sp - 1], store[sp]);
+            pc = pc + 1;
+        }
+
+        public override void DecimalSub(int loc)
+        {
+            if (loc >= code.Length) { throw new IVirtualMachine.CodeTooSmallError(); }
+            code[loc] = new KeyValuePair<Action, string>(() => DecimalSub(), "DecimalSub");
+        }
+
+        private void DecimalMult()
+        {
+            sp = sp - 1;
+            store[sp - 1] = Data.decimalMult(store[sp - 1], store[sp]);
+            pc = pc + 1;
+        }
+
+        public override void DecimalMult(int loc)
+        {
+            if (loc >= code.Length) { throw new IVirtualMachine.CodeTooSmallError(); }
+            code[loc] = new KeyValuePair<Action, string>(() => DecimalMult(), "DecimalMult");
+        }
+
+        private void DecimalDiv()
+        {
+            sp = sp - 1;
+            store[sp - 1] = Data.decimalDiv(store[sp - 1], store[sp]);
+            pc = pc + 1;
+        }
+
+        public override void DecimalDiv(int loc)
+        {
+            if (loc >= code.Length) { throw new IVirtualMachine.CodeTooSmallError(); }
+            code[loc] = new KeyValuePair<Action, string>(() => DecimalDiv(), "DecimalDiv");
+        }
+
+        private void DecimalMod()
+        {
+            sp = sp - 1;
+            store[sp - 1] = Data.decimalMod(store[sp - 1], store[sp]);
+            pc = pc + 1;
+        }
+
+        public override void DecimalMod(int loc)
+        {
+            if (loc >= code.Length) { throw new IVirtualMachine.CodeTooSmallError(); }
+            code[loc] = new KeyValuePair<Action, string>(() => DecimalMod(), "DecimalMod");
+        }
+
+        private void DecimalEQ()
+        {
+            sp = sp - 1;
+            store[sp - 1] = Data.decimalEQ(store[sp - 1], store[sp]);
+            pc = pc + 1;
+        }
+
+        public override void DecimalEQ(int loc)
+        {
+            if (loc >= code.Length) { throw new IVirtualMachine.CodeTooSmallError(); }
+            code[loc] = new KeyValuePair<Action, string>(() => DecimalEQ(), "INtEQ");
+        }
+
+        private void DecimalNE()
+        {
+            sp = sp - 1;
+            store[sp - 1] = Data.decimalNE(store[sp - 1], store[sp]);
+            pc = pc + 1;
+        }
+
+        public override void DecimalNE(int loc)
+        {
+            if (loc >= code.Length) { throw new IVirtualMachine.CodeTooSmallError(); }
+            code[loc] = new KeyValuePair<Action, string>(() => DecimalNE(), "DecimalNE");
+        }
+
+        private void DecimalGT()
+        {
+            sp = sp - 1;
+            store[sp - 1] = Data.decimalGT(store[sp - 1], store[sp]);
+            pc = pc + 1;
+        }
+
+        public override void DecimalGT(int loc)
+        {
+            if (loc >= code.Length) { throw new IVirtualMachine.CodeTooSmallError(); }
+            code[loc] = new KeyValuePair<Action, string>(() => DecimalGT(), "DecimalGT");
+        }
+
+        private void DecimalLT()
+        {
+            sp = sp - 1;
+            store[sp - 1] = Data.decimalLT(store[sp - 1], store[sp]);
+            pc = pc + 1;
+        }
+
+        public override void DecimalLT(int loc)
+        {
+            if (loc >= code.Length) { throw new IVirtualMachine.CodeTooSmallError(); }
+            code[loc] = new KeyValuePair<Action, string>(() => DecimalLT(), "DecimalLT");
+        }
+
+        private void DecimalGE()
+        {
+            sp = sp - 1;
+            store[sp - 1] = Data.decimalGE(store[sp - 1], store[sp]);
+            pc = pc + 1;
+        }
+
+        public override void DecimalGE(int loc)
+        {
+            if (loc >= code.Length) { throw new IVirtualMachine.CodeTooSmallError(); }
+            code[loc] = new KeyValuePair<Action, string>(() => DecimalGE(), "DecimalGE");
+        }
+
+        private void DecimalLE()
+        {
+            sp = sp - 1;
+            store[sp - 1] = Data.decimalLE(store[sp - 1], store[sp]);
+            pc = pc + 1;
+        }
+
+        public override void DecimalLE(int loc)
+        {
+            if (loc >= code.Length) { throw new IVirtualMachine.CodeTooSmallError(); }
+            code[loc] = new KeyValuePair<Action, string>(() => DecimalLE(), "DecimalLE");
+        }
+
 
         private void IntAdd()
         {
@@ -587,6 +788,36 @@ namespace Compiler
         {
             if (loc >= code.Length) { throw new IVirtualMachine.CodeTooSmallError(); }
             code[loc] = new KeyValuePair<Action, string>(() => IntOutput(indicator), "IntOutput(\"" + indicator + "\")");
+        }
+
+        private void DecimalOutput(String indicator)
+        {
+            sp = sp - 1;
+            decimal output = Data.decimalGet(store[sp]);
+            Console.WriteLine("!" + indicator + " : decimal = " + output);
+            pc = pc + 1;
+        }
+
+        public override void DecimalOutput(int loc, String indicator)
+        {
+            if (loc >= code.Length) { throw new IVirtualMachine.CodeTooSmallError(); }
+            code[loc] = new KeyValuePair<Action, string>(() => DecimalOutput(indicator), "DecimalOutput(\"" + indicator + "\")");
+        }
+
+        private void DecimalInput(String indicator)
+        {
+            Console.Write("?" + indicator + " : decimal = ");
+            decimal input = ReadDecimal();
+            int address = Data.intGet(store[sp - 1]);
+            store[address] = Data.decimalNew(input);
+            sp = sp - 1;
+            pc = pc + 1;
+        }
+
+        public override void DecimalInput(int loc, String indicator)
+        {
+            if (loc >= code.Length) { throw new IVirtualMachine.CodeTooSmallError(); }
+            code[loc] = new KeyValuePair<Action, string>(() => DecimalInput(indicator), "DecimalInput(\"" + indicator + "\")");
         }
     }
 

@@ -45,6 +45,7 @@ namespace Compiler
         public abstract int BoolInitHeapCell();
         public abstract int IntInitHeapCell();
         public abstract int FloatInitHeapCell();
+        public abstract int DecimalInitHeapCell();
 
         // each of the following methods creates an instruction and
         // stores the instruction at position loc of code
@@ -61,6 +62,7 @@ namespace Compiler
         public abstract void Enter(int loc, int size, int extreme);
 
         // load values (value -> stack)
+        public abstract void DecimalLoad(int loc, decimal value);
         public abstract void IntLoad(int loc, int value);
         public abstract void FloatLoad(int loc, float value);
 
@@ -73,10 +75,23 @@ namespace Compiler
         public abstract void Store(int loc);
 
         // monadic operations
+        public abstract void DecimalInv(int loc);
         public abstract void IntInv(int loc);
         public abstract void FloatInv(int loc);
 
         // dyadic operations
+        public abstract void DecimalAdd(int loc);
+        public abstract void DecimalSub(int loc);
+        public abstract void DecimalMult(int loc);
+        public abstract void DecimalDiv(int loc);
+        public abstract void DecimalMod(int loc);
+        public abstract void DecimalEQ(int loc);
+        public abstract void DecimalNE(int loc);
+        public abstract void DecimalGT(int loc);
+        public abstract void DecimalLT(int loc);
+        public abstract void DecimalGE(int loc);
+        public abstract void DecimalLE(int loc);
+
         public abstract void IntAdd(int loc);
         public abstract void IntSub(int loc);
         public abstract void IntMult(int loc);
@@ -98,6 +113,9 @@ namespace Compiler
         public abstract void IntInput(int loc, String indicator);
         public abstract void BoolOutput(int loc, String indicator);
         public abstract void IntOutput(int loc, String indicator);
+
+        public abstract void DecimalInput(int loc, String indicator);
+        public abstract void DecimalOutput(int loc, String indicator);
 
         public override abstract String ToString();
     }

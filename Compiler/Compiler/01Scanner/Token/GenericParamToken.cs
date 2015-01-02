@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace Compiler
 {
+    [Serializable]
     public abstract class GenericParamToken<E> : Token
     {
         public E Value { get; private set; }

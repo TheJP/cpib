@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace Compiler
 {
+    [Serializable]
     public class MechModeToken : GenericParamToken<MechMode>
     {
         public MechModeToken(MechMode value) : base(Terminals.MECHMODE, value) { }

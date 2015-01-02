@@ -9,6 +9,7 @@ namespace Compiler
     /// <summary>
     /// Represents a basic Token, which is a single element of the tokenlist (tokenlist=output of the scanner)
     /// </summary>
+    [Serializable]
     public class Token
     {
         /// <summary>

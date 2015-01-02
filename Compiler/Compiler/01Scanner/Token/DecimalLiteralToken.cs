@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace Compiler
 {
+    [Serializable]
     public class DecimalLiteralToken : GenericParamToken<decimal>
     {
         public DecimalLiteralToken(decimal value) : base(Terminals.LITERAL, value) { }

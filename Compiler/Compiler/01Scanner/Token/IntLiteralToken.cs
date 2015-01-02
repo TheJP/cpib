@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace Compiler
 {
+    [Serializable]
     public class IntLiteralToken : GenericParamToken<int>
     {
         public IntLiteralToken(int value) : base(Terminals.LITERAL, value) { }

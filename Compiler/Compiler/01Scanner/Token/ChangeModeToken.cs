@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace Compiler
 {
+    [Serializable]
     public class ChangeModeToken : GenericParamToken<ChangeMode>
     {
         public ChangeModeToken(ChangeMode value) : base(Terminals.CHANGEMODE, value) { }

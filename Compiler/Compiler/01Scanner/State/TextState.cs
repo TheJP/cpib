@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using Compiler.Helpers;
+
 namespace Compiler
 {
     public class TextState : State
@@ -16,7 +18,7 @@ namespace Compiler
             else
             {
                 string token = text.ToString();
-                if (scanner.Keywords.ContainsKey(token)) { scanner.AddToken(scanner.Keywords[token]); }
+                if (scanner.Keywords.ContainsKey(token)) { scanner.AddToken(scanner.Keywords[token].DeepClone()); }
                 else { scanner.AddToken(new IdentToken(token)); }
                 scanner.CurrentState = new DefaultState();
                 scanner.CurrentState.Handle(scanner, data);

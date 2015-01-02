@@ -76,7 +76,6 @@
     <Compile Include="02Parser\AST\ASTCmdDebugOut.cs" />
     <Compile Include="02Parser\AST\ASTCmdIdent.cs" />
     <Compile Include="02Parser\AST\ASTCmdSkip.cs" />
-    <Compile Include="02Parser\AST\ASTComma.cs" />
     <Compile Include="02Parser\AST\ASTCpsCmd.cs" />
     <Compile Include="02Parser\AST\ASTCpsDecl.cs" />
     <Compile Include="02Parser\AST\ASTDecimalLiteral.cs" />
@@ -88,7 +87,6 @@
     <Compile Include="02Parser\AST\ASTIf.cs" />
     <Compile Include="02Parser\AST\ASTIntLiteral.cs" />
     <Compile Include="02Parser\AST\ASTMultOpr.cs" />
-    <Compile Include="02Parser\AST\ASTOptExprList.cs" />
     <Compile Include="02Parser\AST\ASTOptInit.cs" />
     <Compile Include="02Parser\AST\ASTParam.cs" />
     <Compile Include="02Parser\AST\ASTPartials.cs" />

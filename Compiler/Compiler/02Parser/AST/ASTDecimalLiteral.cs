@@ -2,7 +2,7 @@ using Compiler._02Parser.AST;
 
 namespace Compiler
 {
-    public class ASTDecimalLiteral : IASTNode
+    public class ASTDecimalLiteral : ASTExpression
     {
         public ASTDecimalLiteral(decimal value)
         {

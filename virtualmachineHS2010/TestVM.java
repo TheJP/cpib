@@ -36,6 +36,9 @@ public class TestVM {
     public static void main(String[] args) {
         try {
             vm.Alloc(0, 4);
+			vm.DecimalLoad(1,1,1,1,1);
+			vm.DecimalLoad(1,2,2,2,2);
+			
             vm.IntLoad(1, 0);
             vm.IntInput(2, "m");
             vm.IntLoad(3, 1);

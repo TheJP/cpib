@@ -2,7 +2,7 @@ using Compiler._02Parser.AST;
 
 namespace Compiler
 {
-    public class ASTIntLiteral : IASTNode
+    public class ASTIntLiteral : ASTExpression
     {
         public ASTIntLiteral(int value)
         {

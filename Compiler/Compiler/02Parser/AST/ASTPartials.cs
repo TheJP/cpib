@@ -2187,15 +2187,24 @@ namespace Compiler
         {
             var ident = new ASTIdent();
             ident.Ident = ((IdentToken)this.IDENT.Token).Value;
+            
+            ident.OptInitOrExprList = new List<ASTExpression>();
+
             if (this.OptInitOrExprList is OptInitOrExprListINIT)
             {
                 ident.IsInit = true;
-                ident.OptInitOrExprList = new ASTEmpty();
             }
             else
             {
                 ident.IsInit = false;
-                ident.OptInitOrExprList = this.OptInitOrExprList.ToAbstractSyntax();
+                var current = this.OptInitOrExprList.ToAbstractSyntax();
+
+                while (!(current is ASTEmpty))
+                {
+                    var val = (ASTExpression)current;
+                    ident.OptInitOrExprList.Add(val);
+                    current = val.NextExpression;
+                }
             }
             return ident;
         }

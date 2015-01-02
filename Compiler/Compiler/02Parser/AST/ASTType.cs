@@ -1,6 +1,6 @@
 namespace Compiler
 {
-    public class ASTType : IASTNode
+    public class ASTType : ASTExpression
     {
         public Type Type { get; set; }
 
@@ -11,9 +11,14 @@ namespace Compiler
             return string.Format("{0}({1})", Type, Expr);
         }
 
-        public int GenerateCode(int loc, IVirtualMachine vm, CheckerInformation info)
+        public override int GenerateCode(int loc, IVirtualMachine vm, CheckerInformation info)
         {
             throw new System.NotImplementedException();
+        }
+
+        public override Type GetExpressionType(CheckerInformation info)
+        {
+            return this.Type;
         }
     }
 }

@@ -27,6 +27,7 @@ namespace Compiler
         public void addDeclaration(T declaration)
         {
             if (declarations.ContainsKey(declaration.Ident)) { throw new CheckerException(String.Format("Duplicate declarations: '{0}' and '{1}'", declaration, declarations[declaration.Ident])); }
+            declarations.Add(declaration.Ident, declaration);
         }
 
         public IEnumerator<string> GetEnumerator()

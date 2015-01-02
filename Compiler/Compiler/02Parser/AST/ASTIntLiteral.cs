@@ -15,5 +15,11 @@ namespace Compiler
         {
             return Value.ToString();
         }
+
+        public int GenerateCode(int loc, IVirtualMachine vm, CheckerInformation info)
+        {
+            vm.IntLoad(loc++, Value);
+            return loc;
+        }
     }
 }

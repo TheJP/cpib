@@ -35,11 +35,11 @@ namespace Compiler
         NE,
         /// <summary>not</summary>
         NOT,
-        /// <summary>&&</summary>
+        /// <summary>&amp;&amp;</summary>
         AND,
         /// <summary>||</summary>
         OR,
-        /// <summary>&?</summary>
+        /// <summary>&amp;?</summary>
         CAND,
         /// <summary>|?</summary>
         COR,

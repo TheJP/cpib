@@ -7,5 +7,10 @@ namespace Compiler
         public string Ident { get; set; }
 
         public IASTNode NextInit { get; set; }
+
+        public int GenerateCode(int loc, IVirtualMachine vm, CheckerInformation info)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

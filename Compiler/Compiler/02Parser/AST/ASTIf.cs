@@ -25,5 +25,10 @@ endif", Condition, this.TrueCommands);
                 return string.Format(@"if {0} then", Condition);
             }
         }
+
+        public override int GenerateCode(int loc, IVirtualMachine vm, CheckerInformation info)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

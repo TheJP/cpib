@@ -26,8 +26,26 @@ namespace Compiler
             loc = RepTerm.GenerateCode(loc, vm, info);
             switch (Operator)
             {
-                case Operators.AND:
+                case Operators.EQ:
+                    vm.IntEQ(loc++);
                     break;
+                case Operators.NE:
+                    vm.IntNE(loc++);
+                    break;
+                case Operators.LT:
+                    vm.IntLT(loc++);
+                    break;
+                case Operators.LE:
+                    vm.IntLE(loc++);
+                    break;
+                case Operators.GT:
+                    vm.IntGT(loc++);
+                    break;
+                case Operators.GE:
+                    vm.IntGE(loc++);
+                    break;
+                default:
+                    throw new IVirtualMachine.InternalError("There's an invalid operator in ASTRelOpr. Operator: " + Operator.ToString());
             }
             return loc;
         }

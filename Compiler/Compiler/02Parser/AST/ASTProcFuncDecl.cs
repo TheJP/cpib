@@ -21,5 +21,10 @@ namespace Compiler
         {
             return string.Format("{0} {1}", IsFunc ? "func" : "proc", Ident);
         }
+
+        public override int GenerateCode(int loc, IVirtualMachine vm, CheckerInformation info)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

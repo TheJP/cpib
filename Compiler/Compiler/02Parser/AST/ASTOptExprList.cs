@@ -7,5 +7,10 @@ namespace Compiler
         public IASTNode Expr { get; set; }
 
         public IASTNode RepExpr { get; set; }
+
+        public int GenerateCode(int loc, IVirtualMachine vm, CheckerInformation info)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

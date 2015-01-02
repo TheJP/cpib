@@ -852,8 +852,8 @@ namespace Compiler
         public virtual IASTNode ToAbstractSyntax()
         {
             var ident = new ASTCmdIdent();
-            ident.LValue = this.Expr.ToAbstractSyntax();
-            ident.RValue = this.Expr2.ToAbstractSyntax();
+            ident.LValue = (ASTExpression)this.Expr.ToAbstractSyntax();
+            ident.RValue = (ASTExpression)this.Expr2.ToAbstractSyntax();
             return ident;
         }
     }
@@ -862,8 +862,8 @@ namespace Compiler
         public virtual IASTNode ToAbstractSyntax()
         {
             var ident = new ASTCmdIdent();
-            ident.LValue = this.Expr.ToAbstractSyntax();
-            ident.RValue = this.Expr2.ToAbstractSyntax();
+            ident.LValue = (ASTExpression)this.Expr.ToAbstractSyntax();
+            ident.RValue = (ASTExpression)this.Expr2.ToAbstractSyntax();
             return ident;
         }
     }
@@ -872,8 +872,8 @@ namespace Compiler
         public virtual IASTNode ToAbstractSyntax()
         {
             var ident = new ASTCmdIdent();
-            ident.LValue = this.Expr.ToAbstractSyntax();
-            ident.RValue = this.Expr2.ToAbstractSyntax();
+            ident.LValue = (ASTExpression)this.Expr.ToAbstractSyntax();
+            ident.RValue = (ASTExpression)this.Expr2.ToAbstractSyntax();
             return ident;
         }
     }
@@ -882,8 +882,8 @@ namespace Compiler
         public virtual IASTNode ToAbstractSyntax()
         {
             var ident = new ASTCmdIdent();
-            ident.LValue = this.Expr.ToAbstractSyntax();
-            ident.RValue = this.Expr2.ToAbstractSyntax();
+            ident.LValue = (ASTExpression)this.Expr.ToAbstractSyntax();
+            ident.RValue = (ASTExpression)this.Expr2.ToAbstractSyntax();
             return ident;
         }
     }
@@ -892,8 +892,8 @@ namespace Compiler
         public virtual IASTNode ToAbstractSyntax()
         {
             var ident = new ASTCmdIdent();
-            ident.LValue = this.Expr.ToAbstractSyntax();
-            ident.RValue = this.Expr2.ToAbstractSyntax();
+            ident.LValue = (ASTExpression)this.Expr.ToAbstractSyntax();
+            ident.RValue = (ASTExpression)this.Expr2.ToAbstractSyntax();
             return ident;
         }
     }
@@ -903,8 +903,8 @@ namespace Compiler
         public virtual IASTNode ToAbstractSyntax()
         {
             var ident = new ASTCmdIdent();
-            ident.LValue = this.Expr.ToAbstractSyntax();
-            ident.RValue = this.Expr2.ToAbstractSyntax();
+            ident.LValue = (ASTExpression)this.Expr.ToAbstractSyntax();
+            ident.RValue = (ASTExpression)this.Expr2.ToAbstractSyntax();
             return ident;
         }
     }

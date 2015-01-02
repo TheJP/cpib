@@ -22,33 +22,26 @@ namespace Compiler
             //Allocate global storage
             vm.Alloc(loc++, info.Globals.Count);
             //Load input params
-            int address = 0;
-            foreach (string ident in info.Globals)
+            foreach (ASTParam param in Params)
             {
-                IASTStoDecl decl = info.Globals[ident];
-                if (decl is ASTParam)
+                if (param.FlowMode == FlowMode.IN || param.FlowMode == FlowMode.INOUT)
                 {
-                    ASTParam param = (ASTParam)decl;
-                    if (param.FlowMode == FlowMode.IN || param.FlowMode == FlowMode.INOUT)
+                    //Load address where to save the input
+                    vm.IntLoad(loc++, param.Address);
+                    //Switch between types:
+                    switch (param.Type)
                     {
-                        //Load address where to save the input
-                        vm.IntLoad(loc++, address);
-                        //Switch between types:
-                        switch (param.Type)
-                        {
-                            case Type.INT32:
-                                vm.IntInput(loc++, ident);
-                                break;
-                            case Type.BOOL:
-                                vm.BoolInput(loc++, ident);
-                                break;
-                            case Type.DECIMAL:
-                                vm.DecimalInput(loc++, ident);
-                                break;
-                        }
+                        case Type.INT32:
+                            vm.IntInput(loc++, param.Ident);
+                            break;
+                        case Type.BOOL:
+                            vm.BoolInput(loc++, param.Ident);
+                            break;
+                        case Type.DECIMAL:
+                            vm.DecimalInput(loc++, param.Ident);
+                            break;
                     }
                 }
-                address++;
             }
             //Generate main code
             foreach (ASTCpsCmd cmd in Commands)
@@ -70,8 +63,15 @@ namespace Compiler
                         vm.Call(callLoc, procFunc.Address);
                     }
                 }
-                //loc = procFunc.GenerateCode(loc, vm, info);
+                //Change current namespace
+                info.CurrentNamespace = ident;
+                //Generate code for function/procedure
+                loc = procFunc.GenerateCode(loc, vm, info);
+                //Reset namespace
+                info.CurrentNamespace = null;
             }
+            //Add output code
+
             return loc;
         }
     }

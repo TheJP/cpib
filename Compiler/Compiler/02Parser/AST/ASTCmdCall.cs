@@ -28,9 +28,18 @@ namespace Compiler
             var paramIttr = callee.Params.GetEnumerator();
             foreach (ASTExpression expr in ExprList)
             {
-                loc = expr.GenerateCode(loc, vm, info);
-                //TODO: Add special case: Ref, out, inout need LValue expressions! -> Write address on the stack instead of value
+                if (!paramIttr.MoveNext()) { throw new IVirtualMachine.InternalError("Too many arguments"); }
+                ASTParam param = paramIttr.Current;
+                if (param.OptMechmode != MechMode.COPY || (param.FlowMode == FlowMode.OUT || param.FlowMode == FlowMode.INOUT))
+                {
+                    loc = expr.GenerateLValue(loc, vm, info); //Load address on the stack
+                }
+                else
+                {
+                    loc = expr.GenerateCode(loc, vm, info); //Load value on the stack
+                }
             }
+            if (paramIttr.MoveNext()) { throw new IVirtualMachine.InternalError("Too few arguments"); }
             //Address of the function is not known.
             //So it has to be stored that at this loc should be a call to the function/procedure.
             if (callee.Address >= 0)

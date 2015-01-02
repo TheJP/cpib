@@ -22,7 +22,39 @@ namespace Compiler
 
         public override int GenerateCode(int loc, IVirtualMachine vm, CheckerInformation info)
         {
-            throw new System.NotImplementedException();
+            int copies = 0;
+            foreach (ASTParam param in Params)
+            {
+                if (param.OptMechmode == MechMode.COPY && (param.FlowMode == FlowMode.INOUT || param.FlowMode == FlowMode.OUT))
+                {
+                    ++copies;
+                }
+            }
+            vm.Enter(loc++, copies + Declarations.Count, 0);
+            //CopyIn of inout copy parameters
+            foreach (ASTParam param in Params)
+            {
+                if (param.OptMechmode == MechMode.COPY && param.FlowMode == FlowMode.INOUT)
+                {
+                    vm.CopyIn(loc++, param.AddressLocation.Value, param.Address);
+                }
+            }
+            //Generate body
+            foreach (ASTCpsCmd cmd in Commands)
+            {
+                loc = cmd.GenerateCode(loc, vm, info);
+            }
+            //CopyOut of inout copy and out copy parameters
+            foreach (ASTParam param in Params)
+            {
+                if (param.OptMechmode == MechMode.COPY && (param.FlowMode == FlowMode.INOUT || param.FlowMode == FlowMode.OUT))
+                {
+                    vm.CopyOut(loc++, param.Address, param.AddressLocation.Value);
+                }
+            }
+            //Return
+            vm.Return(loc++, Params.Count);
+            return loc;
         }
     }
 }

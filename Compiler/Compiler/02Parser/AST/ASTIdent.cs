@@ -31,8 +31,10 @@ namespace Compiler
                 else if (storage is ASTParam)
                 {
                     //TODO: What should happen if OptMechmode == null?
-                    //Load parameter wirh mechmode REF
-                    vm.IntLoad(loc++, storage.Address);
+                    //Load parameter with mechmode REF
+                    vm.LoadRel(loc++, storage.Address); //Relative Address to fp
+                    vm.Deref(loc++); //Deref to get global Address
+                    //With another Deref the value is loaded
                 }
                 else
                 {
@@ -54,7 +56,7 @@ namespace Compiler
         public override int GenerateCode(int loc, IVirtualMachine vm, CheckerInformation info)
         {
             //TODO: Could also be a function call!
-            GenerateLValue(loc, vm, info);
+            loc = GenerateLValue(loc, vm, info);
             vm.Deref(loc++);
             return loc;
         }

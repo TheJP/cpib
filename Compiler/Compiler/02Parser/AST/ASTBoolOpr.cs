@@ -54,29 +54,29 @@ namespace Compiler
                         break;
                     case Operators.CAND:
                         //If true is on the top of the stack, the second condition has to be evaluated
-                        //1. Invert top of stack:
-                        vm.IntLoad(loc++, 1);
-                        vm.IntNE(loc++);
-                        //2. Jump if left hand side was false
+                        //1. Jump if left hand side was false
                         int conditionalJump = loc++;
-                        //3. a. Evaluate right hand side if left hand side was true
+                        //2. a. Evaluate right hand side if left hand side was true
                         loc = RepTerm.GenerateCode(loc, vm, info);
-                        vm.CondJump(conditionalJump, loc + 1); //Step 2: Only now the jump destination is known!
+                        vm.CondJump(conditionalJump, loc + 1); //Step 1: Only now the jump destination is known!
                         vm.UncondJump(loc, loc + 2);
                         ++loc; //Leap over the load(0) instruction
-                        //3. b. Evaluate to false
+                        //2. b. Evaluate to false
                         vm.IntLoad(loc++, 0);
                         break;
                     case Operators.COR:
                         //If false is on the top of the stack, the second condition has to be evaluated
-                        //1. Jump if left hand side was true
+                        //1. Invert top of stack:
+                        vm.IntLoad(loc++, 1);
+                        vm.IntNE(loc++);
+                        //2. Jump if left hand side was true
                         int conditionalJump2 = loc++;
-                        //2. a. Evaluate right hand side if left hand side was false
+                        //3. a. Evaluate right hand side if left hand side was false
                         loc = RepTerm.GenerateCode(loc, vm, info);
                         vm.CondJump(conditionalJump2, loc + 1);
                         vm.UncondJump(loc, loc + 2);
                         ++loc;
-                        //2. b. Evaluate to true (without evaluating right hand side)
+                        //3. b. Evaluate to true (without evaluating right hand side)
                         vm.IntLoad(loc++, 1);
                         break;
                     default:

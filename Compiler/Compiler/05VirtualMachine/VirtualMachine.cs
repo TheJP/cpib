@@ -824,6 +824,7 @@ namespace Compiler
         {
             decimal data = Data.decimalGet(store[sp - 1]);
             store[sp - 1] = Data.intNew((int)data);
+            pc = pc + 1;
         }
 
         public override void DecimalToInt(int loc)
@@ -834,6 +835,7 @@ namespace Compiler
         {
             int data = Data.intGet(store[sp - 1]);
             store[sp - 1] = Data.decimalNew((decimal)data);
+            pc = pc + 1;
         }
 
         public override void IntToDecimal(int loc)

@@ -4,7 +4,7 @@ global
 	proc pow(in copy const base:decimal, in copy var exp:int32,
 		out ref var o:decimal)
 	do
-		o init := -1.0m;
+		o init := 1.0m;
 		while exp > 0 do
 			o := o * base;
 			exp := exp - 1

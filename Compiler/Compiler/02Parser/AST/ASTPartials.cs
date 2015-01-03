@@ -836,7 +836,11 @@ namespace Compiler
     {
         public virtual IASTNode ToAbstractSyntax()
         {
-            return new ASTEmpty();
+            var ast = new ASTStoDecl();
+            ast.Ident = ((IdentToken)IDENT.Token).Value;
+            ast.Type = ((TypeToken)TYPE.Token).Value;
+            ast.Changemode = ChangeMode.VAR; //TODO: Is this correct?
+            return ast;
         }
     }
     public partial class CmdSKIP : Cmd

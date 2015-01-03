@@ -1,0 +1,20 @@
+﻿program fibonacci(in const pos:int, out var fib:int)
+global
+	proc fibProc(in copy pos:int, out copy fib)
+		local a : int; b : int
+	do
+        if(pos = 0) then
+		    fib init := 1
+	    else
+		    if(pos = 1) then
+			    fib init := 1
+			else
+			    call fibProc(pos - 2, a init);
+				call fibProc(pos - 1, b init);
+				fib init := a + b
+			endif
+		endif
+	endproc;
+do
+	call fibProc(pos, fib init)
+endprogram

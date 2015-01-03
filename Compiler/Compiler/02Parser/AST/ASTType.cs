@@ -16,6 +16,7 @@ namespace Compiler
             if(Type != Type.DECIMAL && Type != Type.INT32){ throw new IVirtualMachine.InternalError("Use of invalid (not existing) casting type " + Type.ToString()); }
             Type exprType = Expr.GetExpressionType(info);
             if(exprType != Type.DECIMAL && exprType != Type.INT32){ throw new IVirtualMachine.InternalError("Cannot cast from type " + exprType.ToString()); }
+            loc = Expr.GenerateCode(loc, vm, info);
             if (Type != exprType)
             {
                 if (Type == Type.DECIMAL && exprType == Type.INT32)

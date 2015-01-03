@@ -2235,7 +2235,7 @@ namespace Compiler
                     }
                     else
                     {
-                        var not = new ASTNot();
+                        var not = new ASTInv();
                         not.Expr = (ASTExpression)lit;
 
                         lit = not;
@@ -2282,7 +2282,7 @@ namespace Compiler
                     }
                     else
                     {
-                        var not = new ASTNot();
+                        var not = new ASTInv();
                         not.Expr = (ASTExpression)lit;
 
                         lit = not;

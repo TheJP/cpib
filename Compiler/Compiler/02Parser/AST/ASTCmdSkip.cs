@@ -4,7 +4,7 @@ namespace Compiler
     {
         public override int GenerateCode(int loc, IVirtualMachine vm, CheckerInformation info)
         {
-            throw new System.NotImplementedException();
+            return loc;
         }
     }
 }

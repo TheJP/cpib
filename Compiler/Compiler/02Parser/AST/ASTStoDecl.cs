@@ -4,7 +4,7 @@ namespace Compiler
     {
         public Type Type { get; set; }
 
-        public ChangeMode Changemode { get; set; }
+        public ChangeMode? Changemode { get; set; }
 
         public override string ToString()
         {

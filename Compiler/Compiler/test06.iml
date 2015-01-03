@@ -1,0 +1,17 @@
+﻿program fibonacci(in const pos:int32, out var fib:int32)
+global
+	fun fibFunc(in copy pos:int32) returns fib : int32
+	do
+        if(pos = 0) then
+		    fib init := 1
+	    else
+		    if(pos = 1) then
+			    fib init := 1
+			else
+				fib init := fibFunc(pos - 2) + fibFunc(pos - 1)
+			endif
+		endif
+	endfun
+do
+	fib init := fibFunc(pos)
+endprogram

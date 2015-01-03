@@ -118,6 +118,7 @@ namespace Compiler
             rootParam.OptChangemode = returnParam.Changemode;
             rootParam.Ident = returnParam.Ident;
             rootParam.Type = returnParam.Type;
+            rootParam.OptMechmode = MechMode.COPY;
             rootParam.FlowMode = FlowMode.OUT;
 
             rootParam.NextParam = this.ParamList.ToAbstractSyntax();

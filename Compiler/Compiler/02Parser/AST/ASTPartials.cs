@@ -839,7 +839,6 @@ namespace Compiler
             var ast = new ASTStoDecl();
             ast.Ident = ((IdentToken)IDENT.Token).Value;
             ast.Type = ((TypeToken)TYPE.Token).Value;
-            ast.Changemode = ChangeMode.VAR; //TODO: Is this correct?
             return ast;
         }
     }

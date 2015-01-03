@@ -79,6 +79,7 @@
     <Compile Include="02Parser\AST\ASTCpsCmd.cs" />
     <Compile Include="02Parser\AST\ASTCpsDecl.cs" />
     <Compile Include="02Parser\AST\ASTDecimalLiteral.cs" />
+    <Compile Include="02Parser\AST\ASTNot.cs" />
     <Compile Include="02Parser\AST\IASTDecl.cs" />
     <Compile Include="02Parser\AST\ASTEmpty.cs" />
     <Compile Include="02Parser\AST\ASTExpression.cs" />

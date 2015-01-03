@@ -1,8 +1,8 @@
-﻿program intDiv(in const m:decimal, in const n:int32,
+﻿program intDiv(in const m:int32, in const n:int32,
                out const q:int32, out const r:int32)
 global
-    proc divide(in copy const m:decimal, in copy const n:int32,
-                out ref var q:int32, out ref var r:decimal)
+    proc divide(in copy const m:int32, in copy const n:int32,
+                out ref var q:int32, out ref var r:int32)
     do
         q init := 0;
         r init := m;

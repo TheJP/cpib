@@ -17,7 +17,20 @@ namespace Compiler
 
         public override int GenerateCode(int loc, IVirtualMachine vm, CheckerInformation info)
         {
-            throw new System.NotImplementedException();
+            loc = Condition.GenerateCode(loc, vm, info);
+            int condJumpLoc = loc++; //Placeholder
+            foreach (ASTCpsCmd cmd in TrueCommands)
+            {
+                loc = cmd.GenerateCode(loc, vm, info);
+            }
+            vm.CondJump(condJumpLoc, loc); //Fill in Placeholder
+            int uncondJumpLoc = loc++; //Placeholder2
+            foreach (ASTCpsCmd cmd in FalseCommands)
+            {
+                loc = cmd.GenerateCode(loc, vm, info);
+            }
+            vm.UncondJump(uncondJumpLoc, loc); //Fill in Placeholder2
+            return loc;
         }
     }
 }

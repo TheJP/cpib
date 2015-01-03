@@ -991,7 +991,7 @@ namespace Compiler
         public virtual IASTNode ToAbstractSyntax()
         {
             var ident = new ASTCmdDebugIn();
-            ident.Expr = this.Expr.ToAbstractSyntax();
+            ident.Expr = (ASTExpression)this.Expr.ToAbstractSyntax();
             return ident;
         }
     }
@@ -1001,7 +1001,7 @@ namespace Compiler
         public virtual IASTNode ToAbstractSyntax()
         {
             var ident = new ASTCmdDebugOut();
-            ident.Expr = this.Expr.ToAbstractSyntax();
+            ident.Expr = (ASTExpression)this.Expr.ToAbstractSyntax();
             return ident;
         }
     }
@@ -2267,7 +2267,7 @@ namespace Compiler
         {
             var ident = new ASTType();
             ident.Type = ((TypeToken)this.TYPE.Token).Value;
-            ident.Expr = this.Expr.ToAbstractSyntax();
+            ident.Expr = (ASTExpression)this.Expr.ToAbstractSyntax();
             return ident;
         }
     }

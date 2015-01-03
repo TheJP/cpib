@@ -20,6 +20,7 @@ namespace Compiler
             return string.Format("{0} {1}", IsFunc ? "func" : "proc", Ident);
         }
 
+        //TODO: Add additional code for function result
         public override int GenerateCode(int loc, IVirtualMachine vm, CheckerInformation info)
         {
             int copies = 0;

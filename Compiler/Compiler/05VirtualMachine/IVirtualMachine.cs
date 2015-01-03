@@ -117,6 +117,9 @@ namespace Compiler
         public abstract void DecimalInput(int loc, String indicator);
         public abstract void DecimalOutput(int loc, String indicator);
 
+        public abstract void DecimalToInt(int loc);
+        public abstract void IntToDecimal(int loc);
+
         public override abstract String ToString();
     }
 }

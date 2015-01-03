@@ -48,6 +48,29 @@ namespace Compiler
             {
                 loc = cmd.GenerateCode(loc, vm, info);
             }
+            //Add output code
+            foreach (ASTParam param in Params)
+            {
+                if (param.FlowMode == FlowMode.OUT || param.FlowMode == FlowMode.INOUT)
+                {
+                    //Load output value
+                    vm.IntLoad(loc++, param.Address);
+                    vm.Deref(loc++);
+                    //Switch between types:
+                    switch (param.Type)
+                    {
+                        case Type.INT32:
+                            vm.IntOutput(loc++, param.Ident);
+                            break;
+                        case Type.BOOL:
+                            vm.BoolOutput(loc++, param.Ident);
+                            break;
+                        case Type.DECIMAL:
+                            vm.DecimalOutput(loc++, param.Ident);
+                            break;
+                    }
+                }
+            }
             //Add stop as last command
             vm.Stop(loc++);
             //Generate functions/procedures
@@ -70,8 +93,6 @@ namespace Compiler
                 //Reset namespace
                 info.CurrentNamespace = null;
             }
-            //Add output code
-
             return loc;
         }
     }

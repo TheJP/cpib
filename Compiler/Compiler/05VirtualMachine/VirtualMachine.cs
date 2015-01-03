@@ -819,6 +819,27 @@ namespace Compiler
             if (loc >= code.Length) { throw new IVirtualMachine.CodeTooSmallError(); }
             code[loc] = new KeyValuePair<Action, string>(() => DecimalInput(indicator), "DecimalInput(\"" + indicator + "\")");
         }
+
+        private void DecimalToInt()
+        {
+            decimal data = Data.decimalGet(store[sp - 1]);
+            store[sp - 1] = Data.intNew((int)data);
+        }
+
+        public override void DecimalToInt(int loc)
+        {
+            code[loc] = new KeyValuePair<Action, string>(() => DecimalToInt(), "DecimalToInt");
+        }
+        private void IntToDecimal()
+        {
+            int data = Data.intGet(store[sp - 1]);
+            store[sp - 1] = Data.decimalNew((decimal)data);
+        }
+
+        public override void IntToDecimal(int loc)
+        {
+            code[loc] = new KeyValuePair<Action, string>(() => IntToDecimal(), "IntToDecimal");
+        }
     }
 
 }

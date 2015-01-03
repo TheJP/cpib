@@ -8,7 +8,7 @@ namespace Compiler
 
         public int GenerateCode(int loc, IVirtualMachine vm, CheckerInformation info)
         {
-            throw new System.NotImplementedException();
+            throw new IVirtualMachine.InternalError("ASTOptInit.GenerateCode was called. This should never happen!");
         }
     }
 }

@@ -23,8 +23,8 @@ namespace Compiler
             {
                 loc = cmd.GenerateCode(loc, vm, info);
             }
-            vm.CondJump(condJumpLoc, loc); //Fill in Placeholder
             int uncondJumpLoc = loc++; //Placeholder2
+            vm.CondJump(condJumpLoc, loc); //Fill in Placeholder
             foreach (ASTCpsCmd cmd in FalseCommands)
             {
                 loc = cmd.GenerateCode(loc, vm, info);

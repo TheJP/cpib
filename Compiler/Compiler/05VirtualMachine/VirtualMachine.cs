@@ -491,7 +491,7 @@ namespace Compiler
         public override void DecimalEQ(int loc)
         {
             if (loc >= code.Length) { throw new IVirtualMachine.CodeTooSmallError(); }
-            code[loc] = new KeyValuePair<Action, string>(() => DecimalEQ(), "INtEQ");
+            code[loc] = new KeyValuePair<Action, string>(() => DecimalEQ(), "IntEQ");
         }
 
         private void DecimalNE()

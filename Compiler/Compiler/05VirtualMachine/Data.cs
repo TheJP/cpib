@@ -127,7 +127,9 @@ namespace Compiler
         public class IntData : IBaseData
         {
             private int i;
-            public IntData(int i) { this.i = i;
+            public IntData(int i)
+            {
+                this.i = i;
             }
             public int getData() { return i; }
         }

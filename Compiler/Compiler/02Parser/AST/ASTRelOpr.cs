@@ -26,7 +26,7 @@ namespace Compiler
             var termType = ((ASTExpression)Term).GetExpressionType(info);
             var repTermType = ((ASTExpression)RepTerm).GetExpressionType(info);
 
-            if (termType == Type.INT32 && repTermType == Type.INT32)
+            if ((termType == Type.INT32 && repTermType == Type.INT32) || (termType == Type.BOOL && repTermType == Type.BOOL))
             {
                 switch (Operator)
                 {

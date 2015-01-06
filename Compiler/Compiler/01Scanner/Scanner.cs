@@ -67,6 +67,8 @@ namespace Compiler
             Keywords.Add("skip", new Token(Terminals.SKIP));
             Keywords.Add("then", new Token(Terminals.THEN));
             Keywords.Add("while", new Token(Terminals.WHILE));
+            Keywords.Add("true", new BoolLiteralToken(true));
+            Keywords.Add("false", new BoolLiteralToken(false));
         }
         /// <summary>
         /// Runs a state machine to execute the lexical analysis

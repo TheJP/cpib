@@ -1,8 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace Compiler
 {
-    public class ASTNot : ASTExpression
+    public class ASTInv : ASTExpression
     {
         public ASTExpression Expr { get; set; }
 
@@ -12,17 +16,18 @@ namespace Compiler
 
             var type = GetExpressionType(info);
 
-            if (type == Type.BOOL)
+            if (type == Type.INT32)
             {
-                //1 NE 1 == 0
-                //0 NE 1 == 1
-                vm.IntLoad(loc++, 1);
-                vm.IntNE(loc++);
+                vm.IntInv(loc++);
+            }
+            else if (type == Type.DECIMAL)
+            {
+                vm.DecimalInv(loc++);
             }
             else
             {
                 throw new IVirtualMachine.InternalError(
-                            "Cannot negate Non-Bool value " + Expr.ToString());
+                            "Cannot inverse " + type.ToString() + " value " + Expr.ToString());
             }
 
             return loc;
@@ -32,5 +37,5 @@ namespace Compiler
         {
             return Expr.GetExpressionType(info);
         }
-    }  
+    }
 }

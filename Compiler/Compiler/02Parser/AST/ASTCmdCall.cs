@@ -15,10 +15,8 @@ namespace Compiler
             return string.Format("call {0}", this.Ident);
         }
 
-        public override int GenerateCode(int loc, IVirtualMachine vm, CheckerInformation info)
+        public static int GenerateCallingCode(int loc, IVirtualMachine vm, CheckerInformation info, ASTProcFuncDecl callee, List<ASTExpression> exprList)
         {
-            //Get abstract declaration
-            ASTProcFuncDecl callee = info.ProcFuncs[Ident];
             //Allocate Return Location on Stack
             if (callee.IsFunc)
             {
@@ -26,7 +24,12 @@ namespace Compiler
             }
             //Evaluate argument expressions
             var paramIttr = callee.Params.GetEnumerator();
-            foreach (ASTExpression expr in ExprList)
+            //Omit return param for functions
+            if (callee.IsFunc)
+            {
+                if (!paramIttr.MoveNext()) { throw new IVirtualMachine.InternalError("No return param found for function"); }
+            }
+            foreach (ASTExpression expr in exprList)
             {
                 if (!paramIttr.MoveNext()) { throw new IVirtualMachine.InternalError("Too many arguments"); }
                 ASTParam param = paramIttr.Current;
@@ -48,10 +51,18 @@ namespace Compiler
             }
             else
             {
-                if (!info.Calls.ContainsKey(Ident)) { info.Calls.Add(Ident, new List<int>()); }
-                info.Calls[Ident].Add(loc);
+                if (!info.Calls.ContainsKey(callee.Ident)) { info.Calls.Add(callee.Ident, new List<int>()); }
+                info.Calls[callee.Ident].Add(loc);
             }
             ++loc;
+            return loc;
+        }
+
+        public override int GenerateCode(int loc, IVirtualMachine vm, CheckerInformation info)
+        {
+            //Get abstract declaration
+            ASTProcFuncDecl callee = info.ProcFuncs[Ident];
+            loc = ASTCmdCall.GenerateCallingCode(loc, vm, info, callee, ExprList);
             return loc;
         }
     }

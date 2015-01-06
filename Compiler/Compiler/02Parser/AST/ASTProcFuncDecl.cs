@@ -20,7 +20,6 @@ namespace Compiler
             return string.Format("{0} {1}", IsFunc ? "func" : "proc", Ident);
         }
 
-        //TODO: Add additional code for function result
         public override int GenerateCode(int loc, IVirtualMachine vm, CheckerInformation info)
         {
             int copies = 0;
@@ -46,15 +45,31 @@ namespace Compiler
                 loc = cmd.GenerateCode(loc, vm, info);
             }
             //CopyOut of inout copy and out copy parameters
+            bool omit = IsFunc;
             foreach (ASTParam param in Params)
             {
-                if (param.OptMechmode == MechMode.COPY && (param.FlowMode == FlowMode.INOUT || param.FlowMode == FlowMode.OUT))
+                if (omit) { omit = false; }
+                else
                 {
-                    vm.CopyOut(loc++, param.Address, param.AddressLocation.Value);
+                    if (param.OptMechmode == MechMode.COPY && (param.FlowMode == FlowMode.INOUT || param.FlowMode == FlowMode.OUT))
+                    {
+                        vm.CopyOut(loc++, param.Address, param.AddressLocation.Value);
+                    }
                 }
             }
+            if (IsFunc)
+            {
+                //CopyOut return value
+                //Can't use standard CopyOut, becuase it works with absolute target address and not with top of stack as needed!
+                var paramIttr = Params.GetEnumerator(); paramIttr.MoveNext();
+                ASTParam result = paramIttr.Current;
+                vm.LoadRel(loc++, result.Address);
+                vm.Deref(loc++);
+                vm.LoadRel(loc++, result.AddressLocation.Value);
+                vm.Store(loc++);
+            }
             //Return
-            vm.Return(loc++, Params.Count);
+            vm.Return(loc++, Params.Count - (IsFunc ? 1 : 0)); //For function the return size is one smaller, leaving the function expression result on the stack!
             return loc;
         }
     }

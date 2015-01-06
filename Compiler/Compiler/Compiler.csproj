@@ -79,6 +79,7 @@
     <Compile Include="02Parser\AST\ASTCpsCmd.cs" />
     <Compile Include="02Parser\AST\ASTCpsDecl.cs" />
     <Compile Include="02Parser\AST\ASTDecimalLiteral.cs" />
+    <Compile Include="02Parser\AST\ASTInv.cs" />
     <Compile Include="02Parser\AST\ASTNot.cs" />
     <Compile Include="02Parser\AST\IASTDecl.cs" />
     <Compile Include="02Parser\AST\ASTEmpty.cs" />
@@ -124,6 +125,9 @@
     <Compile Include="01Scanner\Token\TypeToken.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="test06.iml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="test05.iml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -144,8 +148,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
-    <Folder Include="04CodeGenerator\" />
+    <Content Include="04CodeGenerator\Readme.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

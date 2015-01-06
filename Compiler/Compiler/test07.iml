@@ -1,0 +1,20 @@
+﻿program interest(in const capital0:decimal, in const interest:decimal,
+	in const years:int32, out const capitaln:decimal)
+global
+	fun pow(in copy const base:decimal, in copy var exp:int32) returns o:decimal
+	do
+		o init := 1.0m;
+		while exp > 0 do
+			o := o * base;
+			exp := exp - 1
+		endwhile
+	endfun;
+	var ipown:decimal; //pow(i, years)
+	var captialur:decimal //Unrounded capital
+do
+	//Calculate interest
+	ipown init := pow(1 + interest, years);
+	captialur := capital0 * ipown;
+	//Round to 5 centime (Rappen)
+	capitaln init := decimal(int32(captialur * 20.0m)) div 20.0m
+endprogram

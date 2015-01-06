@@ -27,5 +27,11 @@ namespace Compiler
             vm.CondJump(condJumpLoc, loc);
             return loc;
         }
+
+        public override void GetUsedIdents(ScopeChecker.UsedIdents usedIdents)
+        {
+            Condition.GetUsedIdents(usedIdents);
+            Commands.ForEach(cmd => cmd.GetUsedIdents(usedIdents));
+        }
     }
 }

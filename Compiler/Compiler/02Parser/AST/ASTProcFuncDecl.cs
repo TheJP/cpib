@@ -72,5 +72,11 @@ namespace Compiler
             vm.Return(loc++, Params.Count - (IsFunc ? 1 : 0)); //For function the return size is one smaller, leaving the function expression result on the stack!
             return loc;
         }
+
+        public override void GetUsedIdents(ScopeChecker.UsedIdents usedIdents)
+        {
+            OptGlobImps.ForEach(global => global.GetUsedIdents(usedIdents));
+            Commands.ForEach(cmd => cmd.GetUsedIdents(usedIdents));
+        }
     }
 }

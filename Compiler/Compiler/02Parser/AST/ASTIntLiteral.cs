@@ -24,5 +24,7 @@ namespace Compiler
         {
             return Type.INT32;
         }
+
+        public override void GetUsedIdents(ScopeChecker.UsedIdents usedIdents) { }
     }
 }

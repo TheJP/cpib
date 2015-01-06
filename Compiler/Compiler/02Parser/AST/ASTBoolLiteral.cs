@@ -26,5 +26,7 @@ namespace Compiler
         {
             return Type.BOOL;
         }
+
+        public override void GetUsedIdents(ScopeChecker.UsedIdents usedIdents) { }
     }
 }

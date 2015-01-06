@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace Compiler
 {
     public class ASTGlobalParam : IASTNode
@@ -23,6 +25,13 @@ namespace Compiler
         public int GenerateCode(int loc, IVirtualMachine vm, CheckerInformation info)
         {
             throw new IVirtualMachine.InternalError("ASTGlobalParam.GenerateCode was called. This should never happen!");
+        }
+        public void GetUsedIdents(ScopeChecker.UsedIdents usedIdents)
+        {
+            string tmp = usedIdents.CurrentNamespace;
+            usedIdents.CurrentNamespace = null;
+            usedIdents.AddStoIdent(Ident);
+            usedIdents.CurrentNamespace = tmp;
         }
     }
 }

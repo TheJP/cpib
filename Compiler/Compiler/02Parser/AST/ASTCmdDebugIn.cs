@@ -21,5 +21,10 @@ namespace Compiler
             }
             return loc;
         }
+
+        public override void GetUsedIdents(ScopeChecker.UsedIdents usedIdents)
+        {
+            Expr.GetUsedIdents(usedIdents);
+        }
     }
 }

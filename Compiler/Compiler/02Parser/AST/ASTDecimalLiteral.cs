@@ -24,5 +24,7 @@ namespace Compiler
         {
             return Type.DECIMAL;
         }
+
+        public override void GetUsedIdents(ScopeChecker.UsedIdents usedIdents) { }
     }
 }

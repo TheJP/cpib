@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace Compiler
 {
     public abstract class ASTCpsCmd : IASTNode
@@ -9,5 +11,6 @@ namespace Compiler
         public IASTNode NextCmd { get; set; }
 
         public abstract int GenerateCode(int loc, IVirtualMachine vm, CheckerInformation info);
+        public abstract void GetUsedIdents(ScopeChecker.UsedIdents usedIdents);
     }
 }

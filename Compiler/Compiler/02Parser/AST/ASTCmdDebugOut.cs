@@ -13,13 +13,18 @@ namespace Compiler
                     vm.IntOutput(loc++, "DEBUGOUT");
                     break;
                 case Type.BOOL:
-                    vm.DecimalOutput(loc++, "DEBUGOUT");
+                    vm.BoolOutput(loc++, "DEBUGOUT");
                     break;
                 case Type.DECIMAL:
-                    vm.BoolOutput(loc++, "DEBUGOUT");
+                    vm.DecimalOutput(loc++, "DEBUGOUT");
                     break;
             }
             return loc;
+        }
+
+        public override void GetUsedIdents(ScopeChecker.UsedIdents usedIdents)
+        {
+            Expr.GetUsedIdents(usedIdents);
         }
     }
 }

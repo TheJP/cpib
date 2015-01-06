@@ -15,5 +15,6 @@ namespace Compiler
         {
             throw new IVirtualMachine.InternalError("ASTStoDecl.GenerateCode was called. This should never happen!");
         }
+        public override void GetUsedIdents(ScopeChecker.UsedIdents usedIdents) { }
     }
 }

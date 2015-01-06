@@ -18,5 +18,11 @@ namespace Compiler
             vm.Store(loc++);
             return loc;
         }
+
+        public override void GetUsedIdents(ScopeChecker.UsedIdents usedIdents)
+        {
+            LValue.GetUsedIdents(usedIdents);
+            RValue.GetUsedIdents(usedIdents);
+        }
     }
 }

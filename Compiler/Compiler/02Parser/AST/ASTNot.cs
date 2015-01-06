@@ -32,5 +32,10 @@ namespace Compiler
         {
             return Expr.GetExpressionType(info);
         }
+
+        public override void GetUsedIdents(ScopeChecker.UsedIdents usedIdents)
+        {
+            Expr.GetUsedIdents(usedIdents);
+        }
     }  
 }

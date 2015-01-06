@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace Compiler
 {
@@ -37,5 +38,6 @@ namespace Compiler
         {
             throw new IVirtualMachine.InternalError("ASTParam.GenerateCode was called. This should never happen!");
         }
+        public void GetUsedIdents(ScopeChecker.UsedIdents usedIdents) { }
     }
 }

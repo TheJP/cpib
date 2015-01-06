@@ -1,4 +1,6 @@
-﻿namespace Compiler
+﻿using System.Collections.Generic;
+
+namespace Compiler
 {
     public abstract class ASTExpression : IASTNode
     {
@@ -14,5 +16,6 @@
         }
         public abstract int GenerateCode(int loc, IVirtualMachine vm, CheckerInformation info);
         public abstract Type GetExpressionType(CheckerInformation info);
+        public abstract void GetUsedIdents(ScopeChecker.UsedIdents usedIdents);
     }
 }

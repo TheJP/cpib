@@ -95,5 +95,16 @@ namespace Compiler
             }
             return loc;
         }
+        public void GetUsedIdents(ScopeChecker.UsedIdents usedIdents)
+        {
+            usedIdents.CurrentNamespace = null;
+            Commands.ForEach(cmd => cmd.GetUsedIdents(usedIdents));
+            Declarations.ForEach(decl =>
+            {
+                if (decl is ASTProcFuncDecl) { usedIdents.CurrentNamespace = ((ASTProcFuncDecl)decl).Ident; }
+                decl.GetUsedIdents(usedIdents);
+                usedIdents.CurrentNamespace = null;
+            });
+        }
     }
 }

@@ -120,5 +120,11 @@ namespace Compiler
                 throw new IVirtualMachine.InternalError("Use of unkwon identifier '" + Ident + "'");
             }
         }
+
+        public override void GetUsedIdents(ScopeChecker.UsedIdents usedIdents)
+        {
+            if (IsFuncCall) { usedIdents.AddProcFuncIdent(Ident); }
+            else { usedIdents.AddStoIdent(Ident); }
+        }
     }
 }

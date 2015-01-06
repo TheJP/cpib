@@ -66,9 +66,52 @@ namespace Compiler
             }
         }
 
+        /// <summary>
+        /// Used to collect, which idents are used in a node.
+        /// </summary>
+        public class UsedIdents
+        {
+            private CheckerInformation info;
+            public UsedIdents(CheckerInformation info)
+            {
+                this.info = info;
+            }
+            /// <summary>
+            /// Allows the modification of the current namespace.
+            /// </summary>
+            public string CurrentNamespace
+            {
+                get { return info.CurrentNamespace; }
+                set { info.CurrentNamespace = value; }
+            }
+            /// <summary>
+            /// Marks given Ident as used as ProcFuncIdent by the node.
+            /// </summary>
+            /// <param name="ident">Ident, which is used</param>
+            public void AddProcFuncIdent(string ident)
+            {
+                if (!info.ProcFuncs.ContainsIdent(ident))
+                {
+                    throw new CheckerException("Use of undeclared procedure/function identifier '" + ident + "'");
+                }
+            }
+            /// <summary>
+            /// Marks given Ident as used as StoIdent by the node.
+            /// </summary>
+            /// <param name="ident">Ident, which is used</param>
+            public void AddStoIdent(string ident)
+            {
+                if (!info.Globals.ContainsIdent(ident) && (info.CurrentNamespace == null || !info.Namespaces[info.CurrentNamespace].ContainsIdent(ident)))
+                {
+                    throw new CheckerException("Use of undeclared storage identifier '" + ident + "'");
+                }
+            }
+        }
+
         private void CheckForUndeclaredIdent(ASTProgram root, CheckerInformation info)
         {
-            //TODO: Implement
+            root.GetUsedIdents(new UsedIdents(info));
+            info.CurrentNamespace = null;
         }
 
         public void Check(ASTProgram root, CheckerInformation info)

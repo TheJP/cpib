@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace Compiler
 {
     public abstract class ASTCpsDecl : IASTNode, IASTDecl
@@ -13,5 +15,6 @@ namespace Compiler
         public IASTNode NextDecl { get; set; }
 
         public abstract int GenerateCode(int loc, IVirtualMachine vm, CheckerInformation info);
+        public abstract void GetUsedIdents(ScopeChecker.UsedIdents usedIdents);
     }
 }

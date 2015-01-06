@@ -65,5 +65,11 @@ namespace Compiler
             loc = ASTCmdCall.GenerateCallingCode(loc, vm, info, callee, ExprList);
             return loc;
         }
+
+        public override void GetUsedIdents(ScopeChecker.UsedIdents usedIdents)
+        {
+            ExprList.ForEach(cmd => cmd.GetUsedIdents(usedIdents));
+            usedIdents.AddProcFuncIdent(Ident);
+        }
     }
 }

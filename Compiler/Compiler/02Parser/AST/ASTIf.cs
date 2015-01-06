@@ -32,5 +32,12 @@ namespace Compiler
             vm.UncondJump(uncondJumpLoc, loc); //Fill in Placeholder2
             return loc;
         }
+
+        public override void GetUsedIdents(ScopeChecker.UsedIdents usedIdents)
+        {
+            Condition.GetUsedIdents(usedIdents);
+            TrueCommands.ForEach(cmd => cmd.GetUsedIdents(usedIdents));
+            FalseCommands.ForEach(cmd => cmd.GetUsedIdents(usedIdents));
+        }
     }
 }

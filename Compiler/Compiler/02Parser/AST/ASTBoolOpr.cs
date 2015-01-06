@@ -104,5 +104,11 @@ namespace Compiler
 
             throw new GrammarException(string.Format("Types {0}, {1} are not a valid combination for Bool Operation {2}", termType, repTermType, this.ToString()));
         }
+
+        public override void GetUsedIdents(ScopeChecker.UsedIdents usedIdents)
+        {
+            Term.GetUsedIdents(usedIdents);
+            RepTerm.GetUsedIdents(usedIdents);
+        }
     }
 }

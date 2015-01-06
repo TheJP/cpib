@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace Compiler
 {
     public class ASTType : ASTExpression
@@ -38,6 +40,11 @@ namespace Compiler
         public override Type GetExpressionType(CheckerInformation info)
         {
             return this.Type;
+        }
+
+        public override void GetUsedIdents(ScopeChecker.UsedIdents usedIdents)
+        {
+            Expr.GetUsedIdents(usedIdents);
         }
     }
 }

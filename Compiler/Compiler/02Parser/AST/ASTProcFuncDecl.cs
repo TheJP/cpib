@@ -9,7 +9,7 @@ namespace Compiler
 
         public List<ASTGlobalParam> OptGlobImps { get; set; }
 
-        public IList<ASTParam> Params { get; set; }
+        public List<ASTParam> Params { get; set; }
 
         public List<ASTCpsCmd> Commands { get; set; }
 
@@ -75,6 +75,7 @@ namespace Compiler
 
         public override void GetUsedIdents(ScopeChecker.UsedIdents usedIdents)
         {
+            Params.ForEach(param => param.GetUsedIdents(usedIdents));
             OptGlobImps.ForEach(global => global.GetUsedIdents(usedIdents));
             Commands.ForEach(cmd => cmd.GetUsedIdents(usedIdents));
         }

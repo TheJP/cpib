@@ -72,9 +72,13 @@ namespace Compiler
         public class UsedIdents
         {
             private CheckerInformation info;
+            private IList<string> GlobalInitialized { get; set; }
+            private IDictionary<string, IList<string>> LocalInitialized { get; set; }
             public UsedIdents(CheckerInformation info)
             {
                 this.info = info;
+                GlobalInitialized = new List<string>();
+                LocalInitialized = new Dictionary<string, IList<string>>();
             }
             /// <summary>
             /// Allows the modification of the current namespace.
@@ -99,11 +103,25 @@ namespace Compiler
             /// Marks given Ident as used as StoIdent by the node.
             /// </summary>
             /// <param name="ident">Ident, which is used</param>
-            public void AddStoIdent(string ident)
+            public void AddStoIdent(string ident, bool isInit)
             {
-                if (!info.Globals.ContainsIdent(ident) && (info.CurrentNamespace == null || !info.Namespaces[info.CurrentNamespace].ContainsIdent(ident)))
+                if (!info.Globals.ContainsIdent(ident))
                 {
-                    throw new CheckerException("Use of undeclared storage identifier '" + ident + "'");
+                    if (info.CurrentNamespace == null || !info.Namespaces[info.CurrentNamespace].ContainsIdent(ident))
+                    {
+                        throw new CheckerException("Use of undeclared storage identifier '" + ident + "'");
+                    }
+                    else
+                    {
+                        if (!LocalInitialized.ContainsKey(CurrentNamespace)) { LocalInitialized.Add(CurrentNamespace, new List<string>()); }
+                        if (isInit) { LocalInitialized[CurrentNamespace].Add(ident); }
+                        else if(!LocalInitialized[CurrentNamespace].Contains(ident)) { throw new CheckerException("Use of not initialized local identifier '" + ident + "'"); }
+                    }
+                }
+                else
+                {
+                    if (isInit) { GlobalInitialized.Add(ident); }
+                    else if (!GlobalInitialized.Contains(ident)) { throw new CheckerException("Use of not initialized global identifier '" + ident + "'"); }
                 }
             }
         }

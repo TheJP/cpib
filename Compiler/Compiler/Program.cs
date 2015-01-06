@@ -41,7 +41,6 @@ namespace Compiler
                 Console.WriteLine(vm.ToString());
                 Console.WriteLine();
                 //Executuion
-                
                 vm.Execute();
             }
             catch (Exception ex)

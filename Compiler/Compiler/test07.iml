@@ -14,7 +14,7 @@ global
 do
 	//Calculate interest
 	ipown init := pow(1 + interest, years);
-	captialur := capital0 * ipown;
+	captialur init := capital0 * ipown;
 	//Round to 5 centime (Rappen)
 	capitaln init := decimal(int32(captialur * 20.0m)) div 20.0m
 endprogram

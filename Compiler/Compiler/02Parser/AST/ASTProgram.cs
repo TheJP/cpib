@@ -6,7 +6,7 @@ namespace Compiler
     {
         public string Ident { get; set; }
 
-        public IList<ASTParam> Params { get; set; }
+        public List<ASTParam> Params { get; set; }
 
         public List<ASTCpsDecl> Declarations { get; set; }
 
@@ -98,6 +98,7 @@ namespace Compiler
         public void GetUsedIdents(ScopeChecker.UsedIdents usedIdents)
         {
             usedIdents.CurrentNamespace = null;
+            Params.ForEach(param => param.GetUsedIdents(usedIdents));
             Commands.ForEach(cmd => cmd.GetUsedIdents(usedIdents));
             Declarations.ForEach(decl =>
             {

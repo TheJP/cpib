@@ -30,7 +30,7 @@ namespace Compiler
         {
             string tmp = usedIdents.CurrentNamespace;
             usedIdents.CurrentNamespace = null;
-            usedIdents.AddStoIdent(Ident);
+            usedIdents.AddStoIdent(Ident, false); //TODO: init!
             usedIdents.CurrentNamespace = tmp;
         }
     }

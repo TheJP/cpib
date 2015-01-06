@@ -124,7 +124,7 @@ namespace Compiler
         public override void GetUsedIdents(ScopeChecker.UsedIdents usedIdents)
         {
             if (IsFuncCall) { usedIdents.AddProcFuncIdent(Ident); }
-            else { usedIdents.AddStoIdent(Ident); }
+            else { usedIdents.AddStoIdent(Ident, IsInit); }
         }
     }
 }

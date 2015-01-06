@@ -15,7 +15,9 @@ namespace Compiler
         public IASTNode NextParam { get; set; }
 
         public Type Type { get; set; }
+
         public int Address { get; set; }
+
         /// <summary>
         /// Location where the address of this identifier is stored.
         /// This is only used for: out copy and inout copy parameters
@@ -38,6 +40,12 @@ namespace Compiler
         {
             throw new IVirtualMachine.InternalError("ASTParam.GenerateCode was called. This should never happen!");
         }
-        public void GetUsedIdents(ScopeChecker.UsedIdents usedIdents) { }
+        public void GetUsedIdents(ScopeChecker.UsedIdents usedIdents)
+        {
+            if (FlowMode != null && (FlowMode.Value == Compiler.FlowMode.IN || FlowMode.Value == Compiler.FlowMode.INOUT))
+            {
+                usedIdents.AddStoIdent(Ident, true); //In params are initialized
+            }
+        }
     }
 }

@@ -1,7 +1,7 @@
 ﻿program interest(in const capital0:decimal, in const interest:decimal,
 	in const years:int32, out const capitaln:decimal)
 global
-	fun pow(in copy const base:decimal, in copy var exp:int32) returns o:decimal
+	fun pow(in copy const base:decimal, in copy var exp:int32) returns var o:decimal
 	do
 		o init := 1.0m;
 		while exp > 0 do

@@ -17,7 +17,26 @@ namespace Compiler
         {
             return string.Format("{0} {1}", IsInit? "init ":"", Ident);
         }
-        public override int GenerateLValue(int loc, IVirtualMachine vm, CheckerInformation info)
+        private void AssertNotConstant(IASTStoDecl sto)
+        {
+            if (sto is ASTStoDecl) { AssertNotConstant((ASTStoDecl)sto); }
+            else if (sto is ASTParam) { AssertNotConstant((ASTParam)sto); }
+            else
+            {
+                //Should never happen as long as no new type is added
+                throw new IVirtualMachine.InternalError("Unknown Identifier Type");
+            }
+        }
+        private void AssertNotConstant(ASTStoDecl sto)
+        {
+            if (sto.Changemode == ChangeMode.CONST) { if (!IsInit) { throw new CheckerException("Can't modify constant storage '" + Ident + "'"); } }
+        }
+        private void AssertNotConstant(ASTParam sto)
+        {
+            if (sto.OptChangemode == null || sto.OptChangemode.Value == ChangeMode.CONST) { if (!IsInit) { throw new CheckerException("Can't modify constant parameter '" + Ident + "'"); } } //Default Changemode is const!
+            if (sto.FlowMode == FlowMode.IN && sto.OptMechmode != MechMode.COPY) { throw new CheckerException("Can't modify 'in' parameter '" + Ident + "'"); }
+        }
+        public override int GenerateLValue(int loc, IVirtualMachine vm, CheckerInformation info, bool hasToBeLValue = true)
         {
             if (IsFuncCall)
             {
@@ -25,11 +44,13 @@ namespace Compiler
             }
             else
             {
+                //Write address to the top of the stack
                 if (info.CurrentNamespace != null &&
                     info.Namespaces.ContainsKey(info.CurrentNamespace) &&
                     info.Namespaces[info.CurrentNamespace].ContainsIdent(Ident))
                 {
                     IASTStoDecl storage = info.Namespaces[info.CurrentNamespace][Ident];
+                    if (hasToBeLValue) { AssertNotConstant(storage); }
                     if (storage is ASTStoDecl || (storage is ASTParam && ((ASTParam)storage).OptMechmode == MechMode.COPY))
                     {
                         //Local Identifier or parameter with mechmode COPY
@@ -52,6 +73,7 @@ namespace Compiler
                 else if (info.Globals.ContainsIdent(Ident))
                 {
                     IASTStoDecl storage = info.Globals[Ident];
+                    if (hasToBeLValue) { AssertNotConstant(storage); }
                     vm.IntLoad(loc++, storage.Address);
                 }
                 else
@@ -79,7 +101,7 @@ namespace Compiler
             }
             else
             {
-                loc = GenerateLValue(loc, vm, info);
+                loc = GenerateLValue(loc, vm, info, false);
                 vm.Deref(loc++);
                 return loc;
             }

@@ -113,6 +113,7 @@ namespace Compiler
                     }
                     else
                     {
+                        //Check for initialization
                         if (!LocalInitialized.ContainsKey(CurrentNamespace)) { LocalInitialized.Add(CurrentNamespace, new List<string>()); }
                         if (isInit) { LocalInitialized[CurrentNamespace].Add(ident); }
                         else if(!LocalInitialized[CurrentNamespace].Contains(ident)) { throw new CheckerException("Use of not initialized local identifier '" + ident + "'"); }
@@ -120,6 +121,7 @@ namespace Compiler
                 }
                 else
                 {
+                    //Check for initialization
                     if (isInit) { GlobalInitialized.Add(ident); }
                     else if (!GlobalInitialized.Contains(ident)) { throw new CheckerException("Use of not initialized global identifier '" + ident + "'"); }
                 }

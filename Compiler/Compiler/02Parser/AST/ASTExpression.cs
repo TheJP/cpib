@@ -10,7 +10,7 @@ namespace Compiler
         }
 
         public IASTNode NextExpression { get; set; }
-        public virtual int GenerateLValue(int loc, IVirtualMachine vm, CheckerInformation info)
+        public virtual int GenerateLValue(int loc, IVirtualMachine vm, CheckerInformation info, bool hasToBeLValue = true)
         {
             throw new IVirtualMachine.InternalError("Expression is no LValue");
         }

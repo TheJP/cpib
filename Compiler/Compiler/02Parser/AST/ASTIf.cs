@@ -35,9 +35,13 @@ namespace Compiler
 
         public override void GetUsedIdents(ScopeChecker.UsedIdents usedIdents)
         {
+            //TODO: Allow init, if added in both branches
+            bool tmp = usedIdents.AllowInit;
+            usedIdents.AllowInit = false;
             Condition.GetUsedIdents(usedIdents);
             TrueCommands.ForEach(cmd => cmd.GetUsedIdents(usedIdents));
             FalseCommands.ForEach(cmd => cmd.GetUsedIdents(usedIdents));
+            usedIdents.AllowInit = tmp;
         }
     }
 }

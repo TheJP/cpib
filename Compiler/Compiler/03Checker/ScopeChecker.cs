@@ -72,10 +72,12 @@ namespace Compiler
         public class UsedIdents
         {
             private CheckerInformation info;
-            private IList<string> GlobalInitialized { get; set; }
-            private IDictionary<string, IList<string>> LocalInitialized { get; set; }
+            public IList<string> GlobalInitialized { get; private set; }
+            public IDictionary<string, IList<string>> LocalInitialized { get; private set; }
+            public bool AllowInit { get; set; }
             public UsedIdents(CheckerInformation info)
             {
+                AllowInit = true;
                 this.info = info;
                 GlobalInitialized = new List<string>();
                 LocalInitialized = new Dictionary<string, IList<string>>();
@@ -115,14 +117,22 @@ namespace Compiler
                     {
                         //Check for initialization
                         if (!LocalInitialized.ContainsKey(CurrentNamespace)) { LocalInitialized.Add(CurrentNamespace, new List<string>()); }
-                        if (isInit) { LocalInitialized[CurrentNamespace].Add(ident); }
-                        else if(!LocalInitialized[CurrentNamespace].Contains(ident)) { throw new CheckerException("Use of not initialized local identifier '" + ident + "'"); }
+                        if (isInit && AllowInit)
+                        {
+                            if (LocalInitialized[CurrentNamespace].Contains(ident)) { throw new CheckerException("Initialization of already initialized local identifier '" + ident + "'"); }
+                            LocalInitialized[CurrentNamespace].Add(ident);
+                        }
+                        else if (!LocalInitialized[CurrentNamespace].Contains(ident)) { throw new CheckerException("Use of not initialized local identifier '" + ident + "'"); }
                     }
                 }
                 else
                 {
                     //Check for initialization
-                    if (isInit) { GlobalInitialized.Add(ident); }
+                    if (isInit && AllowInit)
+                    {
+                        if (GlobalInitialized.Contains(ident)) { throw new CheckerException("Initialization of already initialized local identifier '" + ident + "'"); }
+                        GlobalInitialized.Add(ident);
+                    }
                     else if (!GlobalInitialized.Contains(ident)) { throw new CheckerException("Use of not initialized global identifier '" + ident + "'"); }
                 }
             }
@@ -130,8 +140,32 @@ namespace Compiler
 
         private void CheckForUndeclaredIdent(ASTProgram root, CheckerInformation info)
         {
-            root.GetUsedIdents(new UsedIdents(info));
+            UsedIdents usedIdents = new UsedIdents(info);
+            root.GetUsedIdents(usedIdents);
             info.CurrentNamespace = null;
+            //Check to see if each local outflow parameter was initialized
+            foreach (string ident in info.ProcFuncs)
+            {
+                foreach (ASTParam param in info.ProcFuncs[ident].Params)
+                {
+                    if (param.FlowMode == FlowMode.OUT && (!usedIdents.LocalInitialized.ContainsKey(ident) || !usedIdents.LocalInitialized[ident].Contains(param.Ident)))
+                    {
+                        throw new CheckerException("The outflow parameter '" + param.Ident + "' of the procedure/function '" + ident + "' was not initialized");
+                    }
+                }
+            }
+            //Check if each global outflow parameter was initialized
+            foreach (string global in info.Globals)
+            {
+                if (info.Globals[global] is ASTParam)
+                {
+                    ASTParam param = (ASTParam)info.Globals[global];
+                    if (param.FlowMode == FlowMode.OUT && !usedIdents.GlobalInitialized.Contains(param.Ident))
+                    {
+                        throw new CheckerException("The global outflow parameter '" + param.Ident + "' of the program was not initialized");
+                    }
+                }
+            }
         }
 
         public void Check(ASTProgram root, CheckerInformation info)

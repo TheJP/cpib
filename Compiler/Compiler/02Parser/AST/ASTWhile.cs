@@ -30,8 +30,11 @@ namespace Compiler
 
         public override void GetUsedIdents(ScopeChecker.UsedIdents usedIdents)
         {
+            bool tmp = usedIdents.AllowInit;
+            usedIdents.AllowInit = false;
             Condition.GetUsedIdents(usedIdents);
             Commands.ForEach(cmd => cmd.GetUsedIdents(usedIdents));
+            usedIdents.AllowInit = tmp;
         }
     }
 }

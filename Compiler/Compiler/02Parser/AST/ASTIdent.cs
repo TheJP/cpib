@@ -34,7 +34,7 @@ namespace Compiler
         private void AssertNotConstant(ASTParam sto)
         {
             if (sto.OptChangemode == null || sto.OptChangemode.Value == ChangeMode.CONST) { if (!IsInit) { throw new CheckerException("Can't modify constant parameter '" + Ident + "'"); } } //Default Changemode is const!
-            if (sto.FlowMode == FlowMode.IN && sto.OptMechmode != MechMode.COPY) { throw new CheckerException("Can't modify 'in' parameter '" + Ident + "'"); }
+            if (sto.FlowMode == FlowMode.IN && sto.OptMechmode != MechMode.COPY) { throw new CheckerException("Can't modify 'in ref' parameter '" + Ident + "'"); }
         }
         public override int GenerateLValue(int loc, IVirtualMachine vm, CheckerInformation info, bool hasToBeLValue = true)
         {

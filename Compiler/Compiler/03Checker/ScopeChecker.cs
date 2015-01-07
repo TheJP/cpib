@@ -117,8 +117,9 @@ namespace Compiler
                     {
                         //Check for initialization
                         if (!LocalInitialized.ContainsKey(CurrentNamespace)) { LocalInitialized.Add(CurrentNamespace, new List<string>()); }
-                        if (isInit && AllowInit)
+                        if (isInit)
                         {
+                            if (!AllowInit) { throw new CheckerException("Initialization is not allowed inside if or while statements: '" + ident + "'"); }
                             if (LocalInitialized[CurrentNamespace].Contains(ident)) { throw new CheckerException("Initialization of already initialized local identifier '" + ident + "'"); }
                             LocalInitialized[CurrentNamespace].Add(ident);
                         }
@@ -128,8 +129,9 @@ namespace Compiler
                 else
                 {
                     //Check for initialization
-                    if (isInit && AllowInit)
+                    if (isInit)
                     {
+                        if (!AllowInit) { throw new CheckerException("Initialization is not allowed inside if or while statements: '" + ident + "'"); }
                         if (GlobalInitialized.Contains(ident)) { throw new CheckerException("Initialization of already initialized local identifier '" + ident + "'"); }
                         GlobalInitialized.Add(ident);
                     }
@@ -168,13 +170,39 @@ namespace Compiler
             }
         }
 
+        private void CheckFunctionParameter(ASTProgram root, CheckerInformation info)
+        {
+            //Functions can only have one out/inout param (this has to be the first one)
+            foreach (string ident in info.ProcFuncs)
+            {
+                if (info.ProcFuncs[ident].IsFunc)
+                {
+                    var paramIttr = info.ProcFuncs[ident].Params.GetEnumerator();
+                    paramIttr.MoveNext();
+                    while (paramIttr.MoveNext())
+                    {
+                        if (paramIttr.Current.FlowMode == FlowMode.OUT || paramIttr.Current.FlowMode == FlowMode.INOUT)
+                        {
+                            throw new CheckerException("A function can not have out/inout parameter.");
+                        }
+                    }
+                }
+            }
+        }
+
         public void Check(ASTProgram root, CheckerInformation info)
         {
             //Fill namespaces with declaration identifiers
             //Throws an exception if an identifier is declared more then once in a namespace
             OptainNamespaceInformation(root, info);
-            //is any applied identifier declared?
+            //Is any applied identifier declared and initialized?
             CheckForUndeclaredIdent(root, info);
+            //Checks if the function parameters are valid
+            CheckFunctionParameter(root, info);
+
+            //TODO: Check: if only specified globals are accessed in procedures/functions
+            //TODO: Check: Only const globals are allowed in functions
+            //TODO: Check: Are only different parameters provided to a procedure as references (Never more then one reference to the same storage)
         }
     }
 }

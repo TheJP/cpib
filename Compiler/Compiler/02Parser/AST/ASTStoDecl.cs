@@ -11,7 +11,7 @@ namespace Compiler
             return string.Format("{0} {1} : {2}", Changemode, Ident, Type);
         }
 
-        public override int GenerateCode(int loc, MachineCode mc, CheckerInformation info)
+        public override void GenerateCode(uint block, ref uint loc, MachineCode mc, CheckerInformation info)
         {
             throw new CheckerException("ASTStoDecl.GenerateCode was called. This should never happen!");
         }

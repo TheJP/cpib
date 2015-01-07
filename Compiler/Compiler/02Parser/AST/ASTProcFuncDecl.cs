@@ -20,7 +20,7 @@ namespace Compiler
             return string.Format("{0} {1}", IsFunc ? "func" : "proc", Ident);
         }
 
-        public override int GenerateCode(int loc, MachineCode mc, CheckerInformation info)
+        public override void GenerateCode(uint block, ref uint loc, MachineCode mc, CheckerInformation info)
         {
             //TODO
             /*
@@ -73,7 +73,6 @@ namespace Compiler
             //Return
             vm.Return(loc++, Params.Count - (IsFunc ? 1 : 0)); //For function the return size is one smaller, leaving the function expression result on the stack!
             */
-            return loc;
         }
 
         public override void GetUsedIdents(ScopeChecker.UsedIdents usedIdents)

@@ -22,7 +22,7 @@ namespace Compiler
             return string.Format("{0} {1} {2}", FlowMode, OptChangemode, Ident);
         }
 
-        public int GenerateCode(int loc, MachineCode mc, CheckerInformation info)
+        public void GenerateCode(uint block, ref uint loc, MachineCode mc, CheckerInformation info)
         {
             throw new CheckerException("ASTGlobalParam.GenerateCode was called. This should never happen!");
         }

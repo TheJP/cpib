@@ -18,7 +18,7 @@ namespace Compiler
             return string.Format("({0} {1} {2})", Term, Operator, RepTerm);
         }
 
-        public override int GenerateCode(int loc, MachineCode mc, CheckerInformation info)
+        public override void GenerateCode(uint block, ref uint loc, MachineCode mc, CheckerInformation info)
         {
             //TODO
             /*
@@ -87,8 +87,6 @@ namespace Compiler
                 throw new IVirtualMachine.InternalError("There's an invalid operand in ASTRelOpr. Operand: " + termType.ToString() + ", " + repTermType.ToString());
             }
             */
-
-            return loc;
         }
 
         public override Type GetExpressionType(CheckerInformation info)

@@ -11,7 +11,7 @@ namespace Compiler
             return string.Format("{0} := {1}", LValue, RValue);
         }
 
-        public override int GenerateCode(int loc, MachineCode mc, CheckerInformation info)
+        public override void GenerateCode(uint block, ref uint loc, MachineCode mc, CheckerInformation info)
         {
             //TODO
             /*
@@ -19,7 +19,6 @@ namespace Compiler
             loc = LValue.GenerateLValue(loc, vm, info);
             vm.Store(loc++);
             */
-            return loc;
         }
 
         public override void GetUsedIdents(ScopeChecker.UsedIdents usedIdents)

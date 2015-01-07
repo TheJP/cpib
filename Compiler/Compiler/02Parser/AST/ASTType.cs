@@ -13,7 +13,7 @@ namespace Compiler
             return string.Format("{0}({1})", Type, Expr);
         }
 
-        public override int GenerateCode(int loc, MachineCode mc, CheckerInformation info)
+        public override void GenerateCode(uint block, ref uint loc, MachineCode mc, CheckerInformation info)
         {
             //TODO
             /*
@@ -37,7 +37,6 @@ namespace Compiler
                 }
             }
             */
-            return loc;
         }
 
         public override Type GetExpressionType(CheckerInformation info)

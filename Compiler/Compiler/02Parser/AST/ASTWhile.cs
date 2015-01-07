@@ -13,7 +13,7 @@ namespace Compiler
             return string.Format("while {0} do", Condition);
         }
 
-        public override int GenerateCode(int loc, MachineCode mc, CheckerInformation info)
+        public override void GenerateCode(uint block, ref uint loc, MachineCode mc, CheckerInformation info)
         {
             //TODO
             /*
@@ -28,7 +28,6 @@ namespace Compiler
             //Fill in placeholder
             vm.CondJump(condJumpLoc, loc);
             */
-            return loc;
         }
 
         public override void GetUsedIdents(ScopeChecker.UsedIdents usedIdents)

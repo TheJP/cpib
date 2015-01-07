@@ -10,7 +10,7 @@ namespace Compiler
         }
         public IASTNode NextCmd { get; set; }
 
-        public abstract int GenerateCode(int loc, IVirtualMachine vm, CheckerInformation info);
+        public abstract int GenerateCode(int loc, MachineCode mc, CheckerInformation info);
         public abstract void GetUsedIdents(ScopeChecker.UsedIdents usedIdents);
     }
 }

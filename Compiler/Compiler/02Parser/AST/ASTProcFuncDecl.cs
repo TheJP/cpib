@@ -20,8 +20,10 @@ namespace Compiler
             return string.Format("{0} {1}", IsFunc ? "func" : "proc", Ident);
         }
 
-        public override int GenerateCode(int loc, IVirtualMachine vm, CheckerInformation info)
+        public override int GenerateCode(int loc, MachineCode mc, CheckerInformation info)
         {
+            //TODO
+            /*
             int copies = 0;
             foreach (ASTParam param in Params)
             {
@@ -70,6 +72,7 @@ namespace Compiler
             }
             //Return
             vm.Return(loc++, Params.Count - (IsFunc ? 1 : 0)); //For function the return size is one smaller, leaving the function expression result on the stack!
+            */
             return loc;
         }
 

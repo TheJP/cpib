@@ -17,8 +17,10 @@ namespace Compiler
             return string.Format("Program {0}", Ident);
         }
 
-        public int GenerateCode(int loc, IVirtualMachine vm, CheckerInformation info)
+        public int GenerateCode(int loc, MachineCode mc, CheckerInformation info)
         {
+            //TODO
+            /*
             //Allocate global storage
             vm.Alloc(loc++, info.Globals.Count);
             //Load input params
@@ -93,6 +95,7 @@ namespace Compiler
                 //Reset namespace
                 info.CurrentNamespace = null;
             }
+            */
             return loc;
         }
         public void GetUsedIdents(ScopeChecker.UsedIdents usedIdents)

@@ -11,11 +11,14 @@ namespace Compiler
             return string.Format("{0} := {1}", LValue, RValue);
         }
 
-        public override int GenerateCode(int loc, IVirtualMachine vm, CheckerInformation info)
+        public override int GenerateCode(int loc, MachineCode mc, CheckerInformation info)
         {
+            //TODO
+            /*
             loc = RValue.GenerateCode(loc, vm, info);
             loc = LValue.GenerateLValue(loc, vm, info);
             vm.Store(loc++);
+            */
             return loc;
         }
 

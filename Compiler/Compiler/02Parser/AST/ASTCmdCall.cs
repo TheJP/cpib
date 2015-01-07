@@ -15,8 +15,10 @@ namespace Compiler
             return string.Format("call {0}", this.Ident);
         }
 
-        public static int GenerateCallingCode(int loc, IVirtualMachine vm, CheckerInformation info, ASTProcFuncDecl callee, List<ASTExpression> exprList)
+        public static int GenerateCallingCode(int loc, MachineCode mc, CheckerInformation info, ASTProcFuncDecl callee, List<ASTExpression> exprList)
         {
+            //TODO:
+            /*
             //Allocate Return Location on Stack
             if (callee.IsFunc)
             {
@@ -55,14 +57,18 @@ namespace Compiler
                 info.Calls[callee.Ident].Add(loc);
             }
             ++loc;
+             * */
             return loc;
         }
 
-        public override int GenerateCode(int loc, IVirtualMachine vm, CheckerInformation info)
+        public override int GenerateCode(int loc, MachineCode mc, CheckerInformation info)
         {
+            //TODO
+            /*
             //Get abstract declaration
             ASTProcFuncDecl callee = info.ProcFuncs[Ident];
             loc = ASTCmdCall.GenerateCallingCode(loc, vm, info, callee, ExprList);
+            */
             return loc;
         }
 

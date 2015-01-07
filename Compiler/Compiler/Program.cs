@@ -28,7 +28,7 @@ namespace Compiler
                 Console.WriteLine();
                 if(!(ast is ASTProgram))
                 {
-                    throw new IVirtualMachine.InternalError("Generation of Abstract Syntax Tree failed.");
+                    throw new CheckerException("Generation of Abstract Syntax Tree failed.");
                 }
                 ASTProgram program = (ASTProgram)ast;
                 //Checker
@@ -36,12 +36,9 @@ namespace Compiler
                 ScopeChecker contextChecker = new ScopeChecker();
                 contextChecker.Check(program, info);
                 //Code Generator
-                IVirtualMachine vm = new VirtualMachine(1000, 1000);
-                program.GenerateCode(0, vm, info);
-                Console.WriteLine(vm.ToString());
+                program.GenerateCode(0, null, info);
                 Console.WriteLine();
-                //Executuion
-                vm.Execute();
+                //Write File
             }
             catch (Exception ex)
             {

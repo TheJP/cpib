@@ -4,7 +4,7 @@ namespace Compiler
 {
     public interface IASTNode
     {
-        int GenerateCode(int loc, IVirtualMachine vm, CheckerInformation info);
+        int GenerateCode(int loc, MachineCode mc, CheckerInformation info);
         void GetUsedIdents(ScopeChecker.UsedIdents usedIdents);
     }
 }

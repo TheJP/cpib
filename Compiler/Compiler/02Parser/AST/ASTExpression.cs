@@ -10,11 +10,11 @@ namespace Compiler
         }
 
         public IASTNode NextExpression { get; set; }
-        public virtual int GenerateLValue(int loc, IVirtualMachine vm, CheckerInformation info, bool hasToBeLValue = true)
+        public virtual int GenerateLValue(int loc, MachineCode mc, CheckerInformation info, bool hasToBeLValue = true)
         {
-            throw new IVirtualMachine.InternalError("Expression is no LValue");
+            throw new CheckerException("Expression is no LValue");
         }
-        public abstract int GenerateCode(int loc, IVirtualMachine vm, CheckerInformation info);
+        public abstract int GenerateCode(int loc, MachineCode mc, CheckerInformation info);
         public abstract Type GetExpressionType(CheckerInformation info);
         public abstract void GetUsedIdents(ScopeChecker.UsedIdents usedIdents);
     }

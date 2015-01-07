@@ -112,10 +112,9 @@
     <Compile Include="03Checker\CheckerInformation.cs" />
     <Compile Include="03Checker\ScopeChecker.cs" />
     <Compile Include="03Checker\Namespace.cs" />
-    <Compile Include="05VirtualMachine\Data.cs" />
-    <Compile Include="05VirtualMachine\IVirtualMachine.cs" />
-    <Compile Include="05VirtualMachine\TestVirtualMachine.cs" />
-    <Compile Include="05VirtualMachine\VirtualMachine.cs" />
+    <Compile Include="04CodeGenerator\Command.cs" />
+    <Compile Include="04CodeGenerator\Instructions.cs" />
+    <Compile Include="04CodeGenerator\MachineCode.cs" />
     <Compile Include="Helpers\CloneObjects.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -152,9 +151,6 @@
     </None>
   </ItemGroup>
   <ItemGroup />
-  <ItemGroup>
-    <Content Include="04CodeGenerator\Readme.txt" />
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

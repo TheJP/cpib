@@ -22,9 +22,9 @@ namespace Compiler
             return string.Format("{0} {1} {2}", FlowMode, OptChangemode, Ident);
         }
 
-        public int GenerateCode(int loc, IVirtualMachine vm, CheckerInformation info)
+        public int GenerateCode(int loc, MachineCode mc, CheckerInformation info)
         {
-            throw new IVirtualMachine.InternalError("ASTGlobalParam.GenerateCode was called. This should never happen!");
+            throw new CheckerException("ASTGlobalParam.GenerateCode was called. This should never happen!");
         }
         public void GetUsedIdents(ScopeChecker.UsedIdents usedIdents)
         {

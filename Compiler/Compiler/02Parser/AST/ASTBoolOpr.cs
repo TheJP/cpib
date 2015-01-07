@@ -24,8 +24,10 @@ namespace Compiler
             return string.Format("({0} {1} {2})", Term, Operator, RepTerm);
         }
 
-        public override int GenerateCode(int loc, IVirtualMachine vm, CheckerInformation info)
+        public override int GenerateCode(int loc, MachineCode mc, CheckerInformation info)
         {
+            //TODO
+            /*
             loc = Term.GenerateCode(loc, vm, info);
             //Only execute RepTerm if no conditional BoolOpr or if the left hand side is not enough to determine result
             if (Operator != Operators.COR && Operator != Operators.CAND)
@@ -89,6 +91,7 @@ namespace Compiler
                 throw new IVirtualMachine.InternalError(
                             "There's an invalid operand in ASTBoolOpr. Oprand: " + type.ToString());
             }
+            */
             return loc;
         }
 

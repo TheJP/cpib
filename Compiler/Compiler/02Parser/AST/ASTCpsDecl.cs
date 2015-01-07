@@ -14,7 +14,7 @@ namespace Compiler
 
         public IASTNode NextDecl { get; set; }
 
-        public abstract int GenerateCode(int loc, MachineCode mc, CheckerInformation info);
+        public abstract void GenerateCode(uint block, ref uint loc, MachineCode mc, CheckerInformation info);
         public abstract void GetUsedIdents(ScopeChecker.UsedIdents usedIdents);
     }
 }

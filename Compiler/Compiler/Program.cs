@@ -36,7 +36,9 @@ namespace Compiler
                 ScopeChecker contextChecker = new ScopeChecker();
                 contextChecker.Check(program, info);
                 //Code Generator
-                program.GenerateCode(0, null, info);
+                MachineCode mc = new MachineCode();
+                uint loc = 0;
+                program.GenerateCode(0, ref loc, mc, info);
                 Console.WriteLine();
                 //Write File
             }

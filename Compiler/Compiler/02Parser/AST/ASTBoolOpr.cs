@@ -24,7 +24,7 @@ namespace Compiler
             return string.Format("({0} {1} {2})", Term, Operator, RepTerm);
         }
 
-        public override int GenerateCode(int loc, MachineCode mc, CheckerInformation info)
+        public override void GenerateCode(uint block, ref uint loc, MachineCode mc, CheckerInformation info)
         {
             //TODO
             /*
@@ -92,7 +92,6 @@ namespace Compiler
                             "There's an invalid operand in ASTBoolOpr. Oprand: " + type.ToString());
             }
             */
-            return loc;
         }
 
         public override Type GetExpressionType(CheckerInformation info)

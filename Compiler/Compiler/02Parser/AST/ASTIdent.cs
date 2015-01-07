@@ -36,7 +36,7 @@ namespace Compiler
             if (sto.OptChangemode == null || sto.OptChangemode.Value == ChangeMode.CONST) { if (!IsInit) { throw new CheckerException("Can't modify constant parameter '" + Ident + "'"); } } //Default Changemode is const!
             if (sto.FlowMode == FlowMode.IN && sto.OptMechmode != MechMode.COPY) { throw new CheckerException("Can't modify 'in ref' parameter '" + Ident + "'"); }
         }
-        public override int GenerateLValue(int loc, MachineCode mc, CheckerInformation info, bool hasToBeLValue = true)
+        public override void GenerateLValue(uint block, ref uint loc, MachineCode mc, CheckerInformation info, bool hasToBeLValue = true)
         {
             //TODO
             /*
@@ -87,7 +87,7 @@ namespace Compiler
             */
             throw new NotImplementedException("not implemented");
         }
-        public override int GenerateCode(int loc, MachineCode mc, CheckerInformation info)
+        public override void GenerateCode(uint block, ref uint loc, MachineCode mc, CheckerInformation info)
         {
             //TODO:
             /*

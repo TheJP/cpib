@@ -6,7 +6,7 @@ namespace Compiler
     {
         public ASTExpression Expr { get; set; }
 
-        public override int GenerateCode(int loc, MachineCode mc, CheckerInformation info)
+        public override void GenerateCode(uint block, ref uint loc, MachineCode mc, CheckerInformation info)
         {
             //TODO
             /*
@@ -27,7 +27,6 @@ namespace Compiler
                             "Cannot negate Non-Bool value " + Expr.ToString());
             }
             */
-            return loc;
         }
 
         public override Type GetExpressionType(CheckerInformation info)

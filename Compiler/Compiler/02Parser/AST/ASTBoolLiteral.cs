@@ -16,11 +16,10 @@ namespace Compiler
             return Value.ToString();
         }
 
-        public override int GenerateCode(int loc, MachineCode mc, CheckerInformation info)
+        public override void GenerateCode(uint block, ref uint loc, MachineCode mc, CheckerInformation info)
         {
             //TODO
             //vm.IntLoad(loc++, Value ? 1 : 0);
-            return loc;
         }
 
         public override Type GetExpressionType(CheckerInformation info)

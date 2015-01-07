@@ -15,7 +15,7 @@ namespace Compiler
             return string.Format(@"if {0} then", Condition);
         }
 
-        public override int GenerateCode(int loc, MachineCode mc, CheckerInformation info)
+        public override void GenerateCode(uint block, ref uint loc, MachineCode mc, CheckerInformation info)
         {
             //TODO
             /*
@@ -33,7 +33,6 @@ namespace Compiler
             }
             vm.UncondJump(uncondJumpLoc, loc); //Fill in Placeholder2
             */
-            return loc;
         }
 
         public override void GetUsedIdents(ScopeChecker.UsedIdents usedIdents)

@@ -8,7 +8,7 @@ namespace Compiler
 
         public IASTNode NextInit { get; set; }
 
-        public int GenerateCode(int loc, MachineCode mc, CheckerInformation info)
+        public void GenerateCode(uint block, ref uint loc, MachineCode mc, CheckerInformation info)
         {
             throw new CheckerException("ASTOptInit.GenerateCode was called. This should never happen!");
         }

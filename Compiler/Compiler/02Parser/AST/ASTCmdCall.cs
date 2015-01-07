@@ -15,7 +15,7 @@ namespace Compiler
             return string.Format("call {0}", this.Ident);
         }
 
-        public static int GenerateCallingCode(int loc, MachineCode mc, CheckerInformation info, ASTProcFuncDecl callee, List<ASTExpression> exprList)
+        public static void GenerateCallingCode(uint block, ref uint loc, MachineCode mc, CheckerInformation info, ASTProcFuncDecl callee, List<ASTExpression> exprList)
         {
             //TODO:
             /*
@@ -57,11 +57,10 @@ namespace Compiler
                 info.Calls[callee.Ident].Add(loc);
             }
             ++loc;
-             * */
-            return loc;
+            */
         }
 
-        public override int GenerateCode(int loc, MachineCode mc, CheckerInformation info)
+        public override void GenerateCode(uint block, ref uint loc, MachineCode mc, CheckerInformation info)
         {
             //TODO
             /*
@@ -69,7 +68,6 @@ namespace Compiler
             ASTProcFuncDecl callee = info.ProcFuncs[Ident];
             loc = ASTCmdCall.GenerateCallingCode(loc, vm, info, callee, ExprList);
             */
-            return loc;
         }
 
         public override void GetUsedIdents(ScopeChecker.UsedIdents usedIdents)

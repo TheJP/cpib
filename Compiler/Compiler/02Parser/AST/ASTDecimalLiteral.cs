@@ -1,3 +1,5 @@
+using System;
+
 namespace Compiler
 {
     public class ASTDecimalLiteral : ASTExpression
@@ -14,11 +16,9 @@ namespace Compiler
             return string.Format("{0}m", this.Value);
         }
 
-        public override int GenerateCode(int loc, MachineCode mc, CheckerInformation info)
+        public override void GenerateCode(uint block, ref uint loc, MachineCode mc, CheckerInformation info)
         {
-            //TODO
-            //vm.DecimalLoad(loc++, Value);
-            return loc;
+            throw new NotSupportedException("Decimals are not supported in the logisim cpu");
         }
 
         public override Type GetExpressionType(CheckerInformation info)

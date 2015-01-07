@@ -112,6 +112,7 @@
     <Compile Include="03Checker\CheckerInformation.cs" />
     <Compile Include="03Checker\ScopeChecker.cs" />
     <Compile Include="03Checker\Namespace.cs" />
+    <Compile Include="04CodeGenerator\CodeGenerationException.cs" />
     <Compile Include="04CodeGenerator\Command.cs" />
     <Compile Include="04CodeGenerator\Instructions.cs" />
     <Compile Include="04CodeGenerator\MachineCode.cs" />

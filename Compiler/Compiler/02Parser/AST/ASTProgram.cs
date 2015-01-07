@@ -17,7 +17,7 @@ namespace Compiler
             return string.Format("Program {0}", Ident);
         }
 
-        public int GenerateCode(int loc, MachineCode mc, CheckerInformation info)
+        public void GenerateCode(uint block, ref uint loc, MachineCode mc, CheckerInformation info)
         {
             //TODO
             /*
@@ -96,7 +96,6 @@ namespace Compiler
                 info.CurrentNamespace = null;
             }
             */
-            return loc;
         }
         public void GetUsedIdents(ScopeChecker.UsedIdents usedIdents)
         {

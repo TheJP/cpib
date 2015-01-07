@@ -13,8 +13,10 @@ namespace Compiler
             return string.Format("{0}({1})", Type, Expr);
         }
 
-        public override int GenerateCode(int loc, IVirtualMachine vm, CheckerInformation info)
+        public override int GenerateCode(int loc, MachineCode mc, CheckerInformation info)
         {
+            //TODO
+            /*
             if(Type != Type.DECIMAL && Type != Type.INT32){ throw new IVirtualMachine.InternalError("Use of invalid (not existing) casting type " + Type.ToString()); }
             Type exprType = Expr.GetExpressionType(info);
             if(exprType != Type.DECIMAL && exprType != Type.INT32){ throw new IVirtualMachine.InternalError("Cannot cast from type " + exprType.ToString()); }
@@ -34,6 +36,7 @@ namespace Compiler
                     throw new IVirtualMachine.InternalError("Invalid casting operation");
                 }
             }
+            */
             return loc;
         }
 

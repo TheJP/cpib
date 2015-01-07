@@ -13,8 +13,10 @@ namespace Compiler
             return string.Format("while {0} do", Condition);
         }
 
-        public override int GenerateCode(int loc, IVirtualMachine vm, CheckerInformation info)
+        public override int GenerateCode(int loc, MachineCode mc, CheckerInformation info)
         {
+            //TODO
+            /*
             int conditionLoc = loc;
             loc = Condition.GenerateCode(loc, vm, info);
             int condJumpLoc = loc++; //Placeholder for conditonal jump out of while loop
@@ -25,6 +27,7 @@ namespace Compiler
             vm.UncondJump(loc++, conditionLoc);
             //Fill in placeholder
             vm.CondJump(condJumpLoc, loc);
+            */
             return loc;
         }
 

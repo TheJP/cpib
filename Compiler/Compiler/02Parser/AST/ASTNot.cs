@@ -6,8 +6,10 @@ namespace Compiler
     {
         public ASTExpression Expr { get; set; }
 
-        public override int GenerateCode(int loc, IVirtualMachine vm, CheckerInformation info)
+        public override int GenerateCode(int loc, MachineCode mc, CheckerInformation info)
         {
+            //TODO
+            /*
             loc = Expr.GenerateCode(loc, vm, info);
 
             var type = GetExpressionType(info);
@@ -24,7 +26,7 @@ namespace Compiler
                 throw new IVirtualMachine.InternalError(
                             "Cannot negate Non-Bool value " + Expr.ToString());
             }
-
+            */
             return loc;
         }
 

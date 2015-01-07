@@ -32,8 +32,10 @@ namespace Compiler
             return string.Format("({0} {1} {2})", Term, Operator, RepTerm);
         }
 
-        public override int GenerateCode(int loc, IVirtualMachine vm, CheckerInformation info)
+        public override int GenerateCode(int loc, MachineCode mc, CheckerInformation info)
         {
+            //TODO
+            /*
             loc = Term.GenerateCode(loc, vm, info);
             loc = RepTerm.GenerateCode(loc, vm, info);
 
@@ -73,6 +75,7 @@ namespace Compiler
                 throw new IVirtualMachine.InternalError(
                             "There's an invalid operand type in ASTAddOpr. type: " + type.ToString());
             }
+            */
             return loc;
         }
 

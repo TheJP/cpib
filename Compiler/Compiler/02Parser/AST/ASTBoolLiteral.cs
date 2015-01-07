@@ -16,9 +16,10 @@ namespace Compiler
             return Value.ToString();
         }
 
-        public override int GenerateCode(int loc, IVirtualMachine vm, CheckerInformation info)
+        public override int GenerateCode(int loc, MachineCode mc, CheckerInformation info)
         {
-            vm.IntLoad(loc++, Value ? 1 : 0);
+            //TODO
+            //vm.IntLoad(loc++, Value ? 1 : 0);
             return loc;
         }
 

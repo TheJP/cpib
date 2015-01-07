@@ -15,8 +15,10 @@ namespace Compiler
             return string.Format(@"if {0} then", Condition);
         }
 
-        public override int GenerateCode(int loc, IVirtualMachine vm, CheckerInformation info)
+        public override int GenerateCode(int loc, MachineCode mc, CheckerInformation info)
         {
+            //TODO
+            /*
             loc = Condition.GenerateCode(loc, vm, info);
             int condJumpLoc = loc++; //Placeholder
             foreach (ASTCpsCmd cmd in TrueCommands)
@@ -30,6 +32,7 @@ namespace Compiler
                 loc = cmd.GenerateCode(loc, vm, info);
             }
             vm.UncondJump(uncondJumpLoc, loc); //Fill in Placeholder2
+            */
             return loc;
         }
 

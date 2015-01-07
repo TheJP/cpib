@@ -24,7 +24,7 @@ namespace Compiler
             else
             {
                 //Should never happen as long as no new type is added
-                throw new IVirtualMachine.InternalError("Unknown Identifier Type");
+                throw new CheckerException("Unknown Identifier Type");
             }
         }
         private void AssertNotConstant(ASTStoDecl sto)
@@ -36,8 +36,10 @@ namespace Compiler
             if (sto.OptChangemode == null || sto.OptChangemode.Value == ChangeMode.CONST) { if (!IsInit) { throw new CheckerException("Can't modify constant parameter '" + Ident + "'"); } } //Default Changemode is const!
             if (sto.FlowMode == FlowMode.IN && sto.OptMechmode != MechMode.COPY) { throw new CheckerException("Can't modify 'in ref' parameter '" + Ident + "'"); }
         }
-        public override int GenerateLValue(int loc, IVirtualMachine vm, CheckerInformation info, bool hasToBeLValue = true)
+        public override int GenerateLValue(int loc, MachineCode mc, CheckerInformation info, bool hasToBeLValue = true)
         {
+            //TODO
+            /*
             if (IsFuncCall)
             {
                 throw new IVirtualMachine.InternalError("The result of a function can't be an LValue");
@@ -82,21 +84,25 @@ namespace Compiler
                 }
                 return loc;
             }
+            */
+            throw new NotImplementedException("not implemented");
         }
-        public override int GenerateCode(int loc, IVirtualMachine vm, CheckerInformation info)
+        public override int GenerateCode(int loc, MachineCode mc, CheckerInformation info)
         {
+            //TODO:
+            /*
             if (IsFuncCall)
             {
                 if (info.ProcFuncs.ContainsIdent(Ident))
                 {
                     ASTProcFuncDecl callee = info.ProcFuncs[Ident];
-                    if (!callee.IsFunc) { throw new IVirtualMachine.InternalError("Calls inside expresssions can only be made to functions but never to procedures!"); }
+                    if (!callee.IsFunc) { throw new CheckerException("Calls inside expresssions can only be made to functions but never to procedures!"); }
                     loc = ASTCmdCall.GenerateCallingCode(loc, vm, info, callee, OptInitOrExprList);
                     return loc;
                 }
                 else
                 {
-                    throw new IVirtualMachine.InternalError("Call to unkown function '" + Ident + "'");
+                    throw new CheckerException("Call to unkown function '" + Ident + "'");
                 }
             }
             else
@@ -105,6 +111,8 @@ namespace Compiler
                 vm.Deref(loc++);
                 return loc;
             }
+            */
+            throw new NotImplementedException("not implemented");
         }
 
         public override Type GetExpressionType(CheckerInformation info)
@@ -115,14 +123,14 @@ namespace Compiler
                 if (info.ProcFuncs.ContainsIdent(Ident))
                 {
                     ASTProcFuncDecl callee = info.ProcFuncs[Ident];
-                    if (!callee.IsFunc) { throw new IVirtualMachine.InternalError("Calls inside expresssions can only be made to functions but never to procedures!"); }
+                    if (!callee.IsFunc) { throw new CheckerException("Calls inside expresssions can only be made to functions but never to procedures!"); }
                     var paramIttr = callee.Params.GetEnumerator();
-                    if (!paramIttr.MoveNext()) { throw new IVirtualMachine.InternalError("No return param found for function"); }
+                    if (!paramIttr.MoveNext()) { throw new CheckerException("No return param found for function"); }
                     return paramIttr.Current.Type;
                 }
                 else
                 {
-                    throw new IVirtualMachine.InternalError("Call to unkown function '" + Ident + "'");
+                    throw new CheckerException("Call to unkown function '" + Ident + "'");
                 }
             }
             else
@@ -139,7 +147,7 @@ namespace Compiler
                     return info.Globals.GetIdent(Ident).Type;
                 }
 
-                throw new IVirtualMachine.InternalError("Use of unkwon identifier '" + Ident + "'");
+                throw new CheckerException("Use of unkwon identifier '" + Ident + "'");
             }
         }
 

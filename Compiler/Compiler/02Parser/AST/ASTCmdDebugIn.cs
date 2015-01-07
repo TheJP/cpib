@@ -4,8 +4,10 @@ namespace Compiler
     {
         public ASTExpression Expr { get; set; }
 
-        public override int GenerateCode(int loc, IVirtualMachine vm, CheckerInformation info)
+        public override int GenerateCode(int loc, MachineCode mc, CheckerInformation info)
         {
+            //TODO
+            /*
             loc = Expr.GenerateLValue(loc, vm, info);
             switch (Expr.GetExpressionType(info))
             {
@@ -19,6 +21,7 @@ namespace Compiler
                     vm.DecimalInput(loc++, "DEBUGIN");
                     break;
             }
+            */
             return loc;
         }
 

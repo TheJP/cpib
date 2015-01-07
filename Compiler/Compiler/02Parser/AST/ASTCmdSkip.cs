@@ -2,7 +2,7 @@ namespace Compiler
 {
     public class ASTCmdSkip : ASTCpsCmd
     {
-        public override int GenerateCode(int loc, IVirtualMachine vm, CheckerInformation info)
+        public override int GenerateCode(int loc, MachineCode mc, CheckerInformation info)
         {
             return loc;
         }

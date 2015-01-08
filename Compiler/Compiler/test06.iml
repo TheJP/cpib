@@ -2,13 +2,14 @@
 global
 	fun fibFunc(in copy pos:int32) returns fib : int32
 	do
+		fib init := 0;
         if(pos = 0) then
-		    fib init := 1
+		    fib := 1
 	    else
 		    if(pos = 1) then
-			    fib init := 1
+			    fib := 1
 			else
-				fib init := fibFunc(pos - 2) + fibFunc(pos - 1)
+				fib := fibFunc(pos - 2) + fibFunc(pos - 1)
 			endif
 		endif
 	endfun

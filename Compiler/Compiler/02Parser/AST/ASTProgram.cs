@@ -21,7 +21,7 @@ namespace Compiler
         public void GenerateCode(uint block, ref uint loc, MachineCode mc, CheckerInformation info)
         {
             //** Functions and Procedures **//
-            int subblock = MachineCode.FUNCTION_BLOCK_START;
+            uint subblock = MachineCode.FUNCTION_BLOCK_START;
             foreach (string ident in info.ProcFuncs)
             {
                 //Generate calling code for this function/procedure
@@ -35,8 +35,10 @@ namespace Compiler
                 }
                 //Generate Procedures/Functions
                 uint subloc = MachineCode.INIT_LOC;
-                info.ProcFuncs[ident].Address = subblock;
+                info.ProcFuncs[ident].Address = (int)subblock;
                 info.ProcFuncs[ident].GenerateCode((uint)subblock, ref subloc, mc, info);
+                //Add size copy instruction
+                mc[subblock, subloc] = new Command(Instructions.MOV_CM_C, (byte)MachineCode.ConstantLocations.LOAD_SIZE, (byte)subloc);
                 ++subblock;
                 if (subblock > MachineCode.FUNCTION_BLOCK_END)
                 {

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,6 +20,8 @@ namespace Compiler
         public const int FUNCTION_BLOCK_END = Byte.MaxValue - 1;
         public const int LOADER_START = 0x08;
         public const int LOADER_SIZE = 0x44;
+
+        private const string FILE_HEAD = "v2.0 raw";
 
         //Fixed constant location
         public enum ConstantLocations : byte
@@ -99,6 +102,15 @@ namespace Compiler
         public static byte LoaderJumpArgument(uint loc)
         {
             return (byte)-((loc * 4) + (LOADER_SIZE - LOADER_START));
+        }
+
+        public void WriteBinary(StreamWriter writer)
+        {
+            writer.WriteLine(FILE_HEAD);
+            foreach (var block in Commands)
+            {
+
+            }
         }
     }
 }

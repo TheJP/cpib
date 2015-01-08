@@ -8,11 +8,43 @@ namespace Compiler
 {
     public class MachineCode
     {
-        public const int MAX_LOC = 128;
+        public const int INIT_LOC = 1; //Leave space for initial move command
+        public const int MAX_LOC = 32; //128 Byte
         //TODO: Calculate
         public const int DEBUGOUT_STR_LOC = 0x00;
         public const int DEBUGIN_STR_LOC = 0x00;
         private const int STR_START_LOC = 0x00;
+        public const int MAIN_BLOCK = 0;
+        public const int FUNCTION_BLOCK_START = 2;
+        public const int FUNCTION_BLOCK_END = Byte.MaxValue - 1;
+        public const int LOADER_START = 0x08;
+        public const int LOADER_SIZE = 0x44;
+
+        //Fixed constant location
+        public enum ConstantLocations : byte
+        {
+            LOAD_BLOCKADDR_1 = 0x01,
+            LOAD_BLOCKADDR_2 = 0x02,
+            LOAD_ADDR        = 0x03,
+            LOAD_SIZE        = 0x05,
+            LOAD_TO_ADDR     = 0x06,
+        }
+
+        public enum Registers : byte
+        {
+            A = 0x00,
+            B = 0x01,
+            C = 0x02,
+            D = 0x03,
+        }
+
+        public enum IO : byte
+        {
+            Terminal    = 0x01,
+            Keyboard    = 0x02,
+            Storage     = 0x03,
+            StorageAddr = 0x04,
+        }
 
         private Dictionary<uint, Command[]> Commands { get; set; }
         private Dictionary<uint, string> Strings { get; set; }
@@ -59,9 +91,14 @@ namespace Compiler
         /// </summary>
         /// <param name="str"></param>
         /// <returns>Start location of string</returns>
-        public int AddString(string str)
+        public uint AddString(string str)
         {
             return 0;
+        }
+
+        public static byte LoaderJumpArgument(uint loc)
+        {
+            return (byte)-((loc * 4) + (LOADER_SIZE - LOADER_START));
         }
     }
 }

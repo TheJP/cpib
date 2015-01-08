@@ -31,7 +31,7 @@ namespace Compiler
                 {
                     ASTProcFuncDecl procFunc = (ASTProcFuncDecl)declaration;
                     //Add function or procedure identifier
-                    declaration.Address = -1;
+                    procFunc.Address = -1;
                     info.ProcFuncs.addDeclaration(procFunc);
                     Namespace<IASTStoDecl> ns = new Namespace<IASTStoDecl>();
                     info.Namespaces.Add(declaration.Ident, ns);

@@ -11,7 +11,6 @@ namespace Compiler
     {
         static void Main(string[] args)
         {
-            //TestVirtualMachine.Test(); return;
             try
             {
                 //Scanner
@@ -37,10 +36,11 @@ namespace Compiler
                 contextChecker.Check(program, info);
                 //Code Generator
                 MachineCode mc = new MachineCode();
-                uint loc = 0;
-                program.GenerateCode(0, ref loc, mc, info);
+                uint loc = MachineCode.INIT_LOC;
+                program.GenerateCode(MachineCode.MAIN_BLOCK, ref loc, mc, info);
                 Console.WriteLine();
                 //Write File
+                //TODO: Write File
             }
             catch (Exception ex)
             {

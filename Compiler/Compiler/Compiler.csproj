@@ -54,7 +54,7 @@
     <Compile Include="01Scanner\State\SkipLineState.cs" />
     <Compile Include="01Scanner\State\SlashState.cs" />
     <Compile Include="01Scanner\State\State.cs" />
-    <Compile Include="01Scanner\State\TextState.cs" />
+    <Compile Include="01Scanner\Token\TextState.cs" />
     <Compile Include="01Scanner\Token\ChangeModeToken.cs" />
     <Compile Include="01Scanner\Token\DecimalLiteralToken.cs" />
     <Compile Include="01Scanner\Token\FlowModeToken.cs" />

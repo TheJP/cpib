@@ -25,17 +25,17 @@ namespace Compiler
 
         //** Call, Function/Procedure Locations **//
 
-        //This stores locations in the code where the function/procedure is called.
+        //This stores locations in the code where the function/procedure is called. The address is a Pair of block and code location.
         //This is used, if the address is not kown at generation time of the call expression.
         //The call will be stored in the VM when te address of the function/procedure is kown.
-        public IDictionary<string, IList<int>> Calls { get; private set; }
+        public IDictionary<string, IList<Tuple<uint, uint>>> Calls { get; private set; }
         public CheckerInformation()
         {
             Globals = new Namespace<IASTStoDecl>();
             ProcFuncs = new Namespace<ASTProcFuncDecl>();
             Namespaces = new Dictionary<string, Namespace<IASTStoDecl>>();
             CurrentNamespace = null;
-            Calls = new Dictionary<string, IList<int>>();
+            Calls = new Dictionary<string, IList<Tuple<uint, uint>>>();
         }
     }
 }

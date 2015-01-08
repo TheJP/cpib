@@ -16,7 +16,7 @@ namespace Compiler
             {
                 //Scanner
                 Scanner scanner = new Scanner();
-                var list = scanner.Scan(new StreamReader("test07.iml"));
+                var list = scanner.Scan(new StreamReader("test05.iml"));
                 Console.WriteLine("[" + String.Join(", ", list) + "]");
                 Console.WriteLine();
                 //Parser
@@ -46,7 +46,7 @@ namespace Compiler
             catch (Exception ex)
             {
                 Console.WriteLine("Failed: " + ex.Message);
-                //*Only for debuging of the compiler */ Console.WriteLine(ex.StackTrace);
+                /*Only for debuging of the compiler */ Console.WriteLine(ex.StackTrace);
             }
         }
     }

@@ -107,35 +107,32 @@ namespace Compiler
             /// <param name="ident">Ident, which is used</param>
             public void AddStoIdent(string ident, bool isInit)
             {
-                if (!info.Globals.ContainsIdent(ident))
+                if (info.CurrentNamespace != null && info.Namespaces[info.CurrentNamespace].ContainsIdent(ident))
                 {
-                    if (info.CurrentNamespace == null || !info.Namespaces[info.CurrentNamespace].ContainsIdent(ident))
+                    //Check for initialization
+                    if (!LocalInitialized.ContainsKey(CurrentNamespace)) { LocalInitialized.Add(CurrentNamespace, new List<string>()); }
+                    if (isInit)
                     {
-                        throw new CheckerException("Use of undeclared storage identifier '" + ident + "'");
+                        if (!AllowInit) { throw new CheckerException("Initialization is not allowed inside if or while statements: '" + ident + "'"); }
+                        if (LocalInitialized[CurrentNamespace].Contains(ident)) { throw new CheckerException("Initialization of already initialized local identifier '" + ident + "'"); }
+                        LocalInitialized[CurrentNamespace].Add(ident);
                     }
-                    else
-                    {
-                        //Check for initialization
-                        if (!LocalInitialized.ContainsKey(CurrentNamespace)) { LocalInitialized.Add(CurrentNamespace, new List<string>()); }
-                        if (isInit)
-                        {
-                            if (!AllowInit) { throw new CheckerException("Initialization is not allowed inside if or while statements: '" + ident + "'"); }
-                            if (LocalInitialized[CurrentNamespace].Contains(ident)) { throw new CheckerException("Initialization of already initialized local identifier '" + ident + "'"); }
-                            LocalInitialized[CurrentNamespace].Add(ident);
-                        }
-                        else if (!LocalInitialized[CurrentNamespace].Contains(ident)) { throw new CheckerException("Use of not initialized local identifier '" + ident + "'"); }
-                    }
+                    else if (!LocalInitialized[CurrentNamespace].Contains(ident)) { throw new CheckerException("Use of not initialized local identifier '" + ident + "'"); }
                 }
-                else
+                else if (info.Globals.ContainsIdent(ident))
                 {
                     //Check for initialization
                     if (isInit)
                     {
                         if (!AllowInit) { throw new CheckerException("Initialization is not allowed inside if or while statements: '" + ident + "'"); }
-                        if (GlobalInitialized.Contains(ident)) { throw new CheckerException("Initialization of already initialized local identifier '" + ident + "'"); }
+                        if (GlobalInitialized.Contains(ident)) { throw new CheckerException("Initialization of already initialized global identifier '" + ident + "'"); }
                         GlobalInitialized.Add(ident);
                     }
                     else if (!GlobalInitialized.Contains(ident)) { throw new CheckerException("Use of not initialized global identifier '" + ident + "'"); }
+                }
+                else
+                {
+                    throw new CheckerException("Use of undeclared storage identifier '" + ident + "'");
                 }
             }
         }
@@ -203,6 +200,7 @@ namespace Compiler
             //TODO: Check: if only specified globals are accessed in procedures/functions
             //TODO: Check: Only const globals are allowed in functions
             //TODO: Check: Are only different parameters provided to a procedure as references (Never more then one reference to the same storage)
+            //TODO: test05.iml: local constant variables should not be modifiable
         }
     }
 }

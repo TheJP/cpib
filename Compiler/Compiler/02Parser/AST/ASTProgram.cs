@@ -38,7 +38,7 @@ namespace Compiler
                 info.ProcFuncs[ident].Address = (int)subblock;
                 info.ProcFuncs[ident].GenerateCode((uint)subblock, ref subloc, mc, info);
                 //Add size copy instruction
-                mc[subblock, subloc] = new Command(Instructions.MOV_CM_C, (byte)MachineCode.ConstantLocations.LOAD_SIZE, (byte)subloc);
+                mc[subblock, MachineCode.INIT_LOC - 1] = new Command(Instructions.MOV_CM_C, (byte)MachineCode.ConstantLocations.LOAD_SIZE, (byte)(subloc * 4));
                 ++subblock;
                 if (subblock > MachineCode.FUNCTION_BLOCK_END)
                 {
@@ -92,6 +92,8 @@ namespace Compiler
                     mc[block, loc++] = new Command(Instructions.PUSH, (byte)MachineCode.Registers.B); //PUSH BL //BL is set to 0 above
                 }
             }
+            //Write loading size of the initial programm
+            mc[block, MachineCode.INIT_LOC - 1] = new Command(Instructions.MOV_CM_C, (byte)MachineCode.ConstantLocations.LOAD_SIZE, (byte)(loc * 4));
             //TODO
             /*
             //Allocate global storage

@@ -15,7 +15,7 @@ namespace Compiler
             {
                 //Scanner
                 Scanner scanner = new Scanner();
-                var list = scanner.Scan(new StreamReader("test05.iml"));
+                var list = scanner.Scan(new StreamReader("test08.iml"));
                 Console.WriteLine("[" + String.Join(", ", list) + "]");
                 Console.WriteLine();
                 //Parser
@@ -40,7 +40,10 @@ namespace Compiler
                 program.GenerateCode(MachineCode.MAIN_BLOCK, ref loc, mc, info);
                 Console.WriteLine();
                 //Write File
-                //TODO: Write File
+                using (StreamWriter writer = new StreamWriter("out.bin"))
+                {
+                    mc.WriteBinary(writer);
+                }
             }
             catch (Exception ex)
             {

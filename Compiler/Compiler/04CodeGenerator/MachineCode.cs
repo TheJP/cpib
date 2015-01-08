@@ -56,6 +56,7 @@ namespace Compiler
         {
             Strings = new Dictionary<uint, string>();
             Commands = new Dictionary<uint,Command[]>();
+            this[0, 0] = null; //Initialize Block 0
         }
 
         /// <summary>
@@ -109,7 +110,20 @@ namespace Compiler
             writer.WriteLine(FILE_HEAD);
             foreach (var block in Commands)
             {
-
+                foreach (Command cmd in block.Value)
+                {
+                    if (cmd != null) {
+                        writer.Write(((byte)cmd.Instruction).ToString("X2") + " ");
+                        int args = cmd.Instruction.ParamCount();
+                        for (int arg = 0; arg < args; ++arg)
+                        {
+                            writer.Write(cmd.GetArg(arg).ToString("X2") + " ");
+                        }
+                        if (args < 3) { writer.Write((3-args) + "*0"); }
+                        writer.WriteLine();
+                    }
+                    else { writer.WriteLine("4*0"); }
+                }
             }
         }
     }

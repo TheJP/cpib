@@ -19,7 +19,7 @@ namespace Compiler
             this.Instruction = instruction;
             this.Args = args;
         }
-        public byte getArg(int index)
+        public byte GetArg(int index)
         {
             return Args[index];
         }

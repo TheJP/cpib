@@ -1,0 +1,6 @@
+﻿program fibonacci(in const pos:int32, in const fib:int32)
+global
+	var x : int32
+do
+	x init := pos
+endprogram

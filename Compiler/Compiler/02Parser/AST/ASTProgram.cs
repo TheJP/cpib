@@ -46,50 +46,64 @@ namespace Compiler
                 }
             }
             //** Input code **//
-            //Allocate global storage
-            mc[block, loc++] = new Command(Instructions.MOV_R_C, (byte)MachineCode.Registers.B, 0x00); //MOV BL, 00
+            //MOV BL, 00
+            mc[block, loc++] = new Command(Instructions.MOV_R_C, (byte)MachineCode.Registers.B, 0x00);
+            //Add input machine code if there is an in or inout param
+            uint readLoc = MachineCode.LOADER_SIZE + ((loc+1)*4);
+            if (Params.Exists(p => p.FlowMode == FlowMode.IN || p.FlowMode == FlowMode.INOUT))
+            {
+                //The code has te be overjumped the first time. It should only be executed at defined times by a CALL command
+                uint jumpPlaceholder = loc++;
+                //MOV AL, '?' //IO Register
+                mc[block, loc++] = new Command(Instructions.MOV_R_C, (byte)MachineCode.Registers.A, (byte)'?');
+                //MOV CL, 0   //Register which stores the current value. Will be pushed to stack at the end of the input code
+                mc[block, loc++] = new Command(Instructions.MOV_R_C, (byte)MachineCode.Registers.C, 0x00);
+                //OUT Terminal
+                mc[block, loc++] = new Command(Instructions.OUT, (byte)MachineCode.IO.Terminal);
+
+                //Start of loop:
+                uint loopLoc = loc;
+                //IN Keyboard
+                mc[block, loc++] = new Command(Instructions.IN, (byte)MachineCode.IO.Keyboard);
+                //OUT Terminal //Write to Terminal what was read
+                mc[block, loc++] = new Command(Instructions.OUT, (byte)MachineCode.IO.Terminal);
+                //CMP AL, 10 //Check for newline (end of input)
+                mc[block, loc++] = new Command(Instructions.CMP_R_C, (byte)MachineCode.Registers.A, (byte)'\n');
+                //JZ 08 //Leave out RET instruction if there's more to read
+                mc[block, loc++] = new Command(Instructions.JNZ, 2 * 4);
+                //RET
+                mc[block, loc++] = new Command(Instructions.RET);
+
+                //Convert ascii to number
+                //SUB AL, '0'
+                mc[block, loc++] = new Command(Instructions.SUB_C, (byte)MachineCode.Registers.A, (byte)'0');
+                //MUL CL, 10 //Ready CL for next digit. (If it's the first digit CL will still be 0, because 0*10 = 0)
+                mc[block, loc++] = new Command(Instructions.MUL_C, (byte)MachineCode.Registers.C, 10);
+                //ADD CL, AL
+                mc[block, loc++] = new Command(Instructions.ADD_R, (byte)MachineCode.Registers.C, (byte)MachineCode.Registers.A);
+
+                //JMP XX
+                mc[block, loc] = new Command(Instructions.JMP, (byte)((loopLoc - loc) * 4)); ++loc;
+
+                //Fill in the jump placeholder
+                mc[block, jumpPlaceholder] = new Command(Instructions.JMP, (byte)((loc-jumpPlaceholder)*4));
+
+                //Important: BL didn't change in the code here!
+            }
             //Load input params
             foreach (ASTParam param in Params)
             {
                 if (param.FlowMode == FlowMode.IN || param.FlowMode == FlowMode.INOUT)
                 {
-                    //MOV AL, '?' //IO Register
-                    mc[block, loc++] = new Command(Instructions.MOV_R_C, (byte)MachineCode.Registers.A, (byte)'?');
-                    //MOV CL, 0   //Register which stores the current value. Will be pushed to stack at the end of the input code
-                    mc[block, loc++] = new Command(Instructions.MOV_R_C, (byte)MachineCode.Registers.C, 0x00);
-                    //MOV DL, 1   //Register which stores the current position in the input
-                    mc[block, loc++] = new Command(Instructions.MOV_R_C, (byte)MachineCode.Registers.D, 0x01);
-                    //OUT Terminal
-                    mc[block, loc++] = new Command(Instructions.OUT, (byte)MachineCode.IO.Terminal);
-                    //IN Keyboard
-                    mc[block, loc++] = new Command(Instructions.IN, (byte)MachineCode.IO.Keyboard);
-                    //OUT Terminal //Write to Terminal what was read
-                    mc[block, loc++] = new Command(Instructions.OUT, (byte)MachineCode.IO.Terminal);
-                    //CMP AL, 10 //Check for newline (end of input)
-                    mc[block, loc++] = new Command(Instructions.CMP_R_C, (byte)MachineCode.Registers.A, (byte)'\n');
-                    //JZ 18 //Jump to the push instruction
-                    mc[block, loc++] = new Command(Instructions.JZ, 0x18);
-
-                    //Convert ascii to number
-                    //SUB AL, '0'
-                    mc[block, loc++] = new Command(Instructions.SUB_C, (byte)MachineCode.Registers.A, (byte)'0');
-                    //MUL AL, DL
-                    mc[block, loc++] = new Command(Instructions.MUL_R, (byte)MachineCode.Registers.A, (byte)MachineCode.Registers.D);
-                    //ADD CL, AL
-                    mc[block, loc++] = new Command(Instructions.ADD_R, (byte)MachineCode.Registers.C, (byte)MachineCode.Registers.A);
-                    //MUL DL, 10
-                    mc[block, loc++] = new Command(Instructions.MUL_C, (byte)MachineCode.Registers.D, 10);
-
-                    //JMP XX
-                    mc[block, loc++] = new Command(Instructions.JMP, 0xE0);
+                    //CALL readLoc //Call input code which is defined above
+                    mc[block, loc++] = new Command(Instructions.CALL, (byte)readLoc);
                     //PUSH CL
                     mc[block, loc++] = new Command(Instructions.PUSH, (byte)MachineCode.Registers.C);
-
-                    //Important: BL didn't change in the code here!
                 }
                 else
                 {
-                    mc[block, loc++] = new Command(Instructions.PUSH, (byte)MachineCode.Registers.B); //PUSH BL //BL is set to 0 above
+                    //PUSH BL //BL is set to 0 above
+                    mc[block, loc++] = new Command(Instructions.PUSH, (byte)MachineCode.Registers.B);
                 }
             }
             //Write loading size of the initial programm

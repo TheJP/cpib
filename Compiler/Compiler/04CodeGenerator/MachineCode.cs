@@ -11,6 +11,7 @@ namespace Compiler
     {
         public const int INIT_LOC = 1; //Leave space for initial move command
         public const int MAX_LOC = 32; //128 Byte
+        public const int BLOCK_SIZE = 256; //256 Byte = 1 Block
         //TODO: Calculate
         public const int DEBUGOUT_STR_LOC = 0x00;
         public const int DEBUGIN_STR_LOC = 0x00;
@@ -108,8 +109,16 @@ namespace Compiler
         public void WriteBinary(StreamWriter writer)
         {
             writer.WriteLine(FILE_HEAD);
+            uint expectedBlock = 0;
             foreach (var block in Commands)
             {
+                //Fill in 0s for missing blocks
+                if (block.Key > expectedBlock)
+                {
+                    writer.WriteLine(((block.Key - expectedBlock) * BLOCK_SIZE) + "*0");
+                }
+                expectedBlock = block.Key + 1;
+                //Write Commands to the file
                 foreach (Command cmd in block.Value)
                 {
                     if (cmd != null) {
@@ -122,8 +131,11 @@ namespace Compiler
                         if (args < 3) { writer.Write((3-args) + "*0"); }
                         writer.WriteLine();
                     }
+                    //Write 0s for missing commands
                     else { writer.WriteLine("4*0"); }
                 }
+                //Fill the end of the block with 0s
+                writer.WriteLine((BLOCK_SIZE - (MAX_LOC * 4)) + "*0");
             }
         }
     }

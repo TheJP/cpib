@@ -15,19 +15,17 @@ namespace Compiler
 
         public override void GenerateCode(uint block, ref uint loc, MachineCode mc, CheckerInformation info)
         {
-            //TODO
-            /*
-            int conditionLoc = loc;
-            loc = Condition.GenerateCode(loc, vm, info);
-            int condJumpLoc = loc++; //Placeholder for conditonal jump out of while loop
+            uint conditionLoc = loc;
+            Condition.GenerateCode(block, ref loc, mc, info);
+            mc[block, loc++] = new Command(Instructions.POP, (byte)MachineCode.Registers.C);
+            mc[block, loc++] = new Command(Instructions.CMP_R_C, (byte)MachineCode.Registers.C, 0);
+            uint condJumpLoc = loc++;
             foreach (ASTCpsCmd cmd in Commands)
             {
-                loc = cmd.GenerateCode(loc, vm, info);
+                cmd.GenerateCode(block, ref loc, mc, info);
             }
-            vm.UncondJump(loc++, conditionLoc);
-            //Fill in placeholder
-            vm.CondJump(condJumpLoc, loc);
-            */
+            mc[block, loc] = new Command(Instructions.JMP, (byte)((conditionLoc - loc) * 4)); ++loc;
+            mc[block, condJumpLoc] = new Command(Instructions.JZ, (byte)((loc - condJumpLoc) * 4));
         }
 
         public override void GetUsedIdents(ScopeChecker.UsedIdents usedIdents)

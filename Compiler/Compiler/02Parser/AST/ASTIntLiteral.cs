@@ -16,8 +16,8 @@ namespace Compiler
 
         public override void GenerateCode(uint block, ref uint loc, MachineCode mc, CheckerInformation info)
         {
-            //TODO
-            //vm.IntLoad(loc++, Value);
+            mc[block, loc++] = new Command(Instructions.MOV_R_C, (byte)MachineCode.Registers.C, (byte)Value);
+            mc[block, loc++] = new Command(Instructions.PUSH, (byte)MachineCode.Registers.C);
         }
 
         public override Type GetExpressionType(CheckerInformation info)

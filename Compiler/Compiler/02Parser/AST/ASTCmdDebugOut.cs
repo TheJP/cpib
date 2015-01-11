@@ -1,3 +1,5 @@
+using System;
+
 namespace Compiler
 {
     public class ASTCmdDebugOut : ASTCpsCmd
@@ -6,22 +8,7 @@ namespace Compiler
 
         public override void GenerateCode(uint block, ref uint loc, MachineCode mc, CheckerInformation info)
         {
-            //TODO
-            /*
-            loc = Expr.GenerateCode(loc, vm, info);
-            switch (Expr.GetExpressionType(info))
-            {
-                case Type.INT32:
-                    vm.IntOutput(loc++, "DEBUGOUT");
-                    break;
-                case Type.BOOL:
-                    vm.BoolOutput(loc++, "DEBUGOUT");
-                    break;
-                case Type.DECIMAL:
-                    vm.DecimalOutput(loc++, "DEBUGOUT");
-                    break;
-            }
-            */
+            throw new NotSupportedException("DebugOut not implemented: Would consume to much code");
         }
 
         public override void GetUsedIdents(ScopeChecker.UsedIdents usedIdents)

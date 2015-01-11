@@ -1,3 +1,5 @@
+using System;
+
 namespace Compiler
 {
     public class ASTCmdDebugIn : ASTCpsCmd
@@ -6,22 +8,7 @@ namespace Compiler
 
         public override void GenerateCode(uint block, ref uint loc, MachineCode mc, CheckerInformation info)
         {
-            //TODO
-            /*
-            loc = Expr.GenerateLValue(loc, vm, info);
-            switch (Expr.GetExpressionType(info))
-            {
-                case Type.INT32:
-                    vm.IntInput(loc++, "DEBUGIN");
-                    break;
-                case Type.BOOL:
-                    vm.BoolInput(loc++, "DEBUGIN");
-                    break;
-                case Type.DECIMAL:
-                    vm.DecimalInput(loc++, "DEBUGIN");
-                    break;
-            }
-            */
+            throw new NotSupportedException("DebugIn not implemented: Would consume to much code");
         }
 
         public override void GetUsedIdents(ScopeChecker.UsedIdents usedIdents)

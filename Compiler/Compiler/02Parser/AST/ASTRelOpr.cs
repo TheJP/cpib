@@ -20,73 +20,54 @@ namespace Compiler
 
         public override void GenerateCode(uint block, ref uint loc, MachineCode mc, CheckerInformation info)
         {
-            //TODO
-            /*
-            loc = Term.GenerateCode(loc, vm, info);
-            loc = RepTerm.GenerateCode(loc, vm, info);
+            //1. generate the code of both terms
+            Term.GenerateCode(block, ref loc, mc, info);
+            RepTerm.GenerateCode(block, ref loc, mc, info);
+            //2. get the results of the terms into registers
+            mc[block, loc++] = new Command(Instructions.POP, (byte)MachineCode.Registers.D);
+            mc[block, loc++] = new Command(Instructions.POP, (byte)MachineCode.Registers.C);
 
-            var termType = ((ASTExpression)Term).GetExpressionType(info);
-            var repTermType = ((ASTExpression)RepTerm).GetExpressionType(info);
-
-            if ((termType == Type.INT32 && repTermType == Type.INT32) || (termType == Type.BOOL && repTermType == Type.BOOL))
+            //Check types
+            var type = GetExpressionType(info);
+            if (type != Type.INT32)
             {
-                switch (Operator)
-                {
-                    case Operators.EQ:
-                        vm.IntEQ(loc++);
-                        break;
-                    case Operators.NE:
-                        vm.IntNE(loc++);
-                        break;
-                    case Operators.LT:
-                        vm.IntLT(loc++);
-                        break;
-                    case Operators.LE:
-                        vm.IntLE(loc++);
-                        break;
-                    case Operators.GT:
-                        vm.IntGT(loc++);
-                        break;
-                    case Operators.GE:
-                        vm.IntGE(loc++);
-                        break;
-                    default:
-                        throw new IVirtualMachine.InternalError("There's an invalid operator in ASTRelOpr. Operator: " + Operator.ToString());
-                }
+                throw new CodeGenerationException("There's an invalid operand type in ASTRelOpr. type: " + type.ToString());
             }
-            else if ((termType == Type.INT32 && repTermType == Type.DECIMAL)
-                      || (termType == Type.DECIMAL && repTermType == Type.INT32)
-                      || (termType == Type.DECIMAL && repTermType == Type.DECIMAL))
+
+            //3. calculate the result
+            if (Operator != Operators.LE && Operator != Operators.GT)
             {
-                switch (Operator)
-                {
-                    case Operators.EQ:
-                        vm.DecimalEQ(loc++);
-                        break;
-                    case Operators.NE:
-                        vm.DecimalNE(loc++);
-                        break;
-                    case Operators.LT:
-                        vm.DecimalLT(loc++);
-                        break;
-                    case Operators.LE:
-                        vm.DecimalLE(loc++);
-                        break;
-                    case Operators.GT:
-                        vm.DecimalGT(loc++);
-                        break;
-                    case Operators.GE:
-                        vm.DecimalGE(loc++);
-                        break;
-                    default:
-                        throw new IVirtualMachine.InternalError("There's an invalid operator in ASTRelOpr. Operator: " + Operator.ToString());
-                }
+                mc[block, loc++] = new Command(Instructions.CMP_R_R, (byte)MachineCode.Registers.C, (byte)MachineCode.Registers.D);
             }
             else
             {
-                throw new IVirtualMachine.InternalError("There's an invalid operand in ASTRelOpr. Operand: " + termType.ToString() + ", " + repTermType.ToString());
+                mc[block, loc++] = new Command(Instructions.INC, (byte)MachineCode.Registers.D);
+                mc[block, loc++] = new Command(Instructions.CMP_R_R, (byte)MachineCode.Registers.C, (byte)MachineCode.Registers.D);
             }
-            */
+            switch (Operator)
+            {
+                case Operators.EQ:
+                    mc[block, loc++] = new Command(Instructions.JZ, 3 * 4);
+                    break;
+                case Operators.NE:
+                    mc[block, loc++] = new Command(Instructions.JNZ, 3 * 4);
+                    break;
+                case Operators.LT:
+                case Operators.LE: //The difference is handled above
+                    mc[block, loc++] = new Command(Instructions.JS, 3 * 4);
+                    break;
+                case Operators.GT: //The difference is handled above
+                case Operators.GE:
+                    mc[block, loc++] = new Command(Instructions.JNS, 3 * 4);
+                    break;
+                default:
+                    throw new CodeGenerationException("There's an invalid operator in ASTRelOpr. Operator: " + Operator.ToString());
+            }
+            //4. write the result to the stack
+            mc[block, loc++] = new Command(Instructions.PUSH, (byte)MachineCode.Registers.B); //Write 0
+            mc[block, loc++] = new Command(Instructions.JMP, 3 * 4); //Jump over write 0
+            mc[block, loc++] = new Command(Instructions.MOV_R_C, (byte)MachineCode.Registers.C, 1); //Write 1
+            mc[block, loc++] = new Command(Instructions.PUSH, (byte)MachineCode.Registers.C);
         }
 
         public override Type GetExpressionType(CheckerInformation info)

@@ -33,55 +33,37 @@ namespace Compiler
 
         public override void GenerateCode(uint block, ref uint loc, MachineCode mc, CheckerInformation info)
         {
-            //TODO
-            /*
-            loc = Factor.GenerateCode(loc, vm, info);
-            loc = RepFactor.GenerateCode(loc, vm, info);
+            //1. generate the code of both terms
+            Factor.GenerateCode(block, ref loc, mc, info);
+            RepFactor.GenerateCode(block, ref loc, mc, info);
+            //2. get the results of the terms into registers
+            mc[block, loc++] = new Command(Instructions.POP, (byte)MachineCode.Registers.D);
+            mc[block, loc++] = new Command(Instructions.POP, (byte)MachineCode.Registers.C);
 
+            //Check types
             var type = GetExpressionType(info);
-
-            if (type == Type.INT32)
+            if (type != Type.INT32)
             {
-
-                switch (Operator)
-                {
-                    case Operators.TIMES:
-                        vm.IntMult(loc++);
-                        break;
-                    case Operators.DIV:
-                        vm.IntDiv(loc++);
-                        break;
-                    case Operators.MOD:
-                        vm.IntMod(loc++);
-                        break;
-                    default:
-                        throw new IVirtualMachine.InternalError(
-                            "There's an invalid operator in ASTMultOpr. Operator: " + Operator.ToString());
-                }
-            }else if (type == Type.DECIMAL)
-            {
-                switch (Operator)
-                {
-                    case Operators.TIMES:
-                        vm.DecimalMult(loc++);
-                        break;
-                    case Operators.DIV:
-                        vm.DecimalDiv(loc++);
-                        break;
-                    case Operators.MOD:
-                        vm.DecimalMod(loc++);
-                        break;
-                    default:
-                        throw new IVirtualMachine.InternalError(
-                            "There's an invalid operator in ASTMultOpr. Operator: " + Operator.ToString());
-                }
+                throw new CodeGenerationException("There's an invalid operand type in ASTMultOpr. type: " + type.ToString());
             }
-            else
+
+            //3. calculate the result
+            switch (Operator)
             {
-                throw new IVirtualMachine.InternalError(
-                            "There's an invalid operand in ASTMultOpr. operand: " + type.ToString());
+                case Operators.TIMES:
+                    mc[block, loc++] = new Command(Instructions.MUL_R, (byte)MachineCode.Registers.C, (byte)MachineCode.Registers.D);
+                    break;
+                case Operators.DIV:
+                    mc[block, loc++] = new Command(Instructions.DIV_R, (byte)MachineCode.Registers.C, (byte)MachineCode.Registers.D);
+                    break;
+                case Operators.MOD:
+                    mc[block, loc++] = new Command(Instructions.MOD_R, (byte)MachineCode.Registers.C, (byte)MachineCode.Registers.D);
+                    break;
+                default:
+                    throw new CodeGenerationException("There's an invalid operator in ASTMultOpr. Operator: " + Operator.ToString());
             }
-            */
+            //4. write the result to the stack
+            mc[block, loc++] = new Command(Instructions.PUSH, (byte)MachineCode.Registers.C);
         }
 
         public override Type GetExpressionType(CheckerInformation info)

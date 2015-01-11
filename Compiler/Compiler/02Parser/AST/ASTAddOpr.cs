@@ -34,48 +34,34 @@ namespace Compiler
 
         public override void GenerateCode(uint block, ref uint loc, MachineCode mc, CheckerInformation info)
         {
-            //TODO
-            /*
-            loc = Term.GenerateCode(loc, vm, info);
-            loc = RepTerm.GenerateCode(loc, vm, info);
+            //1. generate the code of both terms
+            Term.GenerateCode(block, ref loc, mc, info);
+            RepTerm.GenerateCode(block, ref loc, mc, info);
+            //2. get the results of the terms into registers
+            mc[block, loc++] = new Command(Instructions.POP, (byte)MachineCode.Registers.D);
+            mc[block, loc++] = new Command(Instructions.POP, (byte)MachineCode.Registers.C);
 
+            //Check types
             var type = GetExpressionType(info);
+            if (type != Type.INT32)
+            {
+                throw new CodeGenerationException("There's an invalid operand type in ASTAddOpr. type: " + type.ToString());
+            }
 
-            if (type == Type.INT32)
+            //3. calculate the result
+            switch (Operator)
             {
-                switch (Operator)
-                {
-                    case Operators.PLUS:
-                        vm.IntAdd(loc++);
-                        break;
-                    case Operators.MINUS:
-                        vm.IntSub(loc++);
-                        break;
-                    default:
-                        throw new IVirtualMachine.InternalError(
-                            "There's an invalid operator in ASTAddOpr. Operator: " + Operator.ToString());
-                }
-            }else if (type == Type.DECIMAL)
-            {
-                switch (Operator)
-                {
-                    case Operators.PLUS:
-                        vm.DecimalAdd(loc++);
-                        break;
-                    case Operators.MINUS:
-                        vm.DecimalSub(loc++);
-                        break;
-                    default:
-                        throw new IVirtualMachine.InternalError(
-                            "There's an invalid operator in ASTAddOpr. Operator: " + Operator.ToString());
-                }
+                case Operators.PLUS:
+                    mc[block, loc++] = new Command(Instructions.ADD_R, (byte)MachineCode.Registers.C, (byte)MachineCode.Registers.D);
+                    break;
+                case Operators.MINUS:
+                    mc[block, loc++] = new Command(Instructions.SUB_R, (byte)MachineCode.Registers.C, (byte)MachineCode.Registers.D);
+                    break;
+                default:
+                    throw new CodeGenerationException("There's an invalid operator in ASTAddOpr. Operator: " + Operator.ToString());
             }
-            else
-            {
-                throw new IVirtualMachine.InternalError(
-                            "There's an invalid operand type in ASTAddOpr. type: " + type.ToString());
-            }
-            */
+            //4. write the result to the stack
+            mc[block, loc++] = new Command(Instructions.PUSH, (byte)MachineCode.Registers.C);
         }
 
         public override Type GetExpressionType(CheckerInformation info)

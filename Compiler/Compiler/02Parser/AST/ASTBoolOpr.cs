@@ -26,72 +26,61 @@ namespace Compiler
 
         public override void GenerateCode(uint block, ref uint loc, MachineCode mc, CheckerInformation info)
         {
-            //TODO
-            /*
-            loc = Term.GenerateCode(loc, vm, info);
-            //Only execute RepTerm if no conditional BoolOpr or if the left hand side is not enough to determine result
-            if (Operator != Operators.COR && Operator != Operators.CAND)
+            //1. generate the code of first term
+            Term.GenerateCode(block, ref loc, mc, info);
+            //1. a) generate second term if && or || (not conditional)
+            if (Operator != Operators.CAND && Operator != Operators.COR)
             {
-                loc = RepTerm.GenerateCode(loc, vm, info);
+                RepTerm.GenerateCode(block, ref loc, mc, info);
+                //2. a) (see above)
+                mc[block, loc++] = new Command(Instructions.POP, (byte)MachineCode.Registers.D);
             }
+            //2. get the results of the terms into registers
+            mc[block, loc++] = new Command(Instructions.POP, (byte)MachineCode.Registers.C);
 
+            //Check types
             var type = GetExpressionType(info);
+            if (type != Type.BOOL)
+            {
+                throw new CodeGenerationException("There's an invalid operand type in ASTBoolOpr. type: " + type.ToString());
+            }
 
-            if (type == Type.BOOL)
+            //3. calculate the result
+            switch (Operator)
             {
-                switch (Operator)
-                {
-                    case Operators.AND:
-                        //Can only work with int operations:
-                        //If both terms are true (=1), they result in 2 (1+1=2)
-                        vm.IntAdd(loc++);
-                        //Test if result == 2
-                        vm.IntLoad(loc++, 2);
-                        vm.IntEQ(loc++);
-                        break;
-                    case Operators.OR:
-                        vm.IntAdd(loc++);
-                        vm.IntLoad(loc++, 1);
-                        vm.IntGE(loc++); //>=1 => only one term has to be true
-                        break;
-                    case Operators.CAND:
-                        //If true is on the top of the stack, the second condition has to be evaluated
-                        //1. Jump if left hand side was false
-                        int conditionalJump = loc++;
-                        //2. a. Evaluate right hand side if left hand side was true
-                        loc = RepTerm.GenerateCode(loc, vm, info);
-                        vm.CondJump(conditionalJump, loc + 1); //Step 1: Only now the jump destination is known!
-                        vm.UncondJump(loc, loc + 2);
-                        ++loc; //Leap over the load(0) instruction
-                        //2. b. Evaluate to false
-                        vm.IntLoad(loc++, 0);
-                        break;
-                    case Operators.COR:
-                        //If false is on the top of the stack, the second condition has to be evaluated
-                        //1. Invert top of stack:
-                        vm.IntLoad(loc++, 1);
-                        vm.IntNE(loc++);
-                        //2. Jump if left hand side was true
-                        int conditionalJump2 = loc++;
-                        //3. a. Evaluate right hand side if left hand side was false
-                        loc = RepTerm.GenerateCode(loc, vm, info);
-                        vm.CondJump(conditionalJump2, loc + 1);
-                        vm.UncondJump(loc, loc + 2);
-                        ++loc;
-                        //3. b. Evaluate to true (without evaluating right hand side)
-                        vm.IntLoad(loc++, 1);
-                        break;
-                    default:
-                        throw new IVirtualMachine.InternalError(
-                            "There's an invalid operator in ASTBoolOpr. Operator: " + Operator.ToString());
-                }
+                case Operators.AND:
+                    mc[block, loc++] = new Command(Instructions.AND_R, (byte)MachineCode.Registers.C, (byte)MachineCode.Registers.D);
+                    break;
+                case Operators.OR:
+                    mc[block, loc++] = new Command(Instructions.OR_R, (byte)MachineCode.Registers.C, (byte)MachineCode.Registers.D);
+                    break;
+                case Operators.CAND:
+                    mc[block, loc++] = new Command(Instructions.CMP_R_C, (byte)MachineCode.Registers.C, 0);
+                    //Jump over second term if term1==0
+                    uint jumpPlaceholder = loc++;
+                    //Generate second term
+                    RepTerm.GenerateCode(block, ref loc, mc, info);
+                    //Jump over push 0
+                    mc[block, loc++] = new Command(Instructions.JMP, 2 * 4);
+                    //Fill in placeholder
+                    mc[block, jumpPlaceholder] = new Command(Instructions.JZ, (byte)((loc - jumpPlaceholder)*4));
+                    break;
+                case Operators.COR:
+                    mc[block, loc++] = new Command(Instructions.CMP_R_C, (byte)MachineCode.Registers.C, 0);
+                    //Jump over second term if term1==1
+                    uint jumpPlaceholder2 = loc++;
+                    //Generate second term
+                    RepTerm.GenerateCode(block, ref loc, mc, info);
+                    //Jump over push 0
+                    mc[block, loc++] = new Command(Instructions.JMP, 2 * 4);
+                    //Fill in placeholder
+                    mc[block, jumpPlaceholder2] = new Command(Instructions.JNZ, (byte)((loc - jumpPlaceholder2) * 4));
+                    break;
+                default:
+                    throw new CodeGenerationException("There's an invalid operator in ASTBoolOpr. Operator: " + Operator.ToString());
             }
-            else
-            {
-                throw new IVirtualMachine.InternalError(
-                            "There's an invalid operand in ASTBoolOpr. Oprand: " + type.ToString());
-            }
-            */
+            //4. write the result to the stack
+            mc[block, loc++] = new Command(Instructions.PUSH, (byte)MachineCode.Registers.C);
         }
 
         public override Type GetExpressionType(CheckerInformation info)

@@ -10,11 +10,11 @@ namespace Compiler
     {
         private void OptainNamespaceInformation(ASTProgram root, CheckerInformation info)
         {
-            int globalAddress = 0;
+            int globalAddress = 0xff;
             //Add global parameters
             foreach (ASTParam param in root.Params)
             {
-                param.Address = globalAddress++;
+                param.Address = globalAddress--;
                 info.Globals.addDeclaration(param);
             }
             //Add Global Variables, Functions and Procedures
@@ -24,7 +24,7 @@ namespace Compiler
                 if (declaration is ASTStoDecl)
                 {
                     //Add global storage identifier
-                    declaration.Address = globalAddress++;
+                    declaration.Address = globalAddress--;
                     info.Globals.addDeclaration((ASTStoDecl)declaration);
                 }
                 else if (declaration is ASTProcFuncDecl)

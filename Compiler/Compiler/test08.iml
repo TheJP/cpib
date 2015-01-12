@@ -1,6 +1,15 @@
-﻿program fibonacci(in const pos:int32, in const fib:int32)
+﻿program fibonacci(in var pos:int32, out var fib:int32)
 global
-	var x : int32
+	var x : int32;
+	var y : int32
 do
-	x init := pos
+	fib init := 1;
+	x init := 1;
+	y init := 0;
+	while pos > 0 do
+		pos := pos - 1;
+		y := fib;
+		fib := fib + x;
+		x := y
+	endwhile
 endprogram

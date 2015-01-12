@@ -36,13 +36,11 @@ namespace Compiler
             if (sto.OptChangemode == null || sto.OptChangemode.Value == ChangeMode.CONST) { if (!IsInit) { throw new CheckerException("Can't modify constant parameter '" + Ident + "'"); } } //Default Changemode is const!
             if (sto.FlowMode == FlowMode.IN && sto.OptMechmode != MechMode.COPY) { throw new CheckerException("Can't modify 'in ref' parameter '" + Ident + "'"); }
         }
-        public override void GenerateLValue(uint block, ref uint loc, MachineCode mc, CheckerInformation info, bool hasToBeLValue = true)
+        public override void GenerateLValue(uint block, ref uint loc, MachineCode mc, CheckerInformation info, bool deref = false, bool hasToBeLValue = true)
         {
-            //TODO
-            /*
             if (IsFuncCall)
             {
-                throw new IVirtualMachine.InternalError("The result of a function can't be an LValue");
+                throw new CheckerException("The result of a function can't be an LValue");
             }
             else
             {
@@ -52,53 +50,57 @@ namespace Compiler
                     info.Namespaces[info.CurrentNamespace].ContainsIdent(Ident))
                 {
                     IASTStoDecl storage = info.Namespaces[info.CurrentNamespace][Ident];
+                    throw new NotImplementedException("Local identifiers are not yet supported");
                     if (hasToBeLValue) { AssertNotConstant(storage); }
                     if (storage is ASTStoDecl || (storage is ASTParam && ((ASTParam)storage).OptMechmode == MechMode.COPY))
                     {
                         //Local Identifier or parameter with mechmode COPY
-                        vm.LoadRel(loc++, storage.Address);
+                        //TODO: vm.LoadRel(loc++, storage.Address);
                     }
                     else if (storage is ASTParam)
                     {
                         //If mechmode is null: default = Mechmode.REF
                         //Load parameter with mechmode REF
-                        vm.LoadRel(loc++, storage.Address); //Relative Address to fp
-                        vm.Deref(loc++); //Deref to get global Address
+                        //TODO: vm.LoadRel(loc++, storage.Address); //Relative Address to fp
+                        //TODO: vm.Deref(loc++); //Deref to get global Address
                         //With another Deref the value is loaded
                     }
                     else
                     {
                         //Should never happen as long as no new type is added
-                        throw new IVirtualMachine.InternalError("Unknown Identifier Type");
+                        throw new CodeGenerationException("Unknown Identifier Type");
                     }
                 }
                 else if (info.Globals.ContainsIdent(Ident))
                 {
                     IASTStoDecl storage = info.Globals[Ident];
                     if (hasToBeLValue) { AssertNotConstant(storage); }
-                    vm.IntLoad(loc++, storage.Address);
+                    //Value
+                    if (deref)
+                    {
+                        mc[block, loc++] = new Command(Instructions.MOV_R_CM, (byte)MachineCode.Registers.A, (byte)storage.Address);
+                    }
+                    //Only address
+                    else
+                    {
+                        mc[block, loc++] = new Command(Instructions.MOV_R_C, (byte)MachineCode.Registers.A, (byte)storage.Address);
+                    }
                 }
                 else
                 {
-                    throw new IVirtualMachine.InternalError("Access of undeclared Identifier " + Ident);
+                    throw new CheckerException("Access of undeclared Identifier " + Ident);
                 }
-                return loc;
             }
-            */
-            throw new NotImplementedException("not implemented");
         }
         public override void GenerateCode(uint block, ref uint loc, MachineCode mc, CheckerInformation info)
         {
-            //TODO:
-            /*
             if (IsFuncCall)
             {
                 if (info.ProcFuncs.ContainsIdent(Ident))
                 {
                     ASTProcFuncDecl callee = info.ProcFuncs[Ident];
                     if (!callee.IsFunc) { throw new CheckerException("Calls inside expresssions can only be made to functions but never to procedures!"); }
-                    loc = ASTCmdCall.GenerateCallingCode(loc, vm, info, callee, OptInitOrExprList);
-                    return loc;
+                    ASTCmdCall.GenerateCallingCode(block, ref loc, mc, info, callee, OptInitOrExprList);
                 }
                 else
                 {
@@ -107,12 +109,9 @@ namespace Compiler
             }
             else
             {
-                loc = GenerateLValue(loc, vm, info, false);
-                vm.Deref(loc++);
-                return loc;
+                GenerateLValue(block, ref loc, mc, info, true, false);
+                mc[block, loc++] = new Command(Instructions.PUSH, (byte)MachineCode.Registers.A);
             }
-            */
-            throw new NotImplementedException("not implemented");
         }
 
         public override Type GetExpressionType(CheckerInformation info)

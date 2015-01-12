@@ -10,7 +10,7 @@ namespace Compiler
     public class MachineCode
     {
         public const int INIT_LOC = 1; //Leave space for initial move command
-        public const int MAX_LOC = 32; //128 Byte
+        public const int MAX_LOC = 49; //TODO: With loader: 32; //128 Byte
         public const int BLOCK_SIZE = 256; //256 Byte = 1 Block
         //TODO: Calculate
         public const int DEBUGOUT_STR_LOC = 0x00;
@@ -19,8 +19,8 @@ namespace Compiler
         public const int MAIN_BLOCK = 0;
         public const int FUNCTION_BLOCK_START = 2;
         public const int FUNCTION_BLOCK_END = Byte.MaxValue - 1;
-        public const int LOADER_START = 0x08;
-        public const int LOADER_SIZE = 0x44;
+        public const int LOADER_START = 0x00; //TODO: With loader: 0x08;
+        public const int LOADER_SIZE = 0x00; //TODO: With loader: 0x44;
 
         private const string FILE_HEAD = "v2.0 raw";
 

@@ -10,7 +10,7 @@ namespace Compiler
         }
 
         public IASTNode NextExpression { get; set; }
-        public virtual void GenerateLValue(uint block, ref uint loc, MachineCode mc, CheckerInformation info, bool hasToBeLValue = true)
+        public virtual void GenerateLValue(uint block, ref uint loc, MachineCode mc, CheckerInformation info, bool deref = false, bool hasToBeLValue = true)
         {
             throw new CheckerException("Expression is no LValue");
         }

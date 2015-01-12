@@ -29,7 +29,7 @@ namespace Compiler
 
             //Check types
             var type = GetExpressionType(info);
-            if (type != Type.INT32)
+            if (type != Type.INT32 && type != Type.BOOL)
             {
                 throw new CodeGenerationException("There's an invalid operand type in ASTRelOpr. type: " + type.ToString());
             }

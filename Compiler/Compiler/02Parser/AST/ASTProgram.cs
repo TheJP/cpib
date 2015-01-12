@@ -121,7 +121,8 @@ namespace Compiler
             //** Output Code **//
             //TODO:
             //Write loading size of the initial programm
-            mc[block, MachineCode.INIT_LOC - 1] = new Command(Instructions.MOV_CM_C, (byte)MachineCode.ConstantLocations.LOAD_SIZE, (byte)(loc * 4));
+            //TODO: With loader: mc[block, MachineCode.INIT_LOC - 1] = new Command(Instructions.MOV_CM_C, (byte)MachineCode.ConstantLocations.LOAD_SIZE, (byte)(loc * 4));
+            mc[block, MachineCode.INIT_LOC - 1] = new Command(Instructions.NOP); //Placeholder for loader size instruction
             /*
             //Add output code
             foreach (ASTParam param in Params)

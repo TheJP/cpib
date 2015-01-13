@@ -1,6 +1,6 @@
 ﻿program fibonacci(in const pos:int32, out var fib:int32)
 global
-	fun fibFunc(in copy pos:int32) returns fib : int32
+	fun fibFunc(in copy pos:int32) returns var fib : int32
 	do
 		fib init := 0;
         if(pos = 0) then

@@ -766,7 +766,7 @@ namespace Compiler
         {
             sp = sp - 1;
             bool output = Data.boolGet(store[sp]);
-            Console.WriteLine("!" + indicator + " : bool = " + output);
+            Console.WriteLine("!" + indicator + " : bool = " + output.ToString().ToLower());
             pc = pc + 1;
         }
 

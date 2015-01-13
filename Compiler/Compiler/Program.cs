@@ -11,12 +11,16 @@ namespace Compiler
     {
         static void Main(string[] args)
         {
+            if (args.Length != 1)
+            {
+                Console.WriteLine("Compiler usage: iml <program>"); return;
+            }
             //TestVirtualMachine.Test(); return;
             try
             {
                 //Scanner
                 Scanner scanner = new Scanner();
-                var list = scanner.Scan(new StreamReader("test05.iml"));
+                var list = scanner.Scan(new StreamReader(args[0]));
                 Console.WriteLine("[" + String.Join(", ", list) + "]");
                 Console.WriteLine();
                 //Parser

@@ -32,6 +32,7 @@ namespace Compiler
                             "Cannot inverse " + type.ToString() + " value " + Expr.ToString());
             }
             */
+            throw new NotImplementedException("Not implemented ASTInv");
         }
 
         public override Type GetExpressionType(CheckerInformation info)

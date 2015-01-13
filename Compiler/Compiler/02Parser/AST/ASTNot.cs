@@ -8,25 +8,21 @@ namespace Compiler
 
         public override void GenerateCode(uint block, ref uint loc, MachineCode mc, CheckerInformation info)
         {
-            //TODO
-            /*
-            loc = Expr.GenerateCode(loc, vm, info);
+            Expr.GenerateCode(block, ref loc, mc, info);
 
             var type = GetExpressionType(info);
 
             if (type == Type.BOOL)
             {
-                //1 NE 1 == 0
-                //0 NE 1 == 1
-                vm.IntLoad(loc++, 1);
-                vm.IntNE(loc++);
+                mc[block, loc++] = new Command(Instructions.POP, (byte)MachineCode.Registers.C);
+                mc[block, loc++] = new Command(Instructions.XOR_C, (byte)MachineCode.Registers.C, 1); //XOR with 0x01 negates the least significant bit
+                mc[block, loc++] = new Command(Instructions.PUSH, (byte)MachineCode.Registers.C);
             }
             else
             {
-                throw new IVirtualMachine.InternalError(
+                throw new CheckerException(
                             "Cannot negate Non-Bool value " + Expr.ToString());
             }
-            */
         }
 
         public override Type GetExpressionType(CheckerInformation info)

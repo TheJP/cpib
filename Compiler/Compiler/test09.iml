@@ -1,0 +1,6 @@
+﻿program theanswer(out const answer:int32)
+global
+	var x : int32
+do
+	answer init := 42
+endprogram

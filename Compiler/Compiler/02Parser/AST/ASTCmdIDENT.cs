@@ -13,12 +13,10 @@ namespace Compiler
 
         public override void GenerateCode(uint block, ref uint loc, MachineCode mc, CheckerInformation info)
         {
-            //TODO
-            /*
-            loc = RValue.GenerateCode(loc, vm, info);
-            loc = LValue.GenerateLValue(loc, vm, info);
-            vm.Store(loc++);
-            */
+            RValue.GenerateCode(block, ref loc, mc, info);
+            LValue.GenerateLValue(block, ref loc, mc, info, false, true); //Writes address to register A
+            mc[block, loc++] = new Command(Instructions.POP, (byte)MachineCode.Registers.C);
+            mc[block, loc++] = new Command(Instructions.MOV_VM_R, (byte)MachineCode.Registers.A, (byte)MachineCode.Registers.C);
         }
 
         public override void GetUsedIdents(ScopeChecker.UsedIdents usedIdents)

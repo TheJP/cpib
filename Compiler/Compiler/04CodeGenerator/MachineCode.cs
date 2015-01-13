@@ -10,7 +10,7 @@ namespace Compiler
     public class MachineCode
     {
         public const int INIT_LOC = 1; //Leave space for initial move command
-        public const int MAX_LOC = 49; //TODO: With loader: 32; //128 Byte
+        public const int MAX_LOC = 60; //TODO: With loader: 32; //128 Byte
         public const int BLOCK_SIZE = 256; //256 Byte = 1 Block
         //TODO: Calculate
         public const int DEBUGOUT_STR_LOC = 0x00;

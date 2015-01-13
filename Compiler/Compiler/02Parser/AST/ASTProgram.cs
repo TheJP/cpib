@@ -60,6 +60,52 @@ namespace Compiler
             mc[block, jumpPlaceholder] = new Command(Instructions.JMP, (byte)((loc - jumpPlaceholder) * 4));
         }
 
+        /// <summary>
+        /// Generates the routine, which is used to write the program outputs.
+        /// Register C has to hold the output value!
+        /// </summary>
+        private void GenerateOutputRoutine(uint block, ref uint loc, MachineCode mc, CheckerInformation info)
+        {
+            //The code has te be overjumped the first time. It should only be executed at defined times by a CALL command
+            uint jumpPlaceholder = loc++;
+            //MOV AL, '!' //IO Register
+            mc[block, loc++] = new Command(Instructions.MOV_R_C, (byte)MachineCode.Registers.A, (byte)'!');
+            //OUT Terminal
+            mc[block, loc++] = new Command(Instructions.OUT, (byte)MachineCode.IO.Terminal);
+
+            //CMP CL, 100 //CL>=100?
+            mc[block, loc++] = new Command(Instructions.CMP_R_C, (byte)MachineCode.Registers.C, 100);
+            //JS 12 //Leave out next 2 instructions if CL<100
+            mc[block, loc++] = new Command(Instructions.JS, 3 * 4);
+            //Write '1' to the Terminal
+            mc[block, loc++] = new Command(Instructions.MOV_R_C, (byte)MachineCode.Registers.A, (byte)'1');
+            mc[block, loc++] = new Command(Instructions.OUT, (byte)MachineCode.IO.Terminal);
+            //Calculate second to last digit
+            mc[block, loc++] = new Command(Instructions.MOV_R_R, (byte)MachineCode.Registers.A, (byte)MachineCode.Registers.C);
+            mc[block, loc++] = new Command(Instructions.DIV_C, (byte)MachineCode.Registers.A, 10);
+            mc[block, loc++] = new Command(Instructions.MOD_C, (byte)MachineCode.Registers.A, 10);
+            //Print second to last digit
+            mc[block, loc++] = new Command(Instructions.ADD_C, (byte)MachineCode.Registers.A, (byte)'0');
+            mc[block, loc++] = new Command(Instructions.OUT, (byte)MachineCode.IO.Terminal);
+            //Calculate last digit
+            mc[block, loc++] = new Command(Instructions.MOV_R_R, (byte)MachineCode.Registers.A, (byte)MachineCode.Registers.C);
+            mc[block, loc++] = new Command(Instructions.MOD_C, (byte)MachineCode.Registers.A, 10);
+            //Print last digit
+            mc[block, loc++] = new Command(Instructions.ADD_C, (byte)MachineCode.Registers.A, (byte)'0');
+            mc[block, loc++] = new Command(Instructions.OUT, (byte)MachineCode.IO.Terminal);
+
+
+            //Write '\n' to the Terminal
+            mc[block, loc++] = new Command(Instructions.MOV_R_C, (byte)MachineCode.Registers.A, (byte)'\n');
+            mc[block, loc++] = new Command(Instructions.OUT, (byte)MachineCode.IO.Terminal);
+
+            //RET
+            mc[block, loc++] = new Command(Instructions.RET);
+
+            //Fill in the jump placeholder
+            mc[block, jumpPlaceholder] = new Command(Instructions.JMP, (byte)((loc - jumpPlaceholder) * 4));
+        }
+
         public void GenerateCode(uint block, ref uint loc, MachineCode mc, CheckerInformation info)
         {
             //** Functions and Procedures **//
@@ -113,63 +159,45 @@ namespace Compiler
                     mc[block, loc++] = new Command(Instructions.PUSH, (byte)MachineCode.Registers.B);
                 }
             }
+            foreach (string global in info.Globals)
+            {
+                if (info.Globals[global] is ASTStoDecl)
+                {
+                    //PUSH BL //BL is set to 0 above
+                    mc[block, loc++] = new Command(Instructions.PUSH, (byte)MachineCode.Registers.B);
+                }
+            }
             //** Main Program Code **//
             foreach (ASTCpsCmd cmd in Commands)
             {
                 cmd.GenerateCode(block, ref loc, mc, info);
             }
             //** Output Code **//
-            //TODO:
-            //Write loading size of the initial programm
-            //TODO: With loader: mc[block, MachineCode.INIT_LOC - 1] = new Command(Instructions.MOV_CM_C, (byte)MachineCode.ConstantLocations.LOAD_SIZE, (byte)(loc * 4));
-            mc[block, MachineCode.INIT_LOC - 1] = new Command(Instructions.NOP); //Placeholder for loader size instruction
-            /*
-            //Add output code
+            //Add output machine code if there is an out or inout param
+            uint writeLoc = MachineCode.LOADER_SIZE + ((loc + 1) * 4);
+            if (Params.Exists(p => p.FlowMode == FlowMode.OUT || p.FlowMode == FlowMode.INOUT))
+            {
+                GenerateOutputRoutine(block, ref loc, mc, info);
+                //Important: BL didn't change in the code here!
+            }
             foreach (ASTParam param in Params)
             {
                 if (param.FlowMode == FlowMode.OUT || param.FlowMode == FlowMode.INOUT)
                 {
-                    //Load output value
-                    vm.IntLoad(loc++, param.Address);
-                    vm.Deref(loc++);
-                    //Switch between types:
-                    switch (param.Type)
-                    {
-                        case Type.INT32:
-                            vm.IntOutput(loc++, param.Ident);
-                            break;
-                        case Type.BOOL:
-                            vm.BoolOutput(loc++, param.Ident);
-                            break;
-                        case Type.DECIMAL:
-                            vm.DecimalOutput(loc++, param.Ident);
-                            break;
-                    }
+                    //Load value on register A
+                    var ident = new ASTIdent() { Ident = param.Ident, IsInit = false, NextExpression = new ASTEmpty(), OptInitOrExprList = new List<ASTExpression>() };
+                    ident.GenerateLValue(block, ref loc, mc, info, true, false);
+                    //Move value to register C
+                    mc[block, loc++] = new Command(Instructions.MOV_R_R, (byte)MachineCode.Registers.C, (byte)MachineCode.Registers.A);
+                    //Call output code
+                    mc[block, loc++] = new Command(Instructions.CALL, (byte)writeLoc);
                 }
             }
-            //Add stop as last command
-            vm.Stop(loc++);
-            //Generate functions/procedures
-            foreach (string ident in info.ProcFuncs)
-            {
-                ASTProcFuncDecl procFunc = info.ProcFuncs[ident];
-                procFunc.Address = loc;
-                //Add calls, now that the function/procedure address is known
-                if (info.Calls.ContainsKey(ident) && info.Calls[ident] != null)
-                {
-                    foreach (int callLoc in info.Calls[ident])
-                    {
-                        vm.Call(callLoc, procFunc.Address);
-                    }
-                }
-                //Change current namespace
-                info.CurrentNamespace = ident;
-                //Generate code for function/procedure
-                loc = procFunc.GenerateCode(loc, vm, info);
-                //Reset namespace
-                info.CurrentNamespace = null;
-            }
-            */
+            //Write loading size of the initial programm
+            //TODO: With loader: mc[block, MachineCode.INIT_LOC - 1] = new Command(Instructions.MOV_CM_C, (byte)MachineCode.ConstantLocations.LOAD_SIZE, (byte)(loc * 4));
+            mc[block, MachineCode.INIT_LOC - 1] = new Command(Instructions.NOP); //Placeholder for loader size instruction
+            //Halt at the end
+            mc[block, loc++] = new Command(Instructions.HALT);
         }
         public void GetUsedIdents(ScopeChecker.UsedIdents usedIdents)
         {

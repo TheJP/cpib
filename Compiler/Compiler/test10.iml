@@ -1,0 +1,6 @@
+﻿program sub(in const a:int32, in const b:int32, out const c:int32)
+global
+	var x : int32
+do
+	c init := a - b
+endprogram

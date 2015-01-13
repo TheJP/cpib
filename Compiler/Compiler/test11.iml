@@ -1,0 +1,11 @@
+﻿program not(in const a:bool, out var c:int32)
+global
+	var x : bool
+do
+	c init := true;
+	if a then
+		c := false
+	else
+		skip
+	endif
+endprogram

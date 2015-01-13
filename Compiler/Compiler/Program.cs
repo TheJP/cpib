@@ -50,7 +50,7 @@ namespace Compiler
             catch (Exception ex)
             {
                 Console.WriteLine("Failed: " + ex.Message);
-                /*Only for debuging of the compiler */ Console.WriteLine(ex.StackTrace);
+                //*Only for debuging of the compiler */ Console.WriteLine(ex.StackTrace);
             }
         }
     }

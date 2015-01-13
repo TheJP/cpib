@@ -72,15 +72,15 @@ namespace Compiler
         public class UsedIdents
         {
             private CheckerInformation info;
-            public IList<string> GlobalInitialized { get; private set; }
-            public IDictionary<string, IList<string>> LocalInitialized { get; private set; }
+            public List<string> GlobalInitialized { get; private set; }
+            public Dictionary<string, List<string>> LocalInitialized { get; private set; }
             public bool AllowInit { get; set; }
             public UsedIdents(CheckerInformation info)
             {
                 AllowInit = true;
                 this.info = info;
                 GlobalInitialized = new List<string>();
-                LocalInitialized = new Dictionary<string, IList<string>>();
+                LocalInitialized = new Dictionary<string, List<string>>();
             }
             /// <summary>
             /// Allows the modification of the current namespace.
@@ -133,6 +133,47 @@ namespace Compiler
                 else
                 {
                     throw new CheckerException("Use of undeclared storage identifier '" + ident + "'");
+                }
+            }
+
+            /// <summary>
+            /// Fork used identifier for the usage in an if/else command.
+            /// </summary>
+            /// <returns>2nd instance of this class which is a deep copies of this instance</returns>
+            public UsedIdents ForkForIf()
+            {
+                UsedIdents b = new UsedIdents(info);
+                b.AllowInit = this.AllowInit;
+                this.GlobalInitialized.ForEach(g => b.GlobalInitialized.Add(g));
+                foreach (var element in this.LocalInitialized)
+                {
+                    b.LocalInitialized.Add(element.Key, new List<string>());
+                    element.Value.ForEach(l => b.LocalInitialized[element.Key].Add(l));
+                }
+                return b;
+            }
+
+            /// <summary>
+            /// Merges previously forked UserIdents.
+            /// Throws an exception if the UserIdents are not compatible.
+            /// </summary>
+            /// <param name="b"></param>
+            public void MergeForIf(UsedIdents b)
+            {
+                CheckerException ifException = new CheckerException("Not both branches of the if/else command initialize the same identifiers");
+                if (this.GlobalInitialized.Count != b.GlobalInitialized.Count) { throw ifException; }
+                if (this.LocalInitialized.Count != b.LocalInitialized.Count) { throw ifException; }
+                foreach (string global in this.GlobalInitialized)
+                {
+                    if (!b.GlobalInitialized.Contains(global)) { throw ifException; }
+                }
+                foreach (var local in this.LocalInitialized)
+                {
+                    if (!b.LocalInitialized.ContainsKey(local.Key)) { throw ifException; }
+                    if (local.Value.Count != b.LocalInitialized[local.Key].Count) { throw ifException; }
+                    foreach(string localIdent in local.Value){
+                        if (!b.LocalInitialized[local.Key].Contains(localIdent)) { throw ifException; }
+                    }
                 }
             }
         }

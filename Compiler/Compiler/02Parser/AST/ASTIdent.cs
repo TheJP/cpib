@@ -29,11 +29,11 @@ namespace Compiler
         }
         private void AssertNotConstant(ASTStoDecl sto)
         {
-            if (sto.Changemode == ChangeMode.CONST) { if (!IsInit) { throw new CheckerException("Can't modify constant storage '" + Ident + "'"); } }
+            if (sto.Changemode != ChangeMode.VAR) { if (!IsInit) { throw new CheckerException("Can't modify constant storage '" + Ident + "'"); } }
         }
         private void AssertNotConstant(ASTParam sto)
         {
-            if (sto.OptChangemode == null || sto.OptChangemode.Value == ChangeMode.CONST) { if (!IsInit) { throw new CheckerException("Can't modify constant parameter '" + Ident + "'"); } } //Default Changemode is const!
+            if (sto.OptChangemode == null || sto.OptChangemode.Value != ChangeMode.VAR) { if (!IsInit) { throw new CheckerException("Can't modify constant parameter '" + Ident + "'"); } } //Default Changemode is const!
             if (sto.FlowMode == FlowMode.IN && sto.OptMechmode != MechMode.COPY) { throw new CheckerException("Can't modify 'in ref' parameter '" + Ident + "'"); }
         }
         public override void GenerateLValue(uint block, ref uint loc, MachineCode mc, CheckerInformation info, bool deref = false, bool hasToBeLValue = true)

@@ -36,13 +36,14 @@ namespace Compiler
 
         public override void GetUsedIdents(ScopeChecker.UsedIdents usedIdents)
         {
-            //TODO: Allow init, if added in both branches
-            bool tmp = usedIdents.AllowInit;
-            usedIdents.AllowInit = false;
             Condition.GetUsedIdents(usedIdents);
+            //Fork usedIdents
+            var usedIdentsFork = usedIdents.ForkForIf();
+            //Give the branches its own UsedIdents instance
             TrueCommands.ForEach(cmd => cmd.GetUsedIdents(usedIdents));
-            FalseCommands.ForEach(cmd => cmd.GetUsedIdents(usedIdents));
-            usedIdents.AllowInit = tmp;
+            FalseCommands.ForEach(cmd => cmd.GetUsedIdents(usedIdentsFork));
+            //Merge the branches again
+            usedIdents.MergeForIf(usedIdentsFork);
         }
     }
 }

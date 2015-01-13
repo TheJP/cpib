@@ -1,0 +1,7 @@
+﻿program negate(out const min:decimal, out const max:decimal)
+global
+	var x : decimal
+do
+	min init :=  79'228'162'514'264'337'593'543'950'335m;
+	max init := -79'228'162'514'264'337'593'543'950'335m
+endprogram

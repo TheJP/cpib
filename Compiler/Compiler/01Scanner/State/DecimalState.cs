@@ -10,7 +10,7 @@ namespace Compiler
     {
         private decimal value;
         private decimal factor = 0.1m;
-        public DecimalState(long value)
+        public DecimalState(decimal value)
         {
             this.value = value;
         }

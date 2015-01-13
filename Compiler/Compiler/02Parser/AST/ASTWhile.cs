@@ -24,8 +24,8 @@ namespace Compiler
             {
                 cmd.GenerateCode(block, ref loc, mc, info);
             }
-            mc[block, loc] = new Command(Instructions.JMP, (byte)((conditionLoc - loc) * 4)); ++loc;
-            mc[block, condJumpLoc] = new Command(Instructions.JZ, (byte)((loc - condJumpLoc) * 4));
+            mc[block, loc] = new Command(Instructions.JMP, (short)((conditionLoc - loc) * 4)); ++loc;
+            mc[block, condJumpLoc] = new Command(Instructions.JZ, (short)((loc - condJumpLoc) * 4));
         }
 
         public override void GetUsedIdents(ScopeChecker.UsedIdents usedIdents)

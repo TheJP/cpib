@@ -9,8 +9,8 @@ namespace Compiler
     public class Command
     {
         public Instructions Instruction { get; private set; }
-        private byte[] Args { get; set; }
-        public Command(Instructions instruction, params byte[] args)
+        private short[] Args { get; set; }
+        public Command(Instructions instruction, params short[] args)
         {
             if (args.Length != instruction.ParamCount())
             {
@@ -19,7 +19,7 @@ namespace Compiler
             this.Instruction = instruction;
             this.Args = args;
         }
-        public byte GetArg(int index)
+        public short GetArg(int index)
         {
             return Args[index];
         }

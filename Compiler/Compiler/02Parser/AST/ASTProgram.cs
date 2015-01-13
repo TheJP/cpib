@@ -54,7 +54,7 @@ namespace Compiler
             mc[block, loc++] = new Command(Instructions.ADD_R, (byte)MachineCode.Registers.C, (byte)MachineCode.Registers.A);
 
             //JMP XX
-            mc[block, loc] = new Command(Instructions.JMP, (byte)((loopLoc - loc) * 4)); ++loc;
+            mc[block, loc] = new Command(Instructions.JMP, (short)((loopLoc - loc) * 4)); ++loc;
 
             //Fill in the jump placeholder
             mc[block, jumpPlaceholder] = new Command(Instructions.JMP, (byte)((loc - jumpPlaceholder) * 4));

@@ -10,8 +10,8 @@ namespace Compiler
     public class MachineCode
     {
         public const int INIT_LOC = 1; //Leave space for initial move command
-        public const int MAX_LOC = 60; //TODO: With loader: 32; //128 Byte
-        public const int BLOCK_SIZE = 256; //256 Byte = 1 Block
+        public const int MAX_LOC = 10000; //TODO: With loader: 32; //128 Byte
+        public const int BLOCK_SIZE = 65536; //65536*2 Byte = 1 Block
         //TODO: Calculate
         public const int DEBUGOUT_STR_LOC = 0x00;
         public const int DEBUGIN_STR_LOC = 0x00;
@@ -122,11 +122,11 @@ namespace Compiler
                 foreach (Command cmd in block.Value)
                 {
                     if (cmd != null) {
-                        writer.Write(((byte)cmd.Instruction).ToString("X2") + " ");
+                        writer.Write(((byte)cmd.Instruction).ToString("X4") + " ");
                         int args = cmd.Instruction.ParamCount();
                         for (int arg = 0; arg < args; ++arg)
                         {
-                            writer.Write(cmd.GetArg(arg).ToString("X2") + " ");
+                            writer.Write(cmd.GetArg(arg).ToString("X4") + " ");
                         }
                         if (args < 3) { writer.Write((3-args) + "*0"); }
                         writer.WriteLine();

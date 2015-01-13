@@ -78,12 +78,12 @@ namespace Compiler
                     //Value
                     if (deref)
                     {
-                        mc[block, loc++] = new Command(Instructions.MOV_R_CM, (byte)MachineCode.Registers.A, (byte)storage.Address);
+                        mc[block, loc++] = new Command(Instructions.MOV_R_CM, (byte)MachineCode.Registers.A, (short)storage.Address);
                     }
                     //Only address
                     else
                     {
-                        mc[block, loc++] = new Command(Instructions.MOV_R_C, (byte)MachineCode.Registers.A, (byte)storage.Address);
+                        mc[block, loc++] = new Command(Instructions.MOV_R_C, (byte)MachineCode.Registers.A, (short)storage.Address);
                     }
                 }
                 else

@@ -10,7 +10,7 @@ namespace Compiler
     {
         private void OptainNamespaceInformation(ASTProgram root, CheckerInformation info)
         {
-            int globalAddress = 0xff;
+            int globalAddress = 0xffff;
             //Add global parameters
             foreach (ASTParam param in root.Params)
             {

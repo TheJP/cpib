@@ -8,7 +8,7 @@ namespace Compiler
 {
     public class NumberState : State
     {
-        private long value;
+        private decimal value;
         public NumberState(char start)
         {
             value = (long)Char.GetNumericValue(start);

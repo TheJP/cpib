@@ -1,4 +1,4 @@
-﻿program not(in const a:bool, out var c:int32)
+program negate(in const a:bool, out var c:bool)
 global
 	var x : bool
 do

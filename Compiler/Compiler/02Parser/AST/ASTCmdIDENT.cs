@@ -13,6 +13,10 @@ namespace Compiler
 
         public override void GenerateCode(uint block, ref uint loc, MachineCode mc, CheckerInformation info)
         {
+            if (LValue.GetExpressionType(info) != RValue.GetExpressionType(info))
+            {
+                throw new CheckerException("An assignment has to have the same types for LValue and RValue");
+            }
             RValue.GenerateCode(block, ref loc, mc, info);
             LValue.GenerateLValue(block, ref loc, mc, info, false, true); //Writes address to register A
             mc[block, loc++] = new Command(Instructions.POP, (byte)MachineCode.Registers.C);

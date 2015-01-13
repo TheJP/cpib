@@ -35,7 +35,8 @@ namespace Compiler
                 ASTParam param = paramIttr.Current;
                 if (param.OptMechmode != MechMode.COPY || (param.FlowMode == FlowMode.OUT || param.FlowMode == FlowMode.INOUT))
                 {
-                    loc = expr.GenerateLValue(loc, vm, info); //Load address on the stack
+                    bool modifiable = param.OptChangemode == ChangeMode.VAR;
+                    loc = expr.GenerateLValue(loc, vm, info, modifiable); //Load address on the stack
                 }
                 else
                 {

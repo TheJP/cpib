@@ -1,0 +1,31 @@
+﻿program conditional(in const a : bool)
+global
+	fun print(in const b : bool) returns r : bool
+	do
+		debugout b;
+		r init := b
+	endfun
+do
+	debugout 1;
+	if print(a) &? print(a) then
+		debugout a
+	else skip
+	endif;
+	debugout 2;
+	if print(a) && print(a) then
+		debugout a
+	else skip
+	endif;
+	debugout 3;
+	if print(a) |? print(a) then
+		skip
+	else
+		debugout a
+	endif;
+	debugout 4;
+	if print(a) || print(a) then
+		skip
+	else
+		debugout a
+	endif
+endprogram

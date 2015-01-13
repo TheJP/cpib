@@ -1,0 +1,14 @@
+Added possibility of forked initializations
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+# On branch master
+# Changes to be committed:
+#	modified:   Compiler/Compiler/01Scanner/State/DecimalState.cs
+#	modified:   Compiler/Compiler/01Scanner/State/NumberState.cs
+#	modified:   Compiler/Compiler/02Parser/AST/ASTIf.cs
+#	modified:   Compiler/Compiler/03Checker/ScopeChecker.cs
+#	modified:   Compiler/Compiler/Compiler.csproj
+#	modified:   Compiler/Compiler/test05.iml
+#	modified:   Compiler/Compiler/test06.iml
+#	new file:   Compiler/Compiler/test12.iml
+#

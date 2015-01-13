@@ -159,6 +159,9 @@
     <None Include="test10.iml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="test13.iml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="test12.iml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
